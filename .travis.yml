@@ -1,4 +1,8 @@
 language: node_js
+node_js: '7'
+install:
+  - npm install
+cache: npm
 deploy:
   provider: heroku
   api_key:
