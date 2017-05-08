@@ -7,6 +7,6 @@ deploy:
   provider: heroku
   api_key:
     secure: hcpgQ6yJrmzHI9qMZgz4gsNjLXZ+DXlgqdWqSgfmX8aC9DNzwe8u1ObWP6HdiB+Tba3jd+CgJ7PVTqhMfx9OQk227/gcsuoJXc12cCEMK88x3Kve/K32JeZgQm/mjxXApvUHuQN17YlB+Y4DtXXayyYab9erT0fe174CIm8yPfmueonbwV+KeNc75VEj/hoWK9EZtyDPBSPIBphwcwnP+p+Jxd5vIEyNXa3X5PNpvot0jODvu98+Shr91xEErwNdSldqBmuCK24XlrtPnIP3FkE0pmUijH4okGNFlVQM2b4qNStZU76i3T4LtYAxRyJ2E5TfGhZvacI+IQqCtj+hnkl2chljY4C7O/zNva4MuQCUm5SDVqYQTkxZz4xfl60KrvvOivP1GiumLUm+riXTc0ELuKYTx5g9priXzghTtbN5SZPhoCB4B6Y969daMbpr7EU+A2Aqju/EcaYkpQTZuvnd5M7g0TEhZzEtELUfXcgC3sjMZQSA+xO/k2E05geKaxMVxNNaAw9fTOc1AEysPK4Z3dv484hKnMq/YJcoJs8BkZGM9NrLaEqKgPI5OIDaCII8HXnYhefWHJNPZsJFlXIBe2odhFNb003cPjb6PFFQFyGkbY0fbq2NjF3fQMj5qR2pxyBB5ZsNKy0HysnQdq+Sn+goc6fNP66yMu9w6mE=
-  app: pacific-wildwood-66572
+  app: choredb
   on:
     repo: ilarinie/react-choredb-2
