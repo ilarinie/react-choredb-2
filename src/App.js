@@ -1,129 +1,43 @@
 import React, {
     Component
 } from 'react';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import {
-    BrowserRouter as Router,
-    Link,
-    Route,
-    withRouter
-} from 'react-router-dom';
-//import Route from './auth/auth_service';
-import { Redirect } from 'react-router-dom';
-const auth_service = require('./auth/auth_service');
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import './App.css';
 
 
-function validateAuthentication() {
-    console.log("asd")
-    var token = localStorage.getItem('token');
-    if (!token){
-      var token = ""
-    }
-    if (token) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function() {
-          console.log("aa")
-        }
-        xhr.onerror = function() {
-          console.log("bee")
-        }
-        xhr.setRequestHeader("Authorization", "JWT " + token);
-        xhr.open("GET", "http://localhost:3000/auth/validate_token", true);
-        xhr.send();
-    }
+
+import { Dashboard } from './components/dashboard/dashboard';
+import { Login } from './components/login/login';
+
+function authenticated() {
+  if (localStorage.getItem('token') === null){
+    return false;
   }
-
-class Login extends Component {
-  static isPrivate = false;
-  render() {
-    return (
-      <div className="Login">
-        <button label="Login" />
-      </div>
-    );
-  }
-}
-
-class Main extends Component {
-static isPrivate = false;
-    render() {
-        return (
-          <div className="Login">
-            asdasd
-          </div>
-        )
-    }
-}
-
-class Topics extends React.Component {
-  static isPrivate = true;
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-    console.log("mount");
-    var token = "";
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function() {
-      console.log("asd2")
-      return true;
-    }
-    xhr.onerror = function() {
-      console.log("asd3")
-      const { history } = this.props;
-      history.pushState(null, '/login')
-      //history.push('/login')
-    }
-    xhr.open("GET", "http://localhost:3000/auth/validate_token", true);
-    xhr.setRequestHeader("Authorization", "JWT " + token);
-    xhr.send();
-
-
-  }
-
-  render() {
-    return <h1>AAAA</h1>
-  }
+  return true;
 }
 
 class Base extends Component {
     render() {
+      if (authenticated()){
         return (
-          <Router>
-            <div>
-              <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/topics">Topics</Link></li>
-              </ul>
-
-            <hr/>
-            <Route exact path="/" component={Main} />
-            <Route path="/topics" component={Topics} />
-            <Route path="/login" component={Login}/>
+          <div className="main-container">
+            <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+              <Dashboard />
+            </MuiThemeProvider>
           </div>
-        </Router>
         );
+      } else {
+        return (
+          <div className="main-container">
+            <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+              <Login />
+            </MuiThemeProvider>
+          </div>
+        );
+      }
     }
 }
-
-
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    validateAuthentication ? (
-      <Component {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
 
 export default Base;

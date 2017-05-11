@@ -1,0 +1,8 @@
+.login-container {
+  margin: 0 auto;
+  background: rgb(48, 48, 48);
+  width: 90%;
+  text-align: center;
+  padding-bottom: 100px;
+  color: white;
+}

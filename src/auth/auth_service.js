@@ -1,52 +1,63 @@
 
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+export class AuthService {
 
-const PRIVATE_ROOT = '/topics';
-const PUBLIC_ROOT = '/login';
-
-const  isAuthenticated = () => {
+  diidaduudadd = function() {
     console.log("asd")
-    //var token = localStorage.getItem('token');
-    var token = "";
-    if (token) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function() {
-          console.log("asd2")
-          return true;
-        }
-        xhr.onerror = function() {
-          console.log("asd3")
-          return false;
-        }
-        xhr.setRequestHeader("Authorization", "JWT " + token);
-        xhr.open("GET", "http://localhost:3000/auth/validate_token", true);
-        xhr.send();
-
-    }
   }
 
+}
 
-  const AuthRoute = ({component, ...props}) => {
-    const { isPrivate } = component;
-    if (isPrivate === true){
-      if (isAuthenticated()) {
-        return <Route { ...props } component={ component } />;
+
+
+function authenticate(username, password, caller){
+  var xhr = new XMLHttpRequest();
+  var data = JSON.stringify({ username: username, password:password});
+  xhr.open("POST", "http://localhost:3000/auth/login", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function(event){ 
+    if (xhr.readyState === 4){
+      if (xhr.responseText.indexOf('Succesfully authenticated') != -1) {
+        var res = JSON.parse(xhr.responseText);
+        caller(null, res.message);
+        localStorage.setItem("token", res.token);
       } else {
-        return <Redirect to="/login/" />;
+        caller(xhr.responseText);
       }
-    } else {
-      return <Route { ...props } component={ component } />;
     }
+  }
+  xhr.onerror = function() {
+    console.log("errorii")
+    caller.callBack(xhr.response.error);
+  }
 
-  };
+  xhr.send(data);
+}
 
+function register(username, password, caller) {
+  var xhr = new XMLHttpRequest();
+  var data = JSON.stringify({ username: username, password:password});
+  xhr.open("POST", "http://localhost:3000/auth/register", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function(event){ 
+    if (xhr.readyState === 4){
+      console.log(xhr.responseText);
+    }
+  }
+  xhr.onerror = function() {
+    console.log("errorii")
+    caller.callBack(xhr.response.error);
+  }
 
-  AuthRoute.propTypes = {
-    component: React.PropTypes.oneOfType([
-      React.PropTypes.element,
-      React.PropTypes.func
-    ])
-  };
+  xhr.send(data);
+}
 
-  export default AuthRoute;
+function logout(){
+  localStorage.removeItem("token");
+  location.reload();
+}
+
+module.exports = {
+  authenticate,
+  register,
+  logout
+}

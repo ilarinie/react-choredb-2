@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+.main-container {
+  width: 100%;
+  background: grey;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -18,7 +27,7 @@
   background: gray;
   height: 100px;
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto; 
 }
 
 .App-intro {
