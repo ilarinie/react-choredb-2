@@ -27,7 +27,7 @@
   background: gray;
   height: 100px;
   width: 90%;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .App-intro {
@@ -37,4 +37,20 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.title-container {
+  padding: 20px;
+}
+.new-commune-section{
+  background: lightgray;
+  width: 80%;
+  margin: 20px auto;
+  float: none;
+  color: black;
+  padding: 20px;
+}
+
+.username-span {
+  color: red;
 }

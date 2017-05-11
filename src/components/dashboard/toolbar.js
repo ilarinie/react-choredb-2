@@ -9,7 +9,10 @@ export class Toolbar extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {open: false};
+    this.state = {
+      open: false,
+      disabled: this.props.disabled
+    };
   }
 
   handleToggle = () => {
@@ -26,25 +29,29 @@ export class Toolbar extends Component {
 
     //let choreClick = this.props.onClick.bind(this, 'chore');
     //let budgetClick = this.props.onClick.bind(this, "budget");
+    if (this.state.disabled){
+      return <AppBar iconElementLeft={null} title="ChoreDB 2.0" />
+    } else {
+      return (
+        <div>
+          <AppBar
+            title="ChoreDB 2.0"
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
+            onLeftIconButtonTouchTap={this.handleToggle}
+          />
+          <Drawer open={this.state.open}
+                  docked={false}
+                  width={200}
+                  onRequestChange={(open) => this.setState({open})}
+            >
+            <MenuItem onTouchTap={this.props.onClick("123")}>Chores</MenuItem>
+            <MenuItem onTouchTap={this.props.onClick("123")}>Budget</MenuItem>
+            <MenuItem onTouchTap={this.props.onClick("123")}>Log Out</MenuItem>
+          </Drawer>
+        </div>
+      );
+    }
 
-    return (
-      <div>
-        <AppBar
-          title="ChoreDB 2.0"
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
-          onLeftIconButtonTouchTap={this.handleToggle}
-        />
-        <Drawer open={this.state.open}
-                docked={false}
-                width={200}
-                onRequestChange={(open) => this.setState({open})}
-          >
-          <MenuItem onTouchTap={this.props.onClick("123")}>Chores</MenuItem>
-          <MenuItem onTouchTap={this.props.onClick("123")}>Budget</MenuItem>
-          <MenuItem onTouchTap={this.props.onClick("123")}>Log Out</MenuItem>
-        </Drawer>
-      </div>
-    );
   }
 
 }

@@ -9,6 +9,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import RaisedButton from 'material-ui/RaisedButton';
 //import { Chore } from './chore';
 
 export class Chores extends Component {
@@ -17,26 +18,52 @@ export class Chores extends Component {
   constructor(props){
     super(props);
     this.state = {
-       chores: [{id: 1, name: "Tiskit"}, {id:2, name: "imurointi"}]
+       chores: this.props.chores
     }
   }
   getInitialState() {
     return {}
   }
 
-
-  render() {
-    var rows = [];
-    for (var i = 0; i < this.state.chores.lenght; i++){
-      rows.push(
-        <TableRow>
-          <TableRowColumn>{this.state.chores[i].name}</TableRowColumn>
-        </TableRow>
-      );
+  completeChore(chore, param2){
+    console.log(param2)
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:3000/chores/"+chore.chore_id+"/do");
+    xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem('token'));
+    var asd = "asd"
+    xhr.onreadystatechange = function(event) {
+      if (xhr.readyState === 4){
+        changeState();
+      }
     }
 
+    var ctx = this;
+
+    function changeState() {
+      console.log("asd")
+      var chores2 = ctx.state.chores;
+      for (var i = 0; i < ctx.state.chores.length; i++){
+        if (chores2[i].chore_id === chore.chore_id) {
+          chores2[i].lastdone = new Date().toString();
+        }
+      }
+      ctx.setState({chores: chores2});
+    }
+    xhr.send();
+  }
+
+
+  render() {
+    var choreNodes = this.state.chores.map( (chore, index) => (
+        <TableRow key={index} >
+          <TableRowColumn>{chore.name}</TableRowColumn>
+          <TableRowColumn>{chore.lastdone}</TableRowColumn>
+          <TableRowColumn><button id={chore.id} value={chore.id} label="Do" onClick={this.completeChore.bind(this, chore)} > Do </button></TableRowColumn>
+        </TableRow>
+      ), this);
+
     return (
-      <Table>
+      <Table selectable={false}>
         <TableHeader>
           <TableRow>
             <TableHeaderColumn>Chore</TableHeaderColumn>
@@ -45,13 +72,7 @@ export class Chores extends Component {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {this.state.chores.map( (row, index) => (
-              <TableRow key={index}>
-                <TableRowColumn>{index}</TableRowColumn>
-                <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.id}</TableRowColumn>
-              </TableRow>
-              ))}
+          {choreNodes}
         </TableBody>
       </Table>
     );

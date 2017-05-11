@@ -16,7 +16,7 @@ function authenticate(username, password, caller){
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onreadystatechange = function(event){ 
     if (xhr.readyState === 4){
-      if (xhr.responseText.indexOf('Succesfully authenticated') != -1) {
+      if (xhr.responseText.indexOf('Succesfully authenticated') !== -1) {
         var res = JSON.parse(xhr.responseText);
         caller(null, res.message);
         localStorage.setItem("token", res.token);
