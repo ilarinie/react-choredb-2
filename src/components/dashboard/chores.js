@@ -25,8 +25,7 @@ export class Chores extends Component {
     return {}
   }
 
-  completeChore(chore, param2){
-    console.log(param2)
+  completeChore(chore){
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:3000/chores/"+chore.chore_id+"/do");
     xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem('token'));

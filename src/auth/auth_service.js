@@ -9,7 +9,7 @@ export class AuthService {
 
 
 
-function authenticate(username, password, caller){
+function authenticate(username, password, callBack){
   var xhr = new XMLHttpRequest();
   var data = JSON.stringify({ username: username, password:password});
   xhr.open("POST", "http://localhost:3000/auth/login", true);
@@ -18,16 +18,16 @@ function authenticate(username, password, caller){
     if (xhr.readyState === 4){
       if (xhr.responseText.indexOf('Succesfully authenticated') !== -1) {
         var res = JSON.parse(xhr.responseText);
-        caller(null, res.message);
+        callBack(null, res.message);
         localStorage.setItem("token", res.token);
       } else {
-        caller(xhr.responseText);
+        callBack(xhr.responseText);
       }
     }
   }
   xhr.onerror = function() {
     console.log("errorii")
-    caller.callBack(xhr.response.error);
+    callBack(xhr.response.error);
   }
 
   xhr.send(data);

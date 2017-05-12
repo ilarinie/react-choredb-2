@@ -11,9 +11,12 @@ export class Toolbar extends Component {
     super(props);
     this.state = {
       open: false,
-      disabled: this.props.disabled
+      disabled: this.props.disabled,
+      title: "ChoreDB 2.0 - "+ this.props.communeName
     };
   }
+
+
 
   handleToggle = () => {
     this.setState({open: !this.state.open});
@@ -21,7 +24,7 @@ export class Toolbar extends Component {
 
   handleClose = (e) => {
     //console.log(e)
-    this.props.onClick(e);
+    //this.props.onClick(e);
     this.setState({open: false});
   }
 
@@ -32,10 +35,11 @@ export class Toolbar extends Component {
     if (this.state.disabled){
       return <AppBar iconElementLeft={null} title="ChoreDB 2.0" />
     } else {
+      console.log("asd " +this.state.title)
       return (
         <div>
           <AppBar
-            title="ChoreDB 2.0"
+            title={this.state.title}
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.handleToggle}
           />

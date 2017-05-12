@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { postCommune } from '../../services/api_service';
 
 export class NewCommune extends Component {
 
@@ -14,20 +15,16 @@ export class NewCommune extends Component {
   }
 
   handleClick = () => {
-    console.log("clickd")
     var data = JSON.stringify({commune_name: document.getElementById('commune_name').value});
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:3000/communes");
-    xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem("token"));
-    xhr.onreadystatechange = function(event) {
+    postCommune(data, this.callBack);
+  }
 
-      if (xhr.readyState === 4){
-        console.log(event);
-      }
+  callBack(err, response){
+    if (!err){
+      location.reload();
+    } else {
+      console.error(err);
     }
-    xhr.send(data);
-
-
   }
 
   render() {
