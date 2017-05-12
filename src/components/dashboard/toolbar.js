@@ -50,6 +50,7 @@ export class Toolbar extends Component {
             >
             <MenuItem onTouchTap={this.props.onClick("123")}>Chores</MenuItem>
             <MenuItem onTouchTap={this.props.onClick("123")}>Budget</MenuItem>
+            <MenuItem onTouchTap={this.props.onClick("123")}>New Chore</MenuItem>
             <MenuItem onTouchTap={this.props.onClick("123")}>Log Out</MenuItem>
           </Drawer>
         </div>

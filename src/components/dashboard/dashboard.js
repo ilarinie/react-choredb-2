@@ -5,6 +5,7 @@ import {Toolbar} from './toolbar';
 import { Chores } from './chores';
 import { Budget } from './budget';
 import { NewCommune } from './newCommune';
+import { NewChore } from './new_chore';
 import { logout, getCommune } from '../../services/api_service';
 
 class Dashboard extends Component {
@@ -44,23 +45,29 @@ class Dashboard extends Component {
     } else if ( data.indexOf('Log Out') !== -1) {
       logout();
       return "logout";
+    } else if (data.indexOf('New Chore') !== -1){
+      return "newchore";
     } else {
       return "chores";
     }
   }
 
   render() {
+
+
     if ( this.state.user ) {
 
       if ( this.state.commune ){
-        console.log(this.state.commune.name)
+        var toolbar =<Toolbar disabled={false} communeName={this.state.commune.name} onClick={() => this.handleMenuItem} />;
         switch(this.state.selectedTab) {
           case "chores":
-            return <div><Toolbar disabled="false" communeName={this.state.commune.name} onClick={() => this.handleMenuItem} /><Chores chores={this.state.chores}/></div>;
+            return <div> {toolbar}<Chores chores={this.state.chores}/></div>;
           case "budget":
-            return <div><Toolbar communeName={this.state.commune.name} onClick={() => this.handleMenuItem}/><Budget /></div>;
+            return <div>{toolbar}<Budget /></div>;
+          case "newchore":
+            return <div>{toolbar}<NewChore /></div>
           default:
-            return <div><Toolbar communeName={this.state.commune.name} onClick={() => this.handleMenuItem}  /></div>
+            return <div>{toolbar}</div>
         }
       } else {
         return <div><Toolbar onClick={() => null}/><NewCommune user={this.state.user} /></div>
