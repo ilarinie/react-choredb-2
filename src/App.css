@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+.main-container {
+  width: 100%;
+  background: grey;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -14,6 +23,13 @@
   color: white;
 }
 
+.Login {
+  background: gray;
+  height: 100px;
+  width: 90%;
+  margin: 0 auto;
+}
+
 .App-intro {
   font-size: large;
 }
@@ -21,4 +37,20 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.title-container {
+  padding: 20px;
+}
+.new-commune-section{
+  background: lightgray;
+  width: 80%;
+  margin: 20px auto;
+  float: none;
+  color: black;
+  padding: 20px;
+}
+
+.username-span {
+  color: red;
 }
