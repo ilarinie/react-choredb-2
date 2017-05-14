@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {postChore} from '../../services/api_service';
+import {Redirect} from 'react-router-dom';
 
 export class NewChore extends Component {
 
@@ -51,9 +52,9 @@ export class NewChore extends Component {
       var parsedRes = JSON.parse(response);
       this.clearValues();
       this.setState({backendErrors: null, backendSuccess: parsedRes.message});
+      this.props.refresh("asd");
     } else {
-      var parsedErr = JSON.parse(err);
-      this.setState({backendErrors: parsedErr.message, backendSuccess: null});
+        this.setState({backendErrors: "Server side error: " + err, backendSuccess: null});
     }
   }
 
@@ -120,8 +121,11 @@ export class NewChore extends Component {
 
 
   render() {
+    if ( this.state.backendSuccess ){
+        return <Redirect to="/" push />;
+    } else {
     return (
-      <div className="login-container">
+      <div className="form-component-container">
         <form onSubmit={this.handleSubmit}>
           <TextField
             id="chore-form-name"
@@ -140,11 +144,12 @@ export class NewChore extends Component {
             hintText="Points awarded" type="number"
             errorText={ (this.state.errors && this.state.errors.points ) ? this.state.errors.points : ""} /> <br />
           <RaisedButton label="Create" type="submit" />
-          <div className="chore-error-div">{this.state.backendErrors}</div>
-          <div className="chore-success-div">{this.state.backendSuccess}</div>
+          <div className="chore-error-div"><p>{this.state.backendErrors}</p></div>
+          <div className="chore-success-div"><p>{this.state.backendSuccess}</p></div>
         </form>
       </div>
     )
+  }
   }
 
 }

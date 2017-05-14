@@ -42,6 +42,23 @@
 .title-container {
   padding: 20px;
 }
+.notification-bar {
+  margin: 0 auto;
+  width: 80%;
+  background: lightgreen;
+  border-radius: 0px 0px 10px 10px;
+  //padding-top: 5px;
+  text-align: center;
+  color: green;
+  border: 1px solid green;
+  border-top: 0px solid black;
+}
+.create-chore-container {
+  width: 90%;
+  background: darkgrey;
+  text-align: center;
+  margin: 0 auto;
+}
 .new-commune-section{
   background: lightgray;
   width: 80%;
@@ -56,9 +73,18 @@
 }
 
 .dashboard-container {
-  display:flex;
-  justify-content: center;
+
 }
+
+.form-component-container {
+  margin: 0 auto;
+  background: rgb(48, 48, 48);
+  width: 90%;
+  text-align: center;
+  padding-bottom: 100px;
+  color: white;
+}
+
 .dashboard-item {
   width: 700px;
   margin: 20px 20px;

@@ -7,21 +7,35 @@ import {NewChore} from './new_chore';
 import {NewPurchase} from './new_purchase';
 import RaisedButton from 'material-ui/RaisedButton';
 import {logout, getCommune} from '../../services/api_service';
+import { BrowserRouter, Route, Link } from 'react-router-dom'
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import CircularProgress from 'material-ui/CircularProgress';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 class Dashboard extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            notification: null,
             selectedTab: "chores",
             commune: null,
             chores: null,
             purchases: null,
             user: null,
-            newChore: false,
-            newPurchase: false,
+            open: false
         };
-        this.openNewChore = this.openNewChore.bind(this);
+    }
+
+    notifyAndReset = (message) => {
+      this.setState({notification: message});
+      getCommune(this.setCommune)
+    }
+
+    componentDidMount = () => {
+        getCommune(this.setCommune);
     }
 
     setCommune = (err, response) => {
@@ -29,99 +43,77 @@ class Dashboard extends Component {
             var res = JSON.parse(response);
             this.setState({commune: res.commune, chores: res.chores, user: res.user, purchases: res.purchases});
         } else {
-            console.log(err);
+            localStorage.removeItem("token");
+            location.reload();
         }
     }
 
-    componentDidMount() {
-        getCommune(this.setCommune);
+    handleToggle = () => {
+      console.log("as");
+      this.setState({open: !this.state.open})
     }
 
-    handleMenuItem = (ev) => {
-        this.setState({
-            selectedTab: this.parseSelectedTab(ev.target.innerHTML)
-        });
+    handleClose = () => {
+      this.setState({open: false});
     }
 
-    parseSelectedTab = (data) => {
-        if (data.indexOf('Budget') !== -1) {
-            return "budget";
-        } else if (data.indexOf('Chores') !== -1) {
-            return "chores";
-        } else if (data.indexOf('Log Out') !== -1) {
-            logout();
-            return "logout";
-        } else if (data.indexOf('New Chore') !== -1) {
-            return "newchore";
-        } else if (data.indexOf('New Purchase') !== -1) {
-            return "newpurchase";
-        } else {
-            return "chores";
-        }
-    }
-
-    openNewChore = (event) => {
-      event.preventDefault();
-      this.setState({newChore: true});
-    }
-    closeNewChore = (event) => {
-      this.setState({newChore: false});
-    }
-
-    openNewPurchase = (event) => {
-      event.preventDefault();
-      this.setState({newPurchase: true});
-    }
-
-    closeNewPurchase = (event) => {
-      this.setState({newPurchase: false});
+    logOut = () => {
+      localStorage.removeItem("token");
+      location.reload();
     }
 
     render() {
 
         if (this.state.user) {
-
             if (this.state.commune) {
-                var toolbar = <Toolbar disabled={false} communeName={this.state.commune.name} onClick={() => this.handleMenuItem}/>;
-                /*
-        switch(this.state.selectedTab) {
-          case "chores":
-            return <div> {toolbar}<Chores chores={this.state.chores}/></div>;
-          case "budget":
-            return <div>{toolbar}<Budget purchases={this.state.purchases}/></div>;
-          case "newchore":
-            return <div>{toolbar}<NewChore /></div>;
-          case "newpurchase":
-            return <div>{toolbar}<NewPurchase /></div>
-          default:
-            return <div>{toolbar}</div>
-        }
-        */
-                return (
-                    <div>
-                        {toolbar}
-                        <div className="dashboard-container">
-                            <div className="dashboard-item">
-                                <Chores chores={this.state.chores}/>
-                                <div className="create-input-container">
-                                  {this.state.user.admin && !this.state.newChore ? <RaisedButton label="New Chore" onClick={this.openNewChore} /> : null}
-                                  {this.state.newChore ? <div><RaisedButton label="X" onClick={this.closeNewChore} /> <NewPurchase /></div> : null}
-                                </div>
+                var navigationBar =  (
+                      <div>
+                          <AppBar
+                            title={this.state.commune.name + " || " + this.state.user.username}
+                            iconClassNameRight="muidocs-icon-navigation-expand-more"
+                            onLeftIconButtonTouchTap={this.handleToggle}
+                          />
+                          <Drawer open={this.state.open}
+                                  docked={false}
+                                  width={200}
+                                  onRequestChange={(open) => this.setState({open})}
+                          >
+                            <Link to="/"><MenuItem onTouchTap={this.handleClose}>Chores</MenuItem></Link>
+                            <Link to="/budget"><MenuItem onTouchTap={this.handleClose}>Budget</MenuItem></Link>
+                            <Link to="/new_chore"><MenuItem onTouchTap={this.handleClose}>New Chore</MenuItem></Link>
+                            <Link to="/new_purchase"><MenuItem onTouchTap={this.handleClose}>New Purchase</MenuItem></Link>
+                            <MenuItem onTouchTap={this.logOut}>Log Out</MenuItem>
+                          </Drawer>
+                      </div>
+                      );
 
-                            </div>
-                            <div className="dashboard-item">
-                                <Budget purchases={this.state.purchases} />
-                                {this.state.newPurchase ? <div><RaisedButton label="X" onClick={this.closeNewPurchase} /> <NewPurchase /></div> : <RaisedButton label="New Purchase" onClick={this.openNewPurchase} /> }
-                            </div>
+                return (
+                  <BrowserRouter>
+                    <div>
+                        {navigationBar}
+                        <div className="notification-bar">
+                          {this.state.notification ? this.state.notification : ""}
                         </div>
+                        <div className="dashboard-container">
+                          <CSSTransitionGroup
+                            transitionName="fade"
+                            transitionEnterTimeout={500}
+                            transitionLeaveTimeout={300}>
+                            <Route exact path="/" component={() => (<Chores chores={this.state.chores} user={this.state.user}/>)}/>
+                            <Route path="/budget" component={() => (<Budget purchases={this.state.purchases} /> )}/>
+                            <Route path="/new_chore" component={() => (<NewChore refresh={this.notifyAndReset.bind(this)} />)} />
+                            <Route path="/new_purchase" component={() => (<NewPurchase refresh={this.notifyAndReset.bind(this)} />)} />
+                          </CSSTransitionGroup>
+                        </div>
+
                     </div>
+                  </BrowserRouter>
                 )
             } else {
                 return <div><Toolbar onClick={() => null}/><NewCommune user={this.state.user}/></div>
             }
         } else {
-            return <div><Toolbar onClick={() => null}/>
-                Loading..</div>
+            return <div className="loading-screen"><CircularProgress /></div>
         }
 
     }

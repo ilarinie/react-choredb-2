@@ -9,8 +9,8 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import { BudgetRow } from './budget_row';
 
-import { getPurchases } from '../../services/api_service';
 
 
 export class Budget extends Component {
@@ -26,11 +26,7 @@ export class Budget extends Component {
     render() {
       if (this.state.purchases) {
         var budgetNodes = this.state.purchases.map( (purchase, index) => (
-            <TableRow key={index} >
-              <TableRowColumn>{purchase.username}</TableRowColumn>
-              <TableRowColumn>{purchase.amount}</TableRowColumn>
-              <TableRowColumn>{purchase.differential}</TableRowColumn>
-            </TableRow>
+          <BudgetRow key={index} budgetItem={purchase} />
           ), this);
       }
 
@@ -38,7 +34,7 @@ export class Budget extends Component {
         <div>
         <h2 className="dashboard-item-title">Budget</h2>
         <Table>
-          <TableHeader>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               <TableHeaderColumn>User</TableHeaderColumn>
               <TableHeaderColumn>Spent</TableHeaderColumn>

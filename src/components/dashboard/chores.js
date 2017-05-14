@@ -9,9 +9,8 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import RaisedButton from 'material-ui/RaisedButton';
-//import { Chore } from './chore';
-import { completeChore } from '../../services/api_service';
+
+import { Chore } from './chore';
 
 export class Chores extends Component {
 
@@ -19,48 +18,26 @@ export class Chores extends Component {
   constructor(props){
     super(props);
     this.state = {
-       chores: this.props.chores
+       chores: this.props.chores,
+       user: this.props.user
     }
-  }
-  getInitialState() {
-    return {}
-  }
-
-  completeChoreHandler(chore){
-    console.log(chore);
-    completeChore(chore, (err, res) => {
-      if (!err){
-        var newChores = this.state.chores;
-        for (var i = 0; i < newChores.length; i++){
-          if (newChores[i].chore_id === chore.chore_id) {
-            newChores[i].lastdone = new Date().toString();
-          }
-        }
-        this.setState({chores: newChores});
-      } else {
-        console.log(err);
-      }
-    });
   }
 
 
   render() {
     var choreNodes = this.state.chores.map( (chore, index) => (
-        <TableRow key={index} >
-          <TableRowColumn>{chore.name}</TableRowColumn>
-          <TableRowColumn>{chore.lastdone}</TableRowColumn>
-          <TableRowColumn><button id={chore.id} value={chore.id} label="Do" onClick={this.completeChoreHandler.bind(this, chore)} > Do </button></TableRowColumn>
-        </TableRow>
+        <Chore key={index} chore={chore} user={this.state.user}/>
       ), this);
 
     return (
       <div>
       <h2 className="dashboard-item-title">Chores</h2>
-      <Table selectable={false}>
-        <TableHeader>
+      <Table>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn>Chore</TableHeaderColumn>
-            <TableHeaderColumn>Last done</TableHeaderColumn>
+            <TableHeaderColumn>Last done by</TableHeaderColumn>
+            <TableHeaderColumn>Last done at</TableHeaderColumn>
             <TableHeaderColumn>Do</TableHeaderColumn>
           </TableRow>
         </TableHeader>
@@ -71,7 +48,5 @@ export class Chores extends Component {
     </div>
     );
   }
-
-
 
 }

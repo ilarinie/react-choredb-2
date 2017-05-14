@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {postPurchase} from '../../services/api_service';
+import {Redirect} from 'react-router-dom';
 
 export class NewPurchase extends Component {
 
@@ -37,6 +38,7 @@ callBack = (err, response) => {
   if (!err) {
     var parsedRes = JSON.parse(response);
     this.setState({purchaseSuccess: parsedRes.message, purchaseError: null})
+    this.props.refresh(parsedRes.message);
   } else {
     var parsedErr = JSON.parse(err);
     this.setState({purchaseSuccess: null, purchaseError: parsedErr.message})
@@ -79,8 +81,11 @@ parseAmount = (amount) => {
 
 
 render() {
+  if (this.state.purchaseSuccess) {
+    return <Redirect to="/budget" push />
+  } else {
   return (
-    <div className="login-container">
+    <div className="form-component-container">
       <form onSubmit={this.handleSubmit}>
       <TextField
         id="purchase-description-input"
@@ -100,6 +105,7 @@ render() {
 
     </div>
   )
+}
 }
 
 }
