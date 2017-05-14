@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {Toolbar} from './toolbar';
 import {Chores} from './chores';
 import {Budget} from './budget';
 import {NewCommune} from './newCommune';
 import {NewChore} from './new_chore';
 import {NewPurchase} from './new_purchase';
-import RaisedButton from 'material-ui/RaisedButton';
-import {logout, getCommune} from '../../services/api_service';
+import {NewCommuneUser} from './new_commune_user';
+import {getCommune} from '../../services/api_service';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
 import CircularProgress from 'material-ui/CircularProgress';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
@@ -66,6 +66,15 @@ class Dashboard extends Component {
 
         if (this.state.user) {
             if (this.state.commune) {
+                var adminMenuItems = (
+                  <div>
+                    <Divider />
+                    <Link to="/new_chore"><MenuItem onTouchTap={this.handleClose}>New Chore</MenuItem></Link>
+                    <Link to="/new_user"><MenuItem onTouchTap={this.handleClose}>Add User to Commune</MenuItem></Link>
+                    <Divider />
+                  </div>
+                );
+
                 var navigationBar =  (
                       <div>
                           <AppBar
@@ -80,8 +89,8 @@ class Dashboard extends Component {
                           >
                             <Link to="/"><MenuItem onTouchTap={this.handleClose}>Chores</MenuItem></Link>
                             <Link to="/budget"><MenuItem onTouchTap={this.handleClose}>Budget</MenuItem></Link>
-                            <Link to="/new_chore"><MenuItem onTouchTap={this.handleClose}>New Chore</MenuItem></Link>
                             <Link to="/new_purchase"><MenuItem onTouchTap={this.handleClose}>New Purchase</MenuItem></Link>
+                            { this.state.user.admin ? adminMenuItems : ""}
                             <MenuItem onTouchTap={this.logOut}>Log Out</MenuItem>
                           </Drawer>
                       </div>
@@ -103,6 +112,7 @@ class Dashboard extends Component {
                             <Route path="/budget" component={() => (<Budget purchases={this.state.purchases} /> )}/>
                             <Route path="/new_chore" component={() => (<NewChore refresh={this.notifyAndReset.bind(this)} />)} />
                             <Route path="/new_purchase" component={() => (<NewPurchase refresh={this.notifyAndReset.bind(this)} />)} />
+                            <Route path="/new_user" component={() => (<NewCommuneUser refresh={this.notifyAndReset.bind(this)} />)} />
                           </CSSTransitionGroup>
                         </div>
 
@@ -110,7 +120,7 @@ class Dashboard extends Component {
                   </BrowserRouter>
                 )
             } else {
-                return <div><Toolbar onClick={() => null}/><NewCommune user={this.state.user}/></div>
+                return <div><NewCommune user={this.state.user}/></div>
             }
         } else {
             return <div className="loading-screen"><div style={ {padding: "200px" }}><CircularProgress /></div></div>

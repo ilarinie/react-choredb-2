@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
-
+a {
+  text-decoration: none;
+}
 .main-container {
   width: 100%;
   background: grey;

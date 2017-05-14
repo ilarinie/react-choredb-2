@@ -6,8 +6,7 @@ import {
   TableBody,
   TableHeader,
   TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
+  TableRow
 } from 'material-ui/Table';
 import { BudgetRow } from './budget_row';
 

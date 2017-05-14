@@ -18,7 +18,7 @@ export class NewChore extends Component {
 
   handleClick = () => {
     var value = document.getElementById('chore_name_input').value;
-    if ( value != " ") {
+    if ( value !== " ") {
       var chore = { name: value };
       postChore(chore, this.callBack);
     }
@@ -59,7 +59,7 @@ export class NewChore extends Component {
   }
 
   parseName = (name) => {
-    if (!name || name == "") {
+    if (!name || name === "") {
       this.setState({errors: {name: "This field is required"}});
       return null;
     }
@@ -77,11 +77,11 @@ export class NewChore extends Component {
 
   parsePriority = (priority) => {
     console.log(priority);
-    if (!priority || priority == ""){
+    if (!priority || priority === ""){
       this.setState({errors: {priority: "This field is required"}});
       return null;
     }
-    var number = parseInt(priority);
+    var number = parseInt(priority, 10);
     if (isNaN(number)){
       this.setState({errors: {priority: "Only numbers allowed"}});
       return null;
@@ -95,11 +95,11 @@ export class NewChore extends Component {
   }
 
   parsePoints = (points) => {
-    if (!points || points == "" ){
+    if (!points || points === "" ){
       this.setState({errors: {points: "This field is required"}});
       return null;
     }
-      var number = parseInt(points);
+      var number = parseInt(points, 10);
     if (isNaN(number)){
       this.setState({errors: {points: "Only numbers allowed"}});
       return null;

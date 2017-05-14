@@ -1,16 +1,16 @@
 var apiUrl = 'https://choredb-api.herokuapp.com/';
 
 
-function setHeaders(){
+/*function setHeaders(){
     var headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Authorization", "JWT " + localStorage.getItem("token"));
     return headers;
-}
+}*/
 
 
-function post(url, data, callBack) {
-    var url = apiUrl + url;
+function post(path, data, callBack) {
+    var url = apiUrl + path;
     /*var init = {
       method: 'POST',
       headers: setHeaders(),
@@ -51,8 +51,8 @@ function post(url, data, callBack) {
     xhr.send(data);
 }
 
-function get(url, callBack) {
-  var url = apiUrl + url;
+function get(path, callBack) {
+  var url = apiUrl + path;
 /*  var init = {
     method: 'GET',
     headers: setHeaders(),
@@ -125,5 +125,6 @@ module.exports = {
     postPurchase,
     getPurchases,
     postChore,
+    post,
     logout
 }

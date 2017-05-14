@@ -17,6 +17,7 @@ export class Login extends Component {
      logging: false,
      error: null
    };
+   this.login = this.login.bind(this);
  }
 
  handleChange = (value) => {
@@ -37,7 +38,8 @@ export class Login extends Component {
     }
   }
 
-  login() {
+  login = (event) => {
+    event.preventDefault();
     this.setState({logging: true});
     authenticate(document.getElementById("username").value, document.getElementById("password").value, this.callBack)
   }
@@ -57,17 +59,22 @@ export class Login extends Component {
       >
       <Tab label="Log in" value="login">
         <div className="login-container">
-        { this.state.logging ? <div>Logging in..</div> : <div><h1>Please log in</h1>
-        <TextField
-          hintText="Username" id="username"
-        /><br/>
-        <TextField
-          hintText="Password"
-          id="password"
-          type="password"
-        /><br />
-        <div className="auth-failure">{this.state.error}</div>
-      <RaisedButton label="Log in" fullWidth={true} onClick={() => this.login()} /> </div>}
+        { this.state.logging ? <div>Logging in..</div> :
+          <div><h1>Please log in</h1>
+            <form onSubmit={this.login}>
+              <TextField
+                hintText="Username" id="username"
+              /><br/>
+              <TextField
+                hintText="Password"
+                id="password"
+                type="password"
+              /><br />
+              <div className="auth-failure">{this.state.error}</div>
+              <RaisedButton label="Log in" type="submit" fullWidth={true}  />
+              </form>
+           </div>}
+
         </div>
       </Tab>
       <Tab label="Register" value="register">
