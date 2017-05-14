@@ -1,7 +1,36 @@
-var apiUrl = 'http://localhost:3000/';
+var apiUrl = 'https://choredb-api.herokuapp.com/';
+
+
+function setHeaders(){
+    var headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
+    return headers;
+}
+
 
 function post(url, data, callBack) {
     var url = apiUrl + url;
+    /*var init = {
+      method: 'POST',
+      headers: setHeaders(),
+      cache: 'default',
+      body: data
+    }
+
+    var request = new Request(url, init);
+    fetch(request).then((response) => {
+      if (response.ok) {
+        console.log(response);
+        callBack(null, response);
+      } else {
+        return response.json();
+        callBack(response, null);
+      }
+    })*/
+
+
+
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
     xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem("token"));
@@ -24,6 +53,19 @@ function post(url, data, callBack) {
 
 function get(url, callBack) {
   var url = apiUrl + url;
+/*  var init = {
+    method: 'GET',
+    headers: setHeaders(),
+    cache: 'default'
+  }
+
+  var request = new Request(url, init);
+  fetch(request).then((response) => {
+    console.log(response);
+  })*/
+
+
+
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
     xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem("token"));

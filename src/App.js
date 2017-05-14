@@ -18,7 +18,7 @@ function authenticated() {
   return true;
 }
 
-class Base extends Component {
+class App extends Component {
     render() {
       if (authenticated()){
         return (
@@ -40,4 +40,4 @@ class Base extends Component {
     }
 }
 
-export default Base;
+export default App;

@@ -113,7 +113,7 @@ class Dashboard extends Component {
                 return <div><Toolbar onClick={() => null}/><NewCommune user={this.state.user}/></div>
             }
         } else {
-            return <div className="loading-screen"><CircularProgress /></div>
+            return <div className="loading-screen"><div style={ {padding: "200px" }}><CircularProgress /></div></div>
         }
 
     }
