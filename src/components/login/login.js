@@ -31,11 +31,9 @@ export class Login extends Component {
       var parsedRes = JSON.parse(response);
       localStorage.setItem("token", parsedRes.token);
       location.reload();
-      console.log("success");
     } else {
       var parsedErr = JSON.parse(err);
       this.setState({error: parsedErr.message});
-      console.error(err);
     }
   }
 
@@ -64,7 +62,9 @@ export class Login extends Component {
           hintText="Username" id="username"
         /><br/>
         <TextField
-          hintText="Password" id="password"
+          hintText="Password"
+          id="password"
+          type="password"
         /><br />
         <div className="auth-failure">{this.state.error}</div>
       <RaisedButton label="Log in" fullWidth={true} onClick={() => this.login()} /> </div>}

@@ -54,3 +54,24 @@
 .username-span {
   color: red;
 }
+
+.dashboard-container {
+  display:flex;
+  justify-content: center;
+}
+.dashboard-item {
+  width: 700px;
+  margin: 20px 20px;
+  background: white;
+  padding: 20px;
+}
+
+.chore-form-input {
+  width: 60% !important;
+}
+.chore-success-div, .purchase-success-div {
+  color: green;
+}
+.chore-error-div, .purchase-error-div {
+  color:red;
+}

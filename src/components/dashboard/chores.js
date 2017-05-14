@@ -11,6 +11,7 @@ import {
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 //import { Chore } from './chore';
+import { completeChore } from '../../services/api_service';
 
 export class Chores extends Component {
 
@@ -25,30 +26,21 @@ export class Chores extends Component {
     return {}
   }
 
-  completeChore(chore){
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:3000/chores/"+chore.chore_id+"/do");
-    xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem('token'));
-    var asd = "asd"
-    xhr.onreadystatechange = function(event) {
-      if (xhr.readyState === 4){
-        changeState();
-      }
-    }
-
-    var ctx = this;
-
-    function changeState() {
-      console.log("asd")
-      var chores2 = ctx.state.chores;
-      for (var i = 0; i < ctx.state.chores.length; i++){
-        if (chores2[i].chore_id === chore.chore_id) {
-          chores2[i].lastdone = new Date().toString();
+  completeChoreHandler(chore){
+    console.log(chore);
+    completeChore(chore, (err, res) => {
+      if (!err){
+        var newChores = this.state.chores;
+        for (var i = 0; i < newChores.length; i++){
+          if (newChores[i].chore_id === chore.chore_id) {
+            newChores[i].lastdone = new Date().toString();
+          }
         }
+        this.setState({chores: newChores});
+      } else {
+        console.log(err);
       }
-      ctx.setState({chores: chores2});
-    }
-    xhr.send();
+    });
   }
 
 
@@ -57,11 +49,13 @@ export class Chores extends Component {
         <TableRow key={index} >
           <TableRowColumn>{chore.name}</TableRowColumn>
           <TableRowColumn>{chore.lastdone}</TableRowColumn>
-          <TableRowColumn><button id={chore.id} value={chore.id} label="Do" onClick={this.completeChore.bind(this, chore)} > Do </button></TableRowColumn>
+          <TableRowColumn><button id={chore.id} value={chore.id} label="Do" onClick={this.completeChoreHandler.bind(this, chore)} > Do </button></TableRowColumn>
         </TableRow>
       ), this);
 
     return (
+      <div>
+      <h2 className="dashboard-item-title">Chores</h2>
       <Table selectable={false}>
         <TableHeader>
           <TableRow>
@@ -74,6 +68,7 @@ export class Chores extends Component {
           {choreNodes}
         </TableBody>
       </Table>
+    </div>
     );
   }
 

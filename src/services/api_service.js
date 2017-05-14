@@ -1,7 +1,7 @@
-var apiUrl = 'https://choredb-api.herokuapp.com/';
+var apiUrl = 'http://localhost:3000/';
 
 function post(url, data, callBack) {
-    console.log(data)
+    var url = apiUrl + url;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
     xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem("token"));
@@ -23,6 +23,7 @@ function post(url, data, callBack) {
 }
 
 function get(url, callBack) {
+  var url = apiUrl + url;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
     xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem("token"));
@@ -39,11 +40,11 @@ function get(url, callBack) {
 }
 
 function authenticate(username, password, callBack) {
-    post(apiUrl + 'auth/login', JSON.stringify({username: username, password: password}), callBack);
+    post('auth/login', JSON.stringify({username: username, password: password}), callBack);
 }
 
 function register(username, password, callBack) {
-    post(apiUrl + 'auth/register', JSON.stringify({username: username, password: password}), callBack);
+    post('auth/register', JSON.stringify({username: username, password: password}), callBack);
 }
 
 function logout() {
@@ -52,14 +53,25 @@ function logout() {
 }
 
 function completeChore(chore, callBack) {
-    post(apiUrl + 'chores/' + chore.id + '/do', null, callBack);
+    post('chores/' + chore.chore_id + '/do', null, callBack);
 }
 
 function getCommune(callBack){
-  get(apiUrl + 'communes', callBack);
+  get('communes', callBack);
 }
 function postCommune(data, callBack){
-  post(apiUrl + 'communes', data, callBack);
+  post('communes', data, callBack);
+}
+
+function postChore(chore, callBack){
+  post('chores', JSON.stringify(chore), callBack);
+}
+
+function postPurchase(purchase, callBack) {
+  post('purchases', JSON.stringify(purchase), callBack);
+}
+function getPurchases(callBack) {
+  get('purchases', callBack);
 }
 
 module.exports = {
@@ -68,5 +80,8 @@ module.exports = {
     register,
     getCommune,
     postCommune,
+    postPurchase,
+    getPurchases,
+    postChore,
     logout
 }
