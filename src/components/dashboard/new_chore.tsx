@@ -43,10 +43,9 @@ export class NewChore extends React.Component<any, any> {
 
   callBack = (err: any, response: any) => {
     if (!err) {
-      var parsedRes = JSON.parse(response);
       this.clearValues();
-      this.setState({backendErrors: null, backendSuccess: parsedRes.message});
-      this.props.refresh('asd');
+      this.setState({backendErrors: null, backendSuccess: response.message});
+      this.props.refresh('New chore created.');
     } else {
         this.setState({backendErrors: 'Server side error: ' + err, backendSuccess: null});
     }

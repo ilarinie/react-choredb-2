@@ -4,7 +4,8 @@ import {Budget} from './budget';
 import {NewCommune} from './newCommune';
 import {NewChore} from './new_chore';
 import {NewPurchase} from './new_purchase';
-import {NewCommuneUser} from './new_commune_user';
+import { NewCommuneUser } from './new_commune_user';
+import {Notification} from './notification';
 import ApiService from '../../services/api_service';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
@@ -20,9 +21,6 @@ export class Dashboard extends React.Component<any, any> {
         this.state = {
             notification: null,
             commune: null,
-            chores: null,
-            purchases: null,
-            user: null,
             open: false
         };
     }
@@ -36,10 +34,9 @@ export class Dashboard extends React.Component<any, any> {
         ApiService.getCommune(this.setCommune);
     }
 
-    setCommune = (err: any, response: any) => {
+    setCommune = (err: any, commune: any) => {
         if (!err) {
-            var res = JSON.parse(response);
-            this.setState({commune: res.commune, chores: res.chores, user: res.user, purchases: res.purchases});
+            this.setState({commune: commune});
         } else {
             localStorage.removeItem('token');
             location.reload();
@@ -61,8 +58,8 @@ export class Dashboard extends React.Component<any, any> {
 
     render() {
 
-        if (this.state.user) {
-            if (this.state.commune) {
+        if (this.state.commune && this.state.commune.user) {
+            if (this.state.commune.commune) {
                 var adminMenuItems = (
                   <div>
                     <Divider />
@@ -75,7 +72,7 @@ export class Dashboard extends React.Component<any, any> {
                 var navigationBar =  (
                       <div>
                           <AppBar
-                            title={this.state.commune.name + ' || ' + this.state.user.username}
+                            title={this.state.commune.commune.name + ' || ' + this.state.commune.user.username}
                             iconClassNameRight="muidocs-icon-navigation-expand-more"
                             onLeftIconButtonTouchTap={this.handleToggle}
                           />
@@ -94,7 +91,7 @@ export class Dashboard extends React.Component<any, any> {
                             <Link to="/new_purchase">
                                 <MenuItem onTouchTap={this.handleClose}>New Purchase</MenuItem>
                             </Link>
-                            {this.state.user.admin ? adminMenuItems : ''}
+                            {this.state.commune.user.admin ? adminMenuItems : ''}
                             <MenuItem onTouchTap={this.logOut}>Log Out</MenuItem>
                           </Drawer>
                       </div>
@@ -103,19 +100,24 @@ export class Dashboard extends React.Component<any, any> {
                 return (
                   <BrowserRouter>
                     <div>
-                        {navigationBar}
-                        <div className="notification-bar">
-                          {this.state.notification ? this.state.notification : ''}
-                        </div>
+                            {navigationBar}
+                        <div className="notification-bar">    
+                                <Notification delay={5000}><p>{this.state.notification}</p></Notification>
+                        </div>        
                         <div className="dashboard-container">
                                 <Route
                                     exact={true}
                                     path="/"
-                                    component={() => (<Chores chores={this.state.chores} user={this.state.user} />)}
+                                    component={() => (
+                                        <Chores
+                                            chores={this.state.commune.chores}
+                                            user={this.state.commune.user}
+                                        />
+                                                     )}
                                 />
                                 <Route
                                     path="/budget"
-                                    component={() => (<Budget purchases={this.state.purchases} />)}
+                                    component={() => (<Budget purchases={this.state.commune.purchases} />)}
                                 />
                                 <Route
                                     path="/new_chore"
@@ -135,7 +137,7 @@ export class Dashboard extends React.Component<any, any> {
                   </BrowserRouter>
                 );
             } else {
-                return <div><NewCommune user={this.state.user}/></div>;
+                return <div><NewCommune user={this.state.commune.user}/></div>;
             }
         } else {
             return <div className="loading-screen"><div style={{padding: '200px' }}><CircularProgress /></div></div>;

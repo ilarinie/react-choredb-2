@@ -3,6 +3,7 @@ import {TableRow, TableRowColumn} from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import ApiService  from '../../services/api_service';
 import { Chore } from '../models/chore';
+import { ErrorHandler } from './error_handler';
 
 export class ChoreComponent extends React.Component < any,
 any > {
@@ -35,7 +36,9 @@ any > {
       if (!err) {
         this.markChoreDone();
       } else {
-        // console.log(err);
+        this.setState({
+          errorObject: err
+        });
       }
     });
   }
@@ -68,7 +71,8 @@ any > {
         <TableRowColumn>
           {this.state.done
             ? <RaisedButton disabled={true} label="X"/>
-            : <RaisedButton label="Do" onClick={this.completeChoreHandler}/>}
+            : <RaisedButton label="Do" onClick={this.completeChoreHandler} />}
+            <ErrorHandler errorObject={this.state.errorObject} />
         </TableRowColumn>
       </TableRow>
     );
