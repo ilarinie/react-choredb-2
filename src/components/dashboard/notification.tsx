@@ -1,39 +1,50 @@
 import * as React from 'react';
+import Snackbar from 'material-ui/Snackbar';
 
 export class Notification extends React.Component<any, any> {
-    
-    _timer: any = null;
 
-    constructor(props: any) {
+    constructor(props : any) {
         super(props);
         this.state = {
-            delay: this.props.delay,
-            visible: true
+            autoHideDuration: 4000,
+            message: this.props.message,
+            open: true
         };
     }
-    
-    componentDidMount = () => {
-        this.setTimer();
+
+    handleTouchTap = () => {
+        this.setState({open: true});
     }
 
-    setTimer = () => {
-        if (this._timer != null) {
-            clearTimeout(this._timer);
-        }
+    handleActionTouchTap = () => {
+        this.setState({open: false});
+    }
 
-        this._timer = setTimeout(() => {
-            this.setState({ visible: false });
-            this._timer = null;
-        },                       this.state.delay);
+    handleChangeDuration = (event: any) => {
+        const value = event.target.value;
+        this.setState({
+            autoHideDuration: value.length > 0
+                ? parseInt(value, 10)
+                : 0
+        });
+    }
 
+    handleRequestClose = () => {
+        this.setState({open: false});
     }
 
     render() {
-        return this.state.visible
-            ? <div>{this.props.children}</div>
-            : <span/>;
+        return (
+                <Snackbar
+                    open={this.state.open}
+                    message={this.state.message}
+                    action="close"
+                    autoHideDuration={this.state.autoHideDuration}
+                    onActionTouchTap={this.handleActionTouchTap}
+                    onRequestClose={this.handleRequestClose}
+                />
+        );
     }
-
 }
 
 export default Notification;

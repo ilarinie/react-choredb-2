@@ -5,11 +5,11 @@ import {NewCommune} from './newCommune';
 import {NewChore} from './new_chore';
 import {NewPurchase} from './new_purchase';
 import { NewCommuneUser } from './new_commune_user';
-import {Notification} from './notification';
 import ApiService from '../../services/api_service';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import Snackbar from 'material-ui/Snackbar';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -21,13 +21,14 @@ export class Dashboard extends React.Component<any, any> {
         this.state = {
             notification: null,
             commune: null,
-            open: false
+            drawerOpen: false,
+            snackBarOpen: false
         };
     }
 
     notifyAndReset = (message: any) => {
-      this.setState({notification: message});
-      ApiService.getCommune(this.setCommune);
+        this.setState({ snackBarOpen: true, notification: message });
+        ApiService.getCommune(this.setCommune);
     }
 
     componentDidMount = () => {
@@ -44,11 +45,13 @@ export class Dashboard extends React.Component<any, any> {
     }
 
     handleToggle = () => {
-      this.setState({open: !this.state.open});
+        this.setState({
+            drawerOpen: !this.state.drawerOpen
+        });
     }
 
     handleClose = () => {
-      this.setState({open: false});
+        this.setState({drawerOpen: false});
     }
 
     logOut = () => {
@@ -77,7 +80,7 @@ export class Dashboard extends React.Component<any, any> {
                             onLeftIconButtonTouchTap={this.handleToggle}
                           />
                           <Drawer
-                              open={this.state.open}
+                              open={this.state.drawerOpen}
                               docked={false}
                               width={200}
                               onRequestChange={(open) => this.setState({open})}
@@ -100,10 +103,7 @@ export class Dashboard extends React.Component<any, any> {
                 return (
                   <BrowserRouter>
                     <div>
-                            {navigationBar}
-                        <div className="notification-bar">    
-                                <Notification delay={5000}><p>{this.state.notification}</p></Notification>
-                        </div>        
+                            {navigationBar}  
                         <div className="dashboard-container">
                                 <Route
                                     exact={true}
@@ -132,7 +132,11 @@ export class Dashboard extends React.Component<any, any> {
                                     component={() => (<NewCommuneUser refresh={this.notifyAndReset.bind(this)} />)}
                                 />
                         </div>
-
+                            < Snackbar
+                                open={this.state.snackBarOpen}
+                                message={this.state.notification}
+                                autoHideDuration={5000}
+                            />
                     </div>
                   </BrowserRouter>
                 );
