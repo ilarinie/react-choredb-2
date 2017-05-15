@@ -1,6 +1,4 @@
-import React, {
-    Component
-} from 'react';
+import * as React from 'react';
 import {
   Table,
   TableBody,
@@ -9,24 +7,22 @@ import {
   TableRow
 } from 'material-ui/Table';
 
-import { Chore } from './chore';
+import { ChoreComponent } from './chore';
 
-export class Chores extends Component {
+export class Chores extends React.Component<any, any> {
 
-
-  constructor(props){
+  constructor(props: any) {
     super(props);
     this.state = {
        chores: this.props.chores,
        user: this.props.user
-    }
+    };
   }
 
-
   render() {
-    var choreNodes = this.state.chores.map( (chore, index) => (
-        <Chore key={index} chore={chore} user={this.state.user}/>
-      ), this);
+    var choreNodes = this.state.chores.map( (chore: any, index: any) => (
+        <ChoreComponent key={index} chore={chore} user={this.state.user}/>
+      ),                                    this);
 
     return (
       <div>

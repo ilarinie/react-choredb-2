@@ -4,7 +4,7 @@ a {
 }
 .main-container {
   width: 100%;
-  background: grey;
+  background: #eee;
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
 }
@@ -22,7 +22,7 @@ a {
   background-color: #222;
   height: 150px;
   padding: 20px;
-  color: white;
+  color: black;
 }
 
 .Login {
@@ -91,7 +91,7 @@ a {
   width: 90%;
   text-align: center;
   padding-bottom: 100px;
-  color: white;
+  color: black;
 }
 
 .dashboard-item {

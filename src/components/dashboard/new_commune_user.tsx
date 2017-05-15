@@ -1,27 +1,28 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { post } from '../../services/api_service';
+import ApiService  from '../../services/api_service';
 
+export class NewCommuneUser extends React.Component<any, any> {
 
-export class NewCommuneUser extends Component {
-
-  constructor(props){
+  constructor(props: any) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = (event: any) => {
     event.preventDefault();
-    post('communes/add_user', JSON.stringify({username: document.getElementById('add-user-username-field').value}), (err, res) => {
+    let data: any;
+    data = { username: (document.getElementById('add-user-username-field') as HTMLInputElement).value };
+
+    ApiService.post('communes/add_user', JSON.stringify(data), (err : any, res : any) => {
       if (!err) {
-        console.log(res);
+        // console.log(res);
       } else {
-        console.log(err);
+        // console.log(err);
       }
     });
   }
-
 
   render() {
     return (
