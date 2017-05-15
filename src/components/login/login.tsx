@@ -4,7 +4,7 @@ import { Register } from './register';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import './login.css';
-import { authenticate } from '../../services/api_service';
+import ApiService from '../../services/api_service';
 
 export class Login extends React.Component<any, any> {
 
@@ -41,7 +41,7 @@ export class Login extends React.Component<any, any> {
     this.setState({logging: true});
     let username = (document.getElementById('username') as HTMLInputElement).value;
     let password = (document.getElementById('password') as HTMLInputElement).value;
-    authenticate(username, password, this.callBack);
+    ApiService.authenticate(username, password, this.callBack);
   }
 
   completeRegistration = (e: any) => {

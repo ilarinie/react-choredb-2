@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {postPurchase} from '../../services/api_service';
+import ApiService from '../../services/api_service';
 import {Redirect} from 'react-router-dom';
 
 export class NewPurchase extends React.Component<any, any> {
@@ -31,7 +31,7 @@ handleSubmit = (event: any) =>  {
   var purchase: any = {};
   purchase.description = desc;
   purchase.amount = amount;
-  postPurchase(purchase, this.callBack);
+  ApiService.postPurchase(purchase, this.callBack);
 }
 
 callBack = (err: any, response: any) => {

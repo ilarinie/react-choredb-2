@@ -5,7 +5,7 @@ import {NewCommune} from './newCommune';
 import {NewChore} from './new_chore';
 import {NewPurchase} from './new_purchase';
 import {NewCommuneUser} from './new_commune_user';
-import {getCommune} from '../../services/api_service';
+import ApiService from '../../services/api_service';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
@@ -29,11 +29,11 @@ export class Dashboard extends React.Component<any, any> {
 
     notifyAndReset = (message: any) => {
       this.setState({notification: message});
-      getCommune(this.setCommune);
+      ApiService.getCommune(this.setCommune);
     }
 
     componentDidMount = () => {
-        getCommune(this.setCommune);
+        ApiService.getCommune(this.setCommune);
     }
 
     setCommune = (err: any, response: any) => {

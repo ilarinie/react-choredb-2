@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {TableRow, TableRowColumn} from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
-import {completeChore} from '../../services/api_service';
+import ApiService  from '../../services/api_service';
+import { Chore } from '../models/chore';
 
-export class Chore extends React.Component < any,
+export class ChoreComponent extends React.Component < any,
 any > {
 
   constructor(props : any) {
@@ -21,7 +22,7 @@ any > {
     this.isChoreLate(this.state.chore);
   }
 
-  isChoreLate = (chore : any) => {
+  isChoreLate = (chore : Chore) => {
     if (chore.lastdone) {
       if (new Date().getTime() > new Date(chore.lastdone).getTime() + chore.priority * 60 * 1000) {
         this.setState({late: true});
@@ -30,7 +31,7 @@ any > {
   }
 
   completeChoreHandler = () => {
-    completeChore(this.state.chore, (err : any, res : any) => {
+    ApiService.completeChore(this.state.chore, (err : any, res : any) => {
       if (!err) {
         this.markChoreDone();
       } else {

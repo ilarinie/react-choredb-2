@@ -7,7 +7,7 @@ import {
   TableRow
 } from 'material-ui/Table';
 
-import { Chore } from './chore';
+import { ChoreComponent } from './chore';
 
 export class Chores extends React.Component<any, any> {
 
@@ -21,7 +21,7 @@ export class Chores extends React.Component<any, any> {
 
   render() {
     var choreNodes = this.state.chores.map( (chore: any, index: any) => (
-        <Chore key={index} chore={chore} user={this.state.user}/>
+        <ChoreComponent key={index} chore={chore} user={this.state.user}/>
       ),                                    this);
 
     return (

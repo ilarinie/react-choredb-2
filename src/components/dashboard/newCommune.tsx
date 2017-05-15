@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { postCommune } from '../../services/api_service';
+import ApiService from '../../services/api_service';
 
 export class NewCommune extends React.Component<any, any> {
 
@@ -16,7 +16,7 @@ export class NewCommune extends React.Component<any, any> {
   handleClick = () => {
     let communeName = (document.getElementById('commune_name') as HTMLInputElement).value;
     var data = JSON.stringify({commune_name: communeName});
-    postCommune(data, this.callBack);
+    ApiService.postCommune(data, this.callBack);
   }
 
   callBack(err: any, response: any) {

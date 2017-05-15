@@ -22,7 +22,10 @@ any > {
           ? {
             background: 'red'
           }
-          : {}}>{this.state.budgetItem.differential}</TableRowColumn>
+            : {}}
+        >
+          {this.state.budgetItem.differential}
+        </TableRowColumn>
       </TableRow>
     );
 

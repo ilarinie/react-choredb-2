@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {postChore} from '../../services/api_service';
+import ApiService from '../../services/api_service';
 import {Redirect} from 'react-router-dom';
 
 export class NewChore extends React.Component<any, any> {
@@ -37,7 +37,7 @@ export class NewChore extends React.Component<any, any> {
     chore.name = name;
     chore.priority = priority;
     chore.points = points;
-    postChore(chore, this.callBack);
+    ApiService.postChore(chore, this.callBack);
 
   }
 

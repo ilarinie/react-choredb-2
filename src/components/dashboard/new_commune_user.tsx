@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { post } from '../../services/api_service';
+import ApiService  from '../../services/api_service';
 
 export class NewCommuneUser extends React.Component<any, any> {
 
@@ -15,7 +15,7 @@ export class NewCommuneUser extends React.Component<any, any> {
     let data: any;
     data = { username: (document.getElementById('add-user-username-field') as HTMLInputElement).value };
 
-    post('communes/add_user', JSON.stringify(data), (err: any, res: any) => {
+    ApiService.post('communes/add_user', JSON.stringify(data), (err : any, res : any) => {
       if (!err) {
         // console.log(res);
       } else {

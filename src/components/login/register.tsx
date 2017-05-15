@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import './login.css';
-import {register} from '../../services/api_service';
+import ApiService from '../../services/api_service';
 
 export class Register extends React.Component < any,
 any > {
@@ -32,7 +32,7 @@ any > {
     let passwordConfirmation = (document.getElementById('regPasswordConf')as HTMLInputElement).value;
 
     if (password === passwordConfirmation) {
-      register(username, password, this.callBack);
+      ApiService.register(username, password, this.callBack);
     } else {
       // handle error
     }
