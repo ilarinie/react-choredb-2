@@ -27,8 +27,6 @@ export class Login extends React.Component<any, any> {
   callBack = (err: any, response: any) => {
     this.setState({logging: false});
     if (!err) {
-      var parsedRes = JSON.parse(response);
-      localStorage.setItem('token', parsedRes.token);
       location.reload();
     } else {
       var parsedErr = JSON.parse(err);

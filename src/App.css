@@ -110,3 +110,11 @@ a {
 .chore-error-div, .purchase-error-div {
   color:red;
 }
+
+
+.error-display {
+  color: red;
+}
+.error-display-hidden {
+  display: none;
+}

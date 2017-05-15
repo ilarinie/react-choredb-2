@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ApiService from '../../services/api_service';
 import {Redirect} from 'react-router-dom';
+import {ErrorHandler} from './error_handler';
 
 export class NewPurchase extends React.Component<any, any> {
 
@@ -36,12 +37,10 @@ handleSubmit = (event: any) =>  {
 
 callBack = (err: any, response: any) => {
   if (!err) {
-    var parsedRes = JSON.parse(response);
-    this.setState({purchaseSuccess: parsedRes.message, purchaseError: null});
-    this.props.refresh(parsedRes.message);
+    this.setState({purchaseSuccess: response.message, purchaseError: null});
+    this.props.refresh(response.message);
   } else {
-    var parsedErr = JSON.parse(err);
-    this.setState({purchaseSuccess: null, purchaseError: parsedErr.message});
+    this.setState({purchaseSuccess: null, errorObject: err});
   }
 }
 
@@ -97,7 +96,7 @@ render() {
       /><br />
       <RaisedButton type="submit" label="Create" />
       <div className="purchase-success-div">{this.state.purchaseSuccess}</div>
-      <div className="purchase-error-div">{this.state.purchaseError}</div>
+      <ErrorHandler errorObject={this.state.errorObject} />
 
       </form>
 

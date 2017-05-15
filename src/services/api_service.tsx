@@ -1,6 +1,10 @@
 
+import { ResultObject } from '../components/models/result_object';
+
+type CallbackFunction = (errorString: any, result?: any) => void;
+
 export module ApiService {
-    var apiUrl = 'https://choredb-api.herokuapp.com/';
+    var apiUrl = 'http://localhost:3000/';
 
     /*function setHeaders(){
         var headers = new Headers();
@@ -9,7 +13,7 @@ export module ApiService {
         return headers;
     }*/
 
-    export function post(path : any, data : any, callBack : any) {
+    export function post(path : any, data : any, callBack : CallbackFunction ) {
         var url = apiUrl + path;
         /*var init = {
         method: 'POST',
@@ -36,12 +40,19 @@ export module ApiService {
         xhr.onreadystatechange = function (event : any) {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    callBack(null, xhr.responseText);
+                    let resultObject: ResultObject = JSON.parse(xhr.responseText) as ResultObject;
+                    if (resultObject) {
+                        callBack(null, resultObject);
+                    } else {
+                        callBack('Server response could not be parsed after POST');
+                    }
+                    
                 } else {
                     if (xhr.responseText === '') {
-                        callBack('Request could not be completed', null);
+                        callBack('Request could not be completed');
                     } else {
-                        callBack(xhr.responseText, null);
+                        let error = JSON.parse(xhr.responseText);
+                        callBack(error.message);
                     }
                 }
             }
@@ -49,7 +60,7 @@ export module ApiService {
         xhr.send(data);
     }
 
-    export function get(path : any, callBack : any) {
+    export function get(path : any, callBack : CallbackFunction ) {
         var url = apiUrl + path;
         /*  var init = {
         method: 'GET',
@@ -68,17 +79,34 @@ export module ApiService {
         xhr.onreadystatechange = function (event : any) {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    callBack(null, xhr.responseText);
+                    let resultObject: ResultObject = JSON.parse(xhr.responseText) as ResultObject;
+                    if (resultObject) {
+                        callBack(null, resultObject);
+                    } else {
+                        callBack('Server response could not be parsed after GET');
+                    }
+                    
                 } else {
-                    callBack(xhr.responseText, null);
+                    let errorObject = JSON.parse(xhr.responseText);
+                    callBack(errorObject.message);
                 }
             }
         };
         xhr.send();
     }
 
-    export function authenticate(username : any, password : any, callBack : any) {
-        post('auth/login', JSON.stringify({username: username, password: password}), callBack);
+    export function authenticate(username: any, password: any, callBack: any) {
+        post('auth/login',
+             JSON.stringify({ username: username, password: password }),
+             (error: any, result: any) => {
+                 let token = result.contents.token;
+                 if (token) {
+                    localStorage.setItem('token', token);
+                    callBack(null, 'Succesfully logged in.');
+                } else {
+                    callBack('Could not get a token from the server');
+                }
+        });
     }
 
     export function register(username : any, password : any, callBack : any) {
@@ -95,7 +123,14 @@ export module ApiService {
     }
 
     export function getCommune(callBack : any) {
-        get('communes', callBack);
+        get('communes', (error, result) => {
+            if (!error) {
+                let commune = JSON.parse(result.contents);
+                callBack(null, commune);
+            } else {
+                callBack('Could not parse Commune object from the server response');
+            }
+        });
     }
     export function postCommune(data : any, callBack : any) {
         post('communes', data, callBack);
