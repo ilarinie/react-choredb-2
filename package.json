@@ -20,13 +20,14 @@
   "devDependencies": {
     "@types/material-ui": "^0.17.6",
     "@types/react-tap-event-plugin": "0.0.30",
+    "mock-local-storage": "^1.0.2",
     "react-scripts-ts": "1.4.0",
     "tslint": "^5.2.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
+    "test": "react-scripts-ts test --env=jsdom -r mock-local-storage",
     "eject": "react-scripts-ts eject"
   }
 }

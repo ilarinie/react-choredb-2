@@ -43,7 +43,11 @@ any > {
     var newChore = this.state.chore;
     newChore.lastdone = new Date().toString();
     newChore.lastdoer = this.state.user.username;
-    this.setState({chore: newChore, done: true, late: false});
+    this.setState({
+      chore: newChore,
+      done: true,
+      late: false
+    });
   }
 
   render() {

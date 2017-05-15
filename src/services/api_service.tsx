@@ -1,6 +1,5 @@
 var apiUrl = 'https://choredb-api.herokuapp.com/';
 
-
 /*function setHeaders(){
     var headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -8,8 +7,7 @@ var apiUrl = 'https://choredb-api.herokuapp.com/';
     return headers;
 }*/
 
-
-function post(path, data, callBack) {
+function post(path: any, data: any, callBack: any) {
     var url = apiUrl + path;
     /*var init = {
       method: 'POST',
@@ -29,29 +27,27 @@ function post(path, data, callBack) {
       }
     })*/
 
-
-
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem("token"));
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function(event) {
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Authorization', 'JWT ' + localStorage.getItem('token'));
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function(event: any) {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 callBack(null, xhr.responseText);
             } else {
-                if (xhr.responseText === "") {
-                  callBack("Request could not be completed", null);
+                if (xhr.responseText === '') {
+                  callBack('Request could not be completed', null);
                 }else {
                   callBack(xhr.responseText, null);
                 }
             }
         }
-    }
+    };
     xhr.send(data);
 }
 
-function get(path, callBack) {
+function get(path: any , callBack: any) {
   var url = apiUrl + path;
 /*  var init = {
     method: 'GET',
@@ -64,12 +60,10 @@ function get(path, callBack) {
     console.log(response);
   })*/
 
-
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
-    xhr.setRequestHeader("Authorization", "JWT " + localStorage.getItem("token"));
-    xhr.onreadystatechange = function(event) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.setRequestHeader('Authorization', 'JWT ' + localStorage.getItem('token'));
+  xhr.onreadystatechange = function(event: any ) {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 callBack(null, xhr.responseText);
@@ -77,42 +71,42 @@ function get(path, callBack) {
                 callBack(xhr.responseText, null);
             }
         }
-    }
-    xhr.send();
+    };
+  xhr.send();
 }
 
-function authenticate(username, password, callBack) {
+function authenticate(username : any, password : any, callBack : any) {
     post('auth/login', JSON.stringify({username: username, password: password}), callBack);
 }
 
-function register(username, password, callBack) {
+function register(username : any, password : any, callBack : any) {
     post('auth/register', JSON.stringify({username: username, password: password}), callBack);
 }
 
 function logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     location.reload();
 }
 
-function completeChore(chore, callBack) {
+function completeChore(chore : any, callBack : any) {
     post('chores/' + chore.chore_id + '/do', null, callBack);
 }
 
-function getCommune(callBack){
+function getCommune(callBack : any) {
   get('communes', callBack);
 }
-function postCommune(data, callBack){
-  post('communes', data, callBack);
+function postCommune(data : any, callBack : any) {
+post('communes', data, callBack);
 }
 
-function postChore(chore, callBack){
+function postChore(chore : any, callBack : any) {
   post('chores', JSON.stringify(chore), callBack);
 }
 
-function postPurchase(purchase, callBack) {
+function postPurchase(purchase : any, callBack : any) {
   post('purchases', JSON.stringify(purchase), callBack);
 }
-function getPurchases(callBack) {
+function getPurchases(callBack : any) {
   get('purchases', callBack);
 }
 
@@ -127,4 +121,4 @@ module.exports = {
     postChore,
     post,
     logout
-}
+};
