@@ -21,7 +21,7 @@ any > {
     }
 
     return (
-      <div>
+      <div className="dashboard-large-item">
         <h2 className="dashboard-item-title">Budget</h2>
         <Table>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>

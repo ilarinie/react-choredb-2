@@ -3,6 +3,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ApiService from '../../services/api_service';
 import {Redirect} from 'react-router-dom';
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
 import {ErrorHandler} from './error_handler';
 
 export class NewPurchase extends React.Component<any, any> {
@@ -83,17 +85,26 @@ render() {
   return (
     <div className="form-component-container">
       <form onSubmit={this.handleSubmit}>
+      <h1>Create a new purchase</h1>
+      <Paper zDepth={2}>
       <TextField
         id="purchase-description-input"
-        hintText="description"
+        className="small-form-input"
+        hintText="Description"
+        underlineShow={false}
         errorText={this.state.descriptionError ? this.state.descriptionError : ''}  
-      /><br />
+      />
+      <Divider />
       <TextField
         id="purchase-amount-input"
+        className="small-form-input"
         hintText="Amount"
         type="number"
+        underlineShow={false}
         errorText={this.state.amountError ? this.state.amountError : ''}
-      /><br />
+      />
+      <Divider />
+      </Paper><br />
       <RaisedButton type="submit" label="Create" />
       <div className="purchase-success-div">{this.state.purchaseSuccess}</div>
       <ErrorHandler errorObject={this.state.errorObject} />

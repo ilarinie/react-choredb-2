@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
-import { Register } from './register';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Register } from './register';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import './login.css';
 import ApiService from '../../services/api_service';
@@ -16,25 +16,14 @@ export class Login extends React.Component<any, any> {
      error: null
    };
    this.login = this.login.bind(this);
- }
-
- handleChange = (value: any) => {
-   this.setState({
-     value: value
-   });
- }
-
-  callBack = (err: any, response: any) => {
-    this.setState({logging: false});
-    if (!err) {
-      location.reload();
-    } else {
-      var parsedErr = JSON.parse(err);
-      this.setState({error: parsedErr.message});
-    }
   }
 
-  login = (event: any) => {
+    handleChange = (value: any) => {
+      this.setState({
+        value: value
+      });
+    }
+   login = (event: any) => {
     event.preventDefault();
     this.setState({logging: true});
     let username = (document.getElementById('username') as HTMLInputElement).value;
@@ -42,8 +31,13 @@ export class Login extends React.Component<any, any> {
     ApiService.authenticate(username, password, this.callBack);
   }
 
-  completeRegistration = (e: any) => {
-    // console.log('asd');
+  callBack = (err: any, response: any) => {
+    if (!err) {
+      location.reload();
+    } else {
+      this.setState({logging: false});
+      this.setState({error: err});
+    }
   }
 
   render() {
@@ -78,7 +72,7 @@ export class Login extends React.Component<any, any> {
             </div>
           </Tab>
           <Tab label="Register" value="register">
-            <Register callBack={() => this.completeRegistration.bind(this)}/>
+            <Register />
           </Tab>
         </Tabs>
       </div>

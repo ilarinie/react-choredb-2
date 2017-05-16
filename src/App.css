@@ -4,13 +4,21 @@ a {
 }
 .main-container {
   width: 100%;
-  background: #eee;
+  background:white;
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
 }
 
+@media screen and (min-width: 1080px){
+  .dashboard-large-item {
+    width: 70%;
+    margin: 0 auto;
+  }
+}
+
 .App {
   text-align: center;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App-logo {
@@ -26,20 +34,12 @@ a {
 }
 
 .Login {
-  background: gray;
+  background: white;
   height: 100px;
   width: 90%;
   margin: 0 auto;
 }
 
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
 .title-container {
   padding: 20px;
@@ -49,7 +49,6 @@ a {
   width: 80%;
   background: lightgreen;
   border-radius: 0px 0px 10px 10px;
-  //padding-top: 5px;
   text-align: center;
   color: green;
   border: 1px solid green;
@@ -71,7 +70,7 @@ a {
 }
 
 .username-span {
-  color: red;
+  color: #D32F2F;
 }
 
 .dashboard-container {
@@ -87,9 +86,7 @@ a {
 
 .form-component-container {
   margin: 0 auto;
-  background: rgb(48, 48, 48);
-  width: 90%;
-  text-align: center;
+  width: 600px;
   padding-bottom: 100px;
   color: black;
 }
@@ -101,19 +98,24 @@ a {
   padding: 20px;
 }
 
-.chore-form-input {
-  width: 60% !important;
+.checkmark {
+  color: green;
+}
+
+.small-form-input {
+  margin-left: 20px;
+  width: 90% !important;
 }
 .chore-success-div, .purchase-success-div {
   color: green;
 }
 .chore-error-div, .purchase-error-div {
-  color:red;
+  color:#D32F2F;
 }
 
 
 .error-display {
-  color: red;
+  color: #D32F2F;
 }
 .error-display-hidden {
   display: none;

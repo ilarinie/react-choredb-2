@@ -25,7 +25,7 @@ export class Chores extends React.Component<any, any> {
       ),                                    this);
 
     return (
-      <div>
+      <div className="dashboard-large-item">
       <h2 className="dashboard-item-title">Chores</h2>
       <Table>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>

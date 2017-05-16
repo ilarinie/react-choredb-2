@@ -1,12 +1,9 @@
 import * as React from 'react';
-import {MuiThemeProvider, lightBaseTheme} from 'material-ui/styles';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {MuiThemeProvider} from 'material-ui/styles';
 import './App.css';
-
-const lightMuiTheme = getMuiTheme(lightBaseTheme);
-
 import { Dashboard } from './components/dashboard/dashboard';
 import { Login } from './components/login/login';
+import  Theme  from './theme/theme';
 
 function authenticated() {
   if (localStorage.getItem('token') === null) {
@@ -20,7 +17,7 @@ class App extends React.Component<{}, null> {
       if (authenticated()) {
         return (
           <div className="main-container">
-            <MuiThemeProvider muiTheme={lightMuiTheme}>
+            <MuiThemeProvider muiTheme={Theme}>
               <Dashboard />
             </MuiThemeProvider>
           </div>
@@ -28,7 +25,7 @@ class App extends React.Component<{}, null> {
       } else {
         return (
           <div className="main-container">
-            <MuiThemeProvider muiTheme={lightMuiTheme}>
+            <MuiThemeProvider muiTheme={Theme}>
               <Login />
             </MuiThemeProvider>
           </div>

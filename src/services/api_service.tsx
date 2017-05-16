@@ -13,7 +13,7 @@ export module ApiService {
         return headers;
     }*/
 
-    export function post(path : any, data : any, callBack : CallbackFunction ) {
+    export function send(method: string, path : string, data : any, callBack : CallbackFunction ) {
         var url = apiUrl + path;
         /*var init = {
         method: 'POST',
@@ -34,7 +34,7 @@ export module ApiService {
         })*/
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', url);
+        xhr.open(method, url);
         xhr.setRequestHeader('Authorization', 'JWT ' + localStorage.getItem('token'));
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function (event : any) {
@@ -87,8 +87,7 @@ export module ApiService {
                     }
                     
                 } else {
-                    let errorObject = JSON.parse(xhr.responseText);
-                    callBack(errorObject.message);
+                    callBack(xhr.responseText);
                 }
             }
         };
@@ -96,21 +95,26 @@ export module ApiService {
     }
 
     export function authenticate(username: any, password: any, callBack: any) {
-        post('auth/login',
+        send('POST', 'auth/login',
              JSON.stringify({ username: username, password: password }),
              (error: any, result: any) => {
-                 let token = result.contents.token;
-                 if (token) {
-                    localStorage.setItem('token', token);
-                    callBack(null, 'Succesfully logged in.');
-                } else {
-                    callBack('Could not get a token from the server');
-                }
+                 if (!error) {
+                    let token = result.contents.token;
+                    if (token) {
+                        localStorage.setItem('token', token);
+                        callBack(null, 'Succesfully logged in.');
+                    } else {
+                        callBack('Could not get a token from the server');
+                    }
+                 } else {
+                     callBack('Username or password wrong, try again.');
+                 }
+
         });
     }
 
     export function register(username : any, password : any, callBack : any) {
-        post('auth/register', JSON.stringify({username: username, password: password}), callBack);
+        send('POST', 'auth/register', JSON.stringify({username: username, password: password}), callBack);
     }
 
     export function logout() {
@@ -119,7 +123,7 @@ export module ApiService {
     }
 
     export function completeChore(chore : any, callBack : any) {
-        post('chores/' + chore.chore_id + '/do', null, callBack);
+        send('POST', 'chores/' + chore.chore_id + '/do', null, callBack);
     }
 
     export function getCommune(callBack : any) {
@@ -133,18 +137,31 @@ export module ApiService {
         });
     }
     export function postCommune(data : any, callBack : any) {
-        post('communes', data, callBack);
+        send('POST', 'communes', data, callBack);
     }
 
     export function postChore(chore : any, callBack : any) {
-        post('chores', JSON.stringify(chore), callBack);
+        send('POST', 'chores', JSON.stringify(chore), callBack);
+    }
+    export function deleteChore(chore : any , callBack : any) {
+        send('DELETE', 'chores/' + chore.id, null, callBack );
     }
 
     export function postPurchase(purchase : any, callBack : any) {
-        post('purchases', JSON.stringify(purchase), callBack);
+        send('POST', 'purchases', JSON.stringify(purchase), callBack);
     }
     export function getPurchases(callBack : any) {
-        get('purchases', callBack);
+        get('purchases', (err : any, result : any) => {
+            if (!err) {
+                var purchases = JSON.parse(result.contents);
+                callBack(null, purchases);
+            } else {
+                callBack('Could not parse purchases from server response.');
+            }
+        });
+    }
+    export function deletePurchase(purchase : any, callBack: any) {
+        send('DELETE', 'purchases/' + purchase.purchase_id, null, callBack);
     }
 }
 

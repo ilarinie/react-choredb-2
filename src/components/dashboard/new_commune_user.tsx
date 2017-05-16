@@ -15,7 +15,7 @@ export class NewCommuneUser extends React.Component<any, any> {
     let data: any;
     data = { username: (document.getElementById('add-user-username-field') as HTMLInputElement).value };
 
-    ApiService.post('communes/add_user', JSON.stringify(data), (err : any, res : any) => {
+    ApiService.send('POST', 'communes/add_user', JSON.stringify(data), (err : any, res : any) => {
       if (!err) {
         // console.log(res);
       } else {

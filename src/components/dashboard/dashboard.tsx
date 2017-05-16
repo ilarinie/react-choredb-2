@@ -6,12 +6,12 @@ import {NewChore} from './new_chore';
 import {NewPurchase} from './new_purchase';
 import { NewCommuneUser } from './new_commune_user';
 import ApiService from '../../services/api_service';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
+import { BrowserRouter,  Route } from 'react-router-dom';
+import { MenuComponent } from './menu_component';
 import Snackbar from 'material-ui/Snackbar';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
+import { PurchaseList } from './purchases/purchase_list'; 
+import { Profile } from './profile/profile';
+
 import CircularProgress from 'material-ui/CircularProgress';
 
 export class Dashboard extends React.Component<any, any> {
@@ -19,7 +19,7 @@ export class Dashboard extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            notification: null,
+            notification: '',
             commune: null,
             drawerOpen: false,
             snackBarOpen: false
@@ -27,11 +27,14 @@ export class Dashboard extends React.Component<any, any> {
     }
 
     notifyAndReset = (message: any) => {
-        this.setState({ snackBarOpen: true, notification: message });
+        this.setState({ snackBarOpen: true, notification: message});
         ApiService.getCommune(this.setCommune);
     }
 
     componentDidMount = () => {
+        this.setState({
+            notification: ''
+        });
         ApiService.getCommune(this.setCommune);
     }
 
@@ -63,47 +66,10 @@ export class Dashboard extends React.Component<any, any> {
 
         if (this.state.commune && this.state.commune.user) {
             if (this.state.commune.commune) {
-                var adminMenuItems = (
-                  <div>
-                    <Divider />
-                    <Link to="/new_chore"><MenuItem onTouchTap={this.handleClose}>New Chore</MenuItem></Link>
-                    <Link to="/new_user"><MenuItem onTouchTap={this.handleClose}>Add User to Commune</MenuItem></Link>
-                    <Divider />
-                  </div>
-                );
-
-                var navigationBar =  (
-                      <div>
-                          <AppBar
-                            title={this.state.commune.commune.name + ' || ' + this.state.commune.user.username}
-                            iconClassNameRight="muidocs-icon-navigation-expand-more"
-                            onLeftIconButtonTouchTap={this.handleToggle}
-                          />
-                          <Drawer
-                              open={this.state.drawerOpen}
-                              docked={false}
-                              width={200}
-                              onRequestChange={(open) => this.setState({open})}
-                          >
-                            <Link to="/">
-                                <MenuItem onTouchTap={this.handleClose}>Chores</MenuItem>
-                            </Link>
-                            <Link to="/budget">
-                                <MenuItem onTouchTap={this.handleClose}>Budget</MenuItem>
-                            </Link>
-                            <Link to="/new_purchase">
-                                <MenuItem onTouchTap={this.handleClose}>New Purchase</MenuItem>
-                            </Link>
-                            {this.state.commune.user.admin ? adminMenuItems : ''}
-                            <MenuItem onTouchTap={this.logOut}>Log Out</MenuItem>
-                          </Drawer>
-                      </div>
-                      );
-
                 return (
                   <BrowserRouter>
                     <div>
-                            {navigationBar}  
+                        <MenuComponent commune={this.state.commune} />
                         <div className="dashboard-container">
                                 <Route
                                     exact={true}
@@ -131,12 +97,20 @@ export class Dashboard extends React.Component<any, any> {
                                     path="/new_user"
                                     component={() => (<NewCommuneUser refresh={this.notifyAndReset.bind(this)} />)}
                                 />
+                                <Route
+                                    path="/purchases"
+                                    component={() => ( <PurchaseList user={this.state.commune.user} /> )}
+                                />
+                                <Route
+                                    path="/profile"
+                                    component={() => ( <Profile user={this.state.commune.user} /> )}
+                                />
                         </div>
                             < Snackbar
                                 open={this.state.snackBarOpen}
                                 message={this.state.notification}
                                 autoHideDuration={5000}
-                            />
+                            /> 
                     </div>
                   </BrowserRouter>
                 );

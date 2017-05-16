@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {TableRow, TableRowColumn} from 'material-ui/Table';
+import { TableRow, TableRowColumn } from 'material-ui/Table';
 
-export class BudgetRow extends React.Component < any,
-any > {
+export class BudgetRow extends React.Component<any,
+  any> {
 
-  constructor(props : any) {
+  constructor(props: any) {
     super(props);
     this.state = {
       budgetItem: this.props.budgetItem
@@ -19,12 +19,14 @@ any > {
         <TableRowColumn>{this.state.budgetItem.amount}</TableRowColumn>
         <TableRowColumn
           style={this.state.budgetItem.differential < 0
-          ? {
-            background: 'red'
-          }
-            : {}}
+            ? {
+              color: '#D32F2F'
+            }
+            : {
+              color: 'green'
+            }}
         >
-          {this.state.budgetItem.differential}
+          <b>{this.state.budgetItem.differential < 0 ? '' : '+'}{this.state.budgetItem.differential}</b>
         </TableRowColumn>
       </TableRow>
     );

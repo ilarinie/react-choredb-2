@@ -2,6 +2,8 @@ import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ApiService from '../../services/api_service';
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
 import {Redirect} from 'react-router-dom';
 
 export class NewChore extends React.Component<any, any> {
@@ -116,24 +118,35 @@ export class NewChore extends React.Component<any, any> {
     } else {
     return (
       <div className="form-component-container">
+
+
         <form onSubmit={this.handleSubmit}>
+        <h1>Create a new chore</h1>
+          <Paper zDepth={2}>
           <TextField
             id="chore-form-name"
-            className="chore-form-input"
+            className="small-form-input"
+            underlineShow={false}
             hintText="Chore name"
-            errorText={(this.state.errors && this.state.errors.name) ? this.state.errors.name : ''} /> <br />
+            errorText={(this.state.errors && this.state.errors.name) ? this.state.errors.name : ''} />
+          <Divider />
           <TextField
             id="chore-form-priority"
-            className="chore-form-input"
+            className="small-form-input"
+            underlineShow={false}
             hintText="How often this should be done? (hours)"
             type="number"
-            errorText={(this.state.errors && this.state.errors.priority) ? this.state.errors.priority : ''} /> <br />
+            errorText={(this.state.errors && this.state.errors.priority) ? this.state.errors.priority : ''} />
+            <Divider/>
           <TextField
             id="chore-form-points"
-            className="chore-form-input"
+            className="small-form-input"
+            underlineShow={false}
             hintText="Points awarded"
             type="number"
-            errorText={(this.state.errors && this.state.errors.points ) ? this.state.errors.points : ''} /> <br />
+            errorText={(this.state.errors && this.state.errors.points ) ? this.state.errors.points : ''} />
+            <Divider />
+                    </Paper><br />
           <RaisedButton label="Create" type="submit" />
           <div className="chore-error-div"><p>{this.state.backendErrors}</p></div>
           <div className="chore-success-div"><p>{this.state.backendSuccess}</p></div>

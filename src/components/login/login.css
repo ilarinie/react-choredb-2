@@ -1,6 +1,5 @@
 .login-container {
   margin: 0 auto;
-  background: #eee;
   width: 90%;
   text-align: center;
   padding-bottom: 100px;
@@ -13,6 +12,6 @@
 }
 
 .auth-failure{
-  color: red;
+  color: #D32F2F;
   padding: 20px;
 }
