@@ -1,8 +1,8 @@
 export class Chore {
-    choreId: number;
     name: string;
+    chore_id: number;
+    creator_id: string;
     priority: number;
-    points: number;
+    lastdone: Date;
     lastdoer: string;
-    lastdone: string;
 }

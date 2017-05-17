@@ -3,7 +3,7 @@ import * as React from 'react';
 import { TableRow, TableRowColumn } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import ApiService from '../../services/api_service';
-import { Chore } from '../models/chore';
+import { Chore } from '../../store/types/chore';
 import { ErrorHandler } from './error_handler';
 
 export class ChoreComponent extends React.Component<any,

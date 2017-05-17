@@ -1,7 +1,6 @@
-export class Purchase {
+export class BudgetItem {
     username: string;
     amount: number;
     differential: number;
-}
 
-export default Purchase;
+}

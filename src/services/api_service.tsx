@@ -1,5 +1,5 @@
 
-import { ResultObject } from '../components/models/result_object';
+import { ResultObject } from '../store/types/result_object';
 
 type CallbackFunction = (errorString: any, result?: any) => void;
 
