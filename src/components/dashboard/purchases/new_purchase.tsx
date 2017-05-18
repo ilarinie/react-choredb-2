@@ -1,11 +1,12 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import ApiService from '../../services/api_service';
+import ApiService from '../../../services/api_service';
 import {Redirect} from 'react-router-dom';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
-import {ErrorHandler} from './error_handler';
+import {updateMessage} from '../notificator/notificator';
+import {fetchPurchases} from '../../../store/state_observable';
 
 export class NewPurchase extends React.Component<any, any> {
 
@@ -40,7 +41,8 @@ handleSubmit = (event: any) =>  {
 callBack = (err: any, response: any) => {
   if (!err) {
     this.setState({purchaseSuccess: response.message, purchaseError: null});
-    this.props.refresh(response.message);
+    updateMessage('New purchase created');
+    fetchPurchases();
   } else {
     this.setState({purchaseSuccess: null, errorObject: err});
   }
@@ -75,7 +77,7 @@ parseAmount = (amount: any) => {
     this.setState({amountError: 'Amount needs to be positive'});
     return null;
   }
-  return amount;
+  return toNumber;
 }
 
 render() {
@@ -99,7 +101,7 @@ render() {
         id="purchase-amount-input"
         className="small-form-input"
         hintText="Amount"
-        type="number"
+        type="tel"
         underlineShow={false}
         errorText={this.state.amountError ? this.state.amountError : ''}
       />
@@ -107,7 +109,6 @@ render() {
       </Paper><br />
       <RaisedButton type="submit" label="Create" />
       <div className="purchase-success-div">{this.state.purchaseSuccess}</div>
-      <ErrorHandler errorObject={this.state.errorObject} />
 
       </form>
 

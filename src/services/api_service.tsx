@@ -4,7 +4,7 @@ import { ResultObject } from '../components/models/result_object';
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
-    var apiUrl = 'https://choredb-api.herokuapp.com/';
+    var apiUrl = 'http://localhost:3000/';
 
     /*function setHeaders(){
         var headers = new Headers();

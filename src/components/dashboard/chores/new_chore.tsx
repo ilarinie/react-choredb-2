@@ -1,12 +1,16 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import ApiService from '../../services/api_service';
+import ApiService from '../../../services/api_service';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { updateMessage } from '../notificator/notificator';
+import {fetchChores} from '../../../store/state_observable';
 
 export class NewChore extends React.Component<any, any> {
+
+  chore: any = {};
 
   constructor(props: any) {
     super(props);
@@ -35,11 +39,11 @@ export class NewChore extends React.Component<any, any> {
       return;
     }
 
-    var chore: any = {};
-    chore.name = name;
-    chore.priority = priority;
-    chore.points = points;
-    ApiService.postChore(chore, this.callBack);
+
+    this.chore.name = name;
+    this.chore.priority = priority;
+    this.chore.points = points;
+    ApiService.postChore(this.chore, this.callBack);
 
   }
 
@@ -47,7 +51,8 @@ export class NewChore extends React.Component<any, any> {
     if (!err) {
       this.clearValues();
       this.setState({backendErrors: null, backendSuccess: response.message});
-      this.props.refresh('New chore created.');
+      updateMessage('New chore created.');
+      fetchChores();
     } else {
         this.setState({backendErrors: 'Server side error: ' + err, backendSuccess: null});
     }

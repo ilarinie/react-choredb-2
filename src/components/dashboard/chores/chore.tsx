@@ -2,10 +2,10 @@ import FontIcon from 'material-ui/FontIcon';
 import * as React from 'react';
 import { TableRow, TableRowColumn } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
-import ApiService from '../../services/api_service';
-import { Chore } from '../models/chore';
-import { ErrorHandler } from './error_handler';
-
+import ApiService from '../../../services/api_service';
+import { Chore } from '../../models/chore';
+import { updateMessage } from '../notificator/notificator';
+import * as moment from 'moment';
 export class ChoreComponent extends React.Component<any,
   any> {
 
@@ -27,9 +27,15 @@ export class ChoreComponent extends React.Component<any,
 
   isChoreLate = (chore: Chore) => {
     if (chore.lastdone) {
+      var isLate = false;
       if (new Date().getTime() > new Date(chore.lastdone).getTime() + chore.priority * 60 * 1000) {
-        this.setState({ late: true });
+        isLate = true;
       }
+      chore.lastdone = moment(chore.lastdone).fromNow();
+      this.setState({
+        chore: chore,
+        late: isLate
+      })
     }
   }
 
@@ -42,6 +48,7 @@ export class ChoreComponent extends React.Component<any,
         loading: false
       });
       if (!err) {
+        updateMessage('Well done.');
         this.markChoreDone();
       } else {
         this.setState({
@@ -54,6 +61,7 @@ export class ChoreComponent extends React.Component<any,
   markChoreDone = () => {
     var newChore = this.state.chore;
     newChore.lastdone = new Date().toString();
+    newChore.lastdone = moment(newChore.lastdone).fromNow();
     newChore.lastdoer = this.state.user.username;
     this.setState({
       chore: newChore,
@@ -82,14 +90,15 @@ export class ChoreComponent extends React.Component<any,
           }
           : {}}
       >
-        <TableRowColumn>{this.state.chore.chorename}</TableRowColumn>
+        <TableRowColumn><b>{this.state.chore.chorename}</b></TableRowColumn>
+        <TableRowColumn > {
+          this.state.chore.lastdoer
+            ? this.state.chore.lastdone
+            : ''
+        } </TableRowColumn>
         <TableRowColumn>{this.state.chore.lastdoer}</TableRowColumn>
-        <TableRowColumn>{this.state.chore.lastdoer
-          ? new Date(this.state.chore.lastdone).toLocaleString()
-          : ''}</TableRowColumn>
         <TableRowColumn>
             {button}
-            < ErrorHandler errorObject={this.state.errorObject} />
         </TableRowColumn>
       </TableRow>
     );

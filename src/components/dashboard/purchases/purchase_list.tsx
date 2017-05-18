@@ -1,6 +1,6 @@
 import RaisedButton from 'material-ui/RaisedButton';
 import ApiService from '../../../services/api_service';
-import {Notification} from '../notification';
+import {updateMessage} from '../notificator/notificator';
 import * as React from 'react';
 import {
   Table,
@@ -9,7 +9,10 @@ import {
   TableHeaderColumn,
   TableRowColumn,
   TableRow
-} from 'material-ui/Table';
+}
+from 'material-ui/Table';
+import {fetchPurchases} from '../../../store/state_observable';
+import {PurchaseTableRow} from './purchase_table_row';
 
 export class PurchaseList extends React.Component<any, any> {
 
@@ -17,47 +20,22 @@ export class PurchaseList extends React.Component<any, any> {
         super(props);
         this.state = {
             user: this.props.user,
-            purchases: null,
+            purchases: this.props.purchases,
             errorMessage: null,
-            success: false
+            success: false,
+            notification: null
         };
         this.deletePurchase.bind(this);
-    }
-
-    componentDidMount = () => {
-        ApiService.getPurchases(this.setPurchases);
-    }
-
-    setPurchases = (err: any, result: any) => {
-        if (!err) {
-                // Newest first
-                result.sort((a: any, b : any) => {
-                    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-                });
-                this.setState({
-                    purchases: result
-                });
-
-         } else {
-                this.setState({
-                    errorMessage: err
-                });
-        }
     }
 
     deletePurchase = (purchase: any) => {
         ApiService.deletePurchase(purchase, (err: any, result: any) => {
             if (!err) {
-                var newPurchases = this.state.purchases;
-                newPurchases = this.removePurchaseFromArray(purchase, newPurchases);
-                this.setState({
-                    purchases: newPurchases,
-                    success: true
-                });
-                
+                updateMessage('Canceling purchase has been created');
+                fetchPurchases();
             } else {
                 this.setState({
-                    errorMessage: err
+                    state: err
                 });
             }
         });
@@ -74,40 +52,26 @@ export class PurchaseList extends React.Component<any, any> {
 
     render() {
         if (this.state.purchases) {
-            var purchaseNodes = this.state.purchases.map( (purchase: any, index: any) => (
-                <TableRow key={index}>
-                    <TableRowColumn>{new Date(purchase.created_at).toLocaleString()}</TableRowColumn>
-                    <TableRowColumn>{purchase.description}</TableRowColumn>
-                    <TableRowColumn>{purchase.amount}</TableRowColumn>
-                    <TableRowColumn >
-                        {this.state.user.user_id === purchase.user_id /*|| this.state.user.admin*/ ?
-                             <RaisedButton
-                                primary={true}
-                                onClick={this.deletePurchase.bind(this, purchase)}
-                                label="Delete"
-                             /> :
-                              <span />}
-                    </TableRowColumn>
-                </TableRow>
-            ), this);
+            var purchaseNodes = this.state.purchases
+                                .map((purchase: any, index: any) => 
+                                (<PurchaseTableRow user={this.state.user} purchase={purchase} delete={this.deletePurchase.bind(this)} key={index} />), this);
             return (
                     <div className="dashboard-large-item">
                         <h2 className="dashboard-item-title">Purchases</h2>
                         <Table>
                             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                            <TableRow>
-                                <TableHeaderColumn>Date</TableHeaderColumn>
-                                <TableHeaderColumn>Description</TableHeaderColumn>
-                                <TableHeaderColumn>Amount</TableHeaderColumn>
-                                <TableHeaderColumn>Delete</TableHeaderColumn>
-                            </TableRow>
+                                <TableRow>
+                                    <TableHeaderColumn>Date</TableHeaderColumn>
+                                    <TableHeaderColumn>Username</TableHeaderColumn>
+                                    <TableHeaderColumn>Description</TableHeaderColumn>
+                                    <TableHeaderColumn>Amount</TableHeaderColumn>
+                                    <TableHeaderColumn>Delete</TableHeaderColumn>
+                                </TableRow>
                             </TableHeader>
                             <TableBody>
-                            {purchaseNodes}
+                                {purchaseNodes}
                             </TableBody>
-                        </Table>
-                        <div>{this.state.errorMessage}</div>
-                        {this.state.success ? <Notification message="Purchase deleted." /> : <span />}
+                        </Table>    
                     </div>
             );
         } else {

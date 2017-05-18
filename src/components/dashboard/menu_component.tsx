@@ -16,7 +16,8 @@ export class MenuComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            commune: this.props.commune
+            commune: this.props.commune,
+            user: this.props.user
         };
         this.iconStyles = {
             marginRight: 24
@@ -67,7 +68,7 @@ export class MenuComponent extends React.Component<any, any> {
         var navigationBar = (
             <div>
                 <AppBar
-                    title={this.state.commune.commune.name + ' || ' + this.state.commune.user.username}
+                    title={this.state.commune.name + ' || ' +  this.state.user.username}
                     iconClassNameRight="muidocs-icon-navigation-expand-more"
                     onLeftIconButtonTouchTap={this.handleToggle}
                 />
@@ -115,7 +116,9 @@ export class MenuComponent extends React.Component<any, any> {
                         >New Purchase
                         </MenuItem>
                     </Link>
-                    {this.state.commune.user.admin ? adminMenuItems : ''}
+                    {true ? adminMenuItems : ''}
+                    <Subheader > Logged in as : </Subheader>
+                    <Subheader > {this.state.user.username} </Subheader>
                     <MenuItem
                         onTouchTap={this.logOut}
                         leftIcon={<FontIcon className="fa fa-power-off" aria-hidden="true"/>}
@@ -130,6 +133,5 @@ export class MenuComponent extends React.Component<any, any> {
             </div>
         );
     }
-
 
 }
