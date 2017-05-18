@@ -4,7 +4,7 @@ import { ResultObject } from '../models/result_object';
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
-    var apiUrl = 'http://localhost:3000/';
+    var apiUrl = 'https://choredb-api.herokuapp.com/';
 
     /*function setHeaders(){
         var headers = new Headers();
@@ -130,7 +130,6 @@ export module ApiService {
         get('communes', (error, result) => {
             if (!error) {
                 let commune = JSON.parse(result.contents);
-                console.log(commune)
                 callBack(null, commune);
             } else {
                 callBack('Could not parse Commune object from the server response');
