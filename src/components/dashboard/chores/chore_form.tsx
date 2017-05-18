@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 import { updateMessage } from '../notificator/notificator';
 import {fetchChores} from '../../../store/state_observable';
 
-export class NewChore extends React.Component<any, any> {
+export class ChoreForm extends React.Component<any, any> {
 
   chore: any = {};
 
@@ -16,6 +16,7 @@ export class NewChore extends React.Component<any, any> {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
+      chore: this.props.chore,
       errors: null,
       backendErrors: '', 
       backendSuccess: ''
@@ -39,7 +40,6 @@ export class NewChore extends React.Component<any, any> {
       return;
     }
 
-
     this.chore.name = name;
     this.chore.priority = priority;
     this.chore.points = points;
@@ -47,12 +47,25 @@ export class NewChore extends React.Component<any, any> {
 
   }
 
+  handleDelete = () => {
+     ApiService.send('DELETE', 'chores/' + this.state.chore.chore_id, null, (err: any, result: any) => {
+      if (!err) {
+        fetchChores();
+        updateMessage('Chore deleted succesfully.')
+        this.setState({
+          backendSuccess: true
+        });
+      }
+    });
+  }
+
+
   callBack = (err: any, response: any) => {
     if (!err) {
       this.clearValues();
-      this.setState({backendErrors: null, backendSuccess: response.message});
       updateMessage('New chore created.');
       fetchChores();
+      this.setState({backendErrors: null, backendSuccess: response.message});
     } else {
         this.setState({backendErrors: 'Server side error: ' + err, backendSuccess: null});
     }
@@ -118,26 +131,27 @@ export class NewChore extends React.Component<any, any> {
   }
 
   render() {
+    console.log(this.state.chore.chorename + 'asd')
     if ( this.state.backendSuccess ) {
       return <Redirect to="/" push={true} />;
     } else {
     return (
       <div className="form-component-container">
-
-
         <form onSubmit={this.handleSubmit}>
-        <h1>Create a new chore</h1>
+        <h1>{!this.state.chore.chorename ? 'Create a new chore' : 'Edit a chore' }</h1>
           <Paper zDepth={2}>
           <TextField
             id="chore-form-name"
             className="small-form-input"
             underlineShow={false}
+            defaultValue={this.state.chore ? this.state.chore.chorename : ''}
             hintText="Chore name"
             errorText={(this.state.errors && this.state.errors.name) ? this.state.errors.name : ''} />
           <Divider />
           <TextField
-            id="chore-form-priority"
+            id="chore-form-priority" 
             className="small-form-input"
+            defaultValue={this.state.chore ? this.state.chore.priority : ''}
             underlineShow={false}
             hintText="How often this should be done? (hours)"
             type="number"
@@ -148,11 +162,13 @@ export class NewChore extends React.Component<any, any> {
             className="small-form-input"
             underlineShow={false}
             hintText="Points awarded"
+            defaultValue={this.state.chore ? this.state.chore.points : ''}
             type="number"
             errorText={(this.state.errors && this.state.errors.points ) ? this.state.errors.points : ''} />
             <Divider />
                     </Paper><br />
           <RaisedButton label="Create" type="submit" />
+          {this.state.chore.chore_id ? <RaisedButton primary={true} label="Delete" onClick={this.handleDelete} /> : <span />}
           <div className="chore-error-div"><p>{this.state.backendErrors}</p></div>
           <div className="chore-success-div"><p>{this.state.backendSuccess}</p></div>
         </form>
@@ -162,5 +178,3 @@ export class NewChore extends React.Component<any, any> {
   }
 
 }
-
-export default NewChore;

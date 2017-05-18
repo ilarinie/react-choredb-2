@@ -13,7 +13,7 @@ any > {
                 <TableRowColumn>{this.props.purchase.description}</TableRowColumn>
                 <TableRowColumn>{this.props.purchase.amount}</TableRowColumn>
                 <TableRowColumn>
-                    {this.props.user.user_id === this.props.purchase.user_id && !this.props.purchase.cancelled/*|| this.state.user.admin*/
+                    {this.props.user.user_id === this.props.purchase.user_id && !this.props.purchase.cancelled /*|| this.state.user.admin*/
                         ? <RaisedButton
                                 primary={true}
                                 onClick={this.props.delete(this.props.purchase)}

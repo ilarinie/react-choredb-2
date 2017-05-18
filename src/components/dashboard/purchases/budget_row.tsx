@@ -9,7 +9,6 @@ export class BudgetRow extends React.Component<any,
     this.state = {
       budgetItem: this.props.budgetItem
     };
-    // console.log(this.state.budgetItem.differential < 0);
   }
 
   render() {

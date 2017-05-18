@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-
 export class Profile extends React.Component<any, any> {
 
     constructor(props: any) {
@@ -15,7 +14,5 @@ export class Profile extends React.Component<any, any> {
            <h1>Hello, {this.state.user.username}</h1> 
         );
     }
-
-
 
 }

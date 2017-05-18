@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .main-container {
   width: 100%;
@@ -24,6 +24,10 @@ a {
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
+}
+.chore-link {
+  color: black;
+  font-weight: 500;
 }
 
 .App-header {

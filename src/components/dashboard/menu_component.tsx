@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 import FontIcon from 'material-ui/FontIcon';
 import Subheader from 'material-ui/Subheader';
 
-
-
 export class MenuComponent extends React.Component<any, any> {
 
     iconStyles;
@@ -24,7 +22,6 @@ export class MenuComponent extends React.Component<any, any> {
         };
     }
 
-
     handleToggle = () => {
         this.setState({
             drawerOpen: !this.state.drawerOpen
@@ -39,7 +36,6 @@ export class MenuComponent extends React.Component<any, any> {
         localStorage.removeItem('token');
         location.reload();
     }
-
 
     render() {
         var adminMenuItems = (

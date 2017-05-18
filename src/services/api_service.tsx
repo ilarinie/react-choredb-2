@@ -1,5 +1,5 @@
 
-import { ResultObject } from '../components/models/result_object';
+import { ResultObject } from '../models/result_object';
 
 type CallbackFunction = (errorString: any, result?: any) => void;
 
@@ -130,6 +130,7 @@ export module ApiService {
         get('communes', (error, result) => {
             if (!error) {
                 let commune = JSON.parse(result.contents);
+                console.log(commune)
                 callBack(null, commune);
             } else {
                 callBack('Could not parse Commune object from the server response');

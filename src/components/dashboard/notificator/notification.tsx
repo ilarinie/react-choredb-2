@@ -26,15 +26,8 @@ export class Notification extends React.Component<any, any> {
                     open: true
                 });
                 this.render();
-            },
-            (err) => {
-                console.log("Error happns");
-            },
-            () => {
-                console.log("redi?");
             });
     }
-
 
     handleTouchTap = () => {
         this.setState({open: true});
