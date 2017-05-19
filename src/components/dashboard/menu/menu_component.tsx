@@ -98,17 +98,10 @@ export class MenuComponent extends React.Component<any, any> {
                         >Budget
                         </MenuItem>
                     </Link>
-                    <Link to="/purchases">
-                        <MenuItem 
-                            onTouchTap={this.handleClose}
-                            leftIcon={<FontIcon className="fa fa-money" aria-hidden="true"/>}
-                        >Purchases
-                        </MenuItem>
-                    </Link>
                     <Link to="/new_purchase">
                         <MenuItem 
                             onTouchTap={this.handleClose}
-                            leftIcon={<FontIcon className="fa fa-usd" aria-hidden="true"/>}
+                            leftIcon={<FontIcon className="fa fa-money" aria-hidden="true"/>}
                         >New Purchase
                         </MenuItem>
                     </Link>
@@ -131,3 +124,14 @@ export class MenuComponent extends React.Component<any, any> {
     }
 
 }
+
+/* UNUSED MENU ITEMS
+
+ <Link to="/purchases">
+ <MenuItem
+ onTouchTap={this.handleClose}
+ leftIcon={<FontIcon className="fa fa-money" aria-hidden="true"/>}
+ >Purchases
+ </MenuItem>
+ </Link>
+ */

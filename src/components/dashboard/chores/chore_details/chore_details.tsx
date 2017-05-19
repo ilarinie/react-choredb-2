@@ -26,15 +26,16 @@ any > {
     }
     render() {
         return (
-            <Tabs value={this.state.value} onChange={this.handleChange}>
-                <Tab label="Chore Stats" value="info">
-                    <ChoreInfo chore={this.state.chore}/>
-                </Tab>
-                <Tab label="Edit Chore" value="edit">
-                    <ChoreEdit chore={this.state.chore}/>
-                </Tab>
-            </Tabs>
-
+            <div className="dashboard-large-item">
+                <Tabs value={this.state.value} onChange={this.handleChange}>
+                    <Tab label="Chore Stats" value="info">
+                        <ChoreInfo chore={this.state.chore}/>
+                    </Tab>
+                    <Tab label="Edit Chore" value="edit">
+                        <ChoreEdit chore={this.state.chore}/>
+                    </Tab>
+                </Tabs>
+            </div>
         );
     }
 }

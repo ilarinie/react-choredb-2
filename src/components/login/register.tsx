@@ -31,7 +31,7 @@ any > {
     let password = (document.getElementById('regPassword')as HTMLInputElement).value;
     let passwordConfirmation = (document.getElementById('regPasswordConf')as HTMLInputElement).value;
 
-    if (password === passwordConfirmation) {
+    if (username !== '' && password === passwordConfirmation) {
       ApiService.register(username, password, this.callBack);
     } else {
       // handle error
@@ -50,8 +50,16 @@ any > {
           {this.state.registering
             ? <div className="registration-success">Loading..</div>
             : <div><TextField hintText="Username" id="regUsername"/><br/>
-              <TextField hintText="Password" id="regPassword"/><br/>
-              <TextField hintText="Password Confirmation" id="regPasswordConf"/><br/>
+              <TextField
+                  hintText="Password"
+                  id="regPassword"
+                  type="password"
+              /><br/>
+              <TextField
+                  hintText="Password Confirmation"
+                  id="regPasswordConf"
+                  type="password"
+              /><br/>
               <RaisedButton
                 label="Register"
                 fullWidth={true}

@@ -141,6 +141,9 @@ export module ApiService {
     }
 
     export function postChore(chore : any, callBack : any) {
+        if (chore.chore_id) {
+            // send('UPDATE, 'chores', JSON.stringify(chore), callBack)
+        }
         send('POST', 'chores', JSON.stringify(chore), callBack);
     }
     export function deleteChore(chore : any , callBack : any) {
@@ -161,6 +164,7 @@ export module ApiService {
         });
     }
     export function deletePurchase(purchase : any, callBack: any) {
+        console.log(purchase);
         send('DELETE', 'purchases/' + purchase.purchase_id, null, callBack);
     }
 }

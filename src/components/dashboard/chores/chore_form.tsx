@@ -138,35 +138,35 @@ export class ChoreForm extends React.Component<any, any> {
     return (
       <div className="form-component-container">
         <form onSubmit={this.handleSubmit}>
-        <h1>{!this.state.chore.chorename ? 'Create a new chore' : 'Edit a chore' }</h1>
+        <h1>{!this.state.chore.chorename ? 'Create a new chore' : 'Edit ' + this.state.chore.chorename }</h1>
           <Paper zDepth={2}>
-          <TextField
-            id="chore-form-name"
-            className="small-form-input"
-            underlineShow={false}
-            defaultValue={this.state.chore ? this.state.chore.chorename : ''}
-            hintText="Chore name"
-            errorText={(this.state.errors && this.state.errors.name) ? this.state.errors.name : ''} />
-          <Divider />
-          <TextField
-            id="chore-form-priority" 
-            className="small-form-input"
-            defaultValue={this.state.chore ? this.state.chore.priority : ''}
-            underlineShow={false}
-            hintText="How often this should be done? (hours)"
-            type="number"
-            errorText={(this.state.errors && this.state.errors.priority) ? this.state.errors.priority : ''} />
-            <Divider/>
-          <TextField
-            id="chore-form-points"
-            className="small-form-input"
-            underlineShow={false}
-            hintText="Points awarded"
-            defaultValue={this.state.chore ? this.state.chore.points : ''}
-            type="number"
-            errorText={(this.state.errors && this.state.errors.points ) ? this.state.errors.points : ''} />
+            <TextField
+              id="chore-form-name"
+              className="small-form-input"
+              underlineShow={false}
+              defaultValue={this.state.chore ? this.state.chore.chorename : ''}
+              hintText="Chore name"
+              errorText={(this.state.errors && this.state.errors.name) ? this.state.errors.name : ''} />
             <Divider />
-                    </Paper><br />
+            <TextField
+              id="chore-form-priority"
+              className="small-form-input"
+              defaultValue={this.state.chore ? this.state.chore.priority : ''}
+              underlineShow={false}
+              hintText="How often this should be done? (hours)"
+              type="number"
+              errorText={(this.state.errors && this.state.errors.priority) ? this.state.errors.priority : ''} />
+              <Divider/>
+            <TextField
+              id="chore-form-points"
+              className="small-form-input"
+              underlineShow={false}
+              hintText="Points awarded"
+              defaultValue={this.state.chore ? this.state.chore.points : ''}
+              type="number"
+              errorText={(this.state.errors && this.state.errors.points ) ? this.state.errors.points : ''} />
+              <Divider />
+          </Paper><br />
           <RaisedButton label="Create" type="submit" />
           {this.state.chore.chore_id ? <RaisedButton primary={true} label="Delete" onClick={this.handleDelete} /> : <span />}
           <div className="chore-error-div"><p>{this.state.backendErrors}</p></div>

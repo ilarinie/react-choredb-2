@@ -7,11 +7,11 @@ import {
     TableBody,
     TableHeader,
     TableHeaderColumn,
-    TableRowColumn,
     TableRow
 } from 'material-ui/Table';
 import {fetchPurchases} from '../../../store/state_observable';
-import {PurchaseTableRow} from './purchase_table_row';
+import * as moment from 'moment';
+import {TableRowColumn} from "material-ui";
 
 export class PurchaseList extends React.Component < any,
 any > {
@@ -33,7 +33,7 @@ any > {
     deletePurchase = (purchase : any) => {
         ApiService.deletePurchase(purchase, (err : any, result : any) => {
             if (!err) {
-                updateMessage('Canceling purchase has been created');
+                updateMessage('Purchase has been cancelled succesfully');
                 fetchPurchases();
             } else {
                 this.setState({state: err});
@@ -41,18 +41,8 @@ any > {
         });
     }
 
-    removePurchaseFromArray = (purchase : any, array : any) => {
-        var index;
-        index = array.indexOf(purchase);
-        if (index !== -1) {
-            array.splice(index, 1);
-        }
-        return array;
-    }
-
     render() {
         if (this.state.purchases) {
-            // tslint:disable-next-line
             var purchaseNodes = this.state.purchases.map((purchase : any, index : any) => (<PurchaseTableRow user={this.state.user} purchase={purchase} delete={this.deletePurchase} key={index}/>), this);
             return (
                 <div className="dashboard-large-item">
@@ -79,5 +69,23 @@ any > {
             );
         }
     }
-
 }
+
+const PurchaseTableRow = ({...props}) => {
+    return (
+        <TableRow>
+            <TableRowColumn>{moment(props.purchase.created_at).fromNow()}</TableRowColumn>
+            <TableRowColumn>{props.purchase.username}</TableRowColumn>
+            <TableRowColumn>{props.purchase.description}</TableRowColumn>
+            <TableRowColumn>{props.purchase.amount}</TableRowColumn>
+            <TableRowColumn>
+                {props.user.user_id === props.purchase.user_id && !props.purchase.cancelled /*|| props.state.user.admin*/
+                    ? <RaisedButton
+                        primary={true}
+                        onClick={props.delete.bind(null, props.purchase)}
+                        label="Delete"/>
+                    : <span/>}
+            </TableRowColumn>;
+        </TableRow>
+    );
+};

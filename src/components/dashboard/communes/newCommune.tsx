@@ -27,12 +27,18 @@ export class NewCommune extends React.Component<any, any> {
     }
   }
 
+  logout = () => {
+    localStorage.removeItem('token');
+    location.reload();
+  }
+
   render() {
     return (
       <div className="login-container">
         <div className="title-container">
             <h2>Welcome to ChoreDB</h2>
         </div>
+        <RaisedButton label="Log Out" onClick={this.logout} />
         <div className="info-content">
           <p>You now have two options, either create a brand new commune, or join an existing one.</p>
           <div className="new-commune-section">

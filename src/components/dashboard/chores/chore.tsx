@@ -14,31 +14,14 @@ any > {
   constructor(props : any) {
     super(props);
     this.state = {
-      chore: (this.props.chore.chorename !== null)
-        ? this.props.chore
-        : null,
+      chore: this.props.chore,
       user: this.props.user,
-      justDone: false,
+      justDone: (new Date().getTime() < new Date(this.props.chore.lastdone).getTime() + 20000),
       done: false,
-      late: false,
+      late: (new Date().getTime() > new Date(this.props.chore.lastdone).getTime() + this.props.chore.priority * 60000),
       loading: false
     };
 
-  }
-
-  componentDidMount = () => {
-    this.isChoreLate(this.state.chore);
-  }
-
-  isChoreLate = (chore : Chore) => {
-    if (chore.lastdone) {
-      var isLate = false;
-      if (new Date().getTime() > new Date(chore.lastdone).getTime() + chore.priority * 60 * 1000) {
-        isLate = true;
-      }
-      chore.lastdone = moment(chore.lastdone).fromNow();
-      this.setState({chore: chore, late: isLate});
-    }
   }
 
   completeChoreHandler = () => {
@@ -57,7 +40,7 @@ any > {
 
   markChoreDone = () => {
     var newChore = this.state.chore;
-    newChore.lastdone = new Date().toString();
+    newChore.lastdone = new Date();
     newChore.lastdoer = this.state.user.username;
     this.setState({chore: newChore, done: true, late: false});
   }
@@ -65,7 +48,7 @@ any > {
   render() {
     if (this.state.chore) {
       var button;
-      if (this.state.chore.lastdone && this.state.chore.lastdone.indexOf('a few seconds ago') !== -1) {
+      if (this.state.justDone) {
         button = <RaisedButton buttonStyle={{ background: 'green', color: 'white'}} disabled={true} label="Done" icon={< FontIcon className = "fa fa-check checkmark" />}/>;
       } else {
         if (this.state.done) {
@@ -88,10 +71,7 @@ any > {
             <Link className="chore-link" to={'/chores/' + this.props.i}>{this.state.chore.chorename}</Link>
           </TableRowColumn>
           <TableRowColumn >
-            {this.state.chore.lastdoer
-              ? this.state.chore.lastdone
-              : ''
-}
+            {this.state.chore.lastdoer ? moment(this.state.chore.lastdone).fromNow() : ''}
           </TableRowColumn>
           <TableRowColumn>{this.state.chore.lastdoer}</TableRowColumn>
           <TableRowColumn>
