@@ -19,7 +19,9 @@ body {
 }
 
 .table>thead>tr>th, .table>tbody>tr>td {
-  border: 1px solid black;
+  border-bottom: 1px solid black;
+  width: 50%;
+  text-align: center;
 }
 
 .pagination-status {

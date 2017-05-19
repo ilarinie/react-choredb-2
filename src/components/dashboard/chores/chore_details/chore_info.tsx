@@ -3,10 +3,27 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import * as moment from 'moment';
 import { TablePagination } from 'react-pagination-table';
 
-export class ChoreInfo extends React.Component < any,
-any > {
+export class ChoreInfo extends React.Component < any, any > {
 
-    headers: any = ['User', 'At'];
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            modifiedTasks: this.modifyTasks(this.props.chore.tasks)
+        };
+    }
+
+    modifyTasks = (tasks) => {
+        var newTasks = tasks;
+        newTasks.sort((a, b) => {
+            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        })
+        for (let i = 0; i < tasks.length; i++) {
+            newTasks[i].created_at = moment(tasks[i].created_at).fromNow();
+        }
+        return newTasks;
+    }
+
 
 
     render() {
@@ -20,23 +37,22 @@ any > {
         return (
             <div className="dashboard-large-item">
                 <h1>{this.props.chore.chorename} info page.</h1>
-                <p>{this.props.chore.tasks ?  <p>{this.props.chore.chorename} has been done {this.props.chore.tasks.length} times </p> : <p>No tasks as of yet.</p> } </p>
-                <ChoreTable header={this.headers} data={this.props.chore.tasks} />
+                <p>{this.props.chore.tasks ?  this.props.chore.chorename + ' has been done ' + this.props.chore.tasks.length + ' times'  : 'No tasks as of yet.' } </p>
+                <ChoreTable data={this.state.modifiedTasks} />
             </div>
         );
     }
 }
-const Header = ['User', 'At'];
 
 const ChoreTable = ({...props}) => {
     return (
         <div>
             <TablePagination
-                title="Tasks"
-                headers={props.header}
+                title="Latest completions:"
+                headers={[]}
                 data={props.data}
                 columns="username.created_at"
-                perPageItemCount={2}
+                perPageItemCount={10}
                 totalCount={props.data.length}
             />
 
