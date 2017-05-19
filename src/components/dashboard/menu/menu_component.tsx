@@ -34,6 +34,7 @@ export class MenuComponent extends React.Component<any, any> {
 
     logOut = () => {
         localStorage.removeItem('token');
+        window.history.pushState('', 'Login', '/');
         location.reload();
     }
 

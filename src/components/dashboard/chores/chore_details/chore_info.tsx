@@ -5,7 +5,6 @@ import { TablePagination } from 'react-pagination-table';
 
 export class ChoreInfo extends React.Component < any, any > {
 
-
     constructor(props: any) {
         super(props);
         this.state = {
