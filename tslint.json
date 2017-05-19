@@ -3,6 +3,11 @@
         "tslint-react"
     ],
     "rules": {
+        "jsx-alignment": false,
+        "jsx-curly-spacing": [
+            "always"
+        ],
+        "jsx-self-close": false,
         "align": [
             true,
             "parameters",
@@ -43,7 +48,7 @@
         "no-any": false,
         "no-arg": true,
         "no-bitwise": true,
-        "no-console": [
+        /*"no-console": [
             true,
             "log",
             "error",
@@ -52,8 +57,8 @@
             "time",
             "timeEnd",
             "trace"
-        ],
-        "no-consecutive-blank-lines": true,
+        ],*/
+        "no-consecutive-blank-lines": false,
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-variable": true,
@@ -72,11 +77,11 @@
             "check-open-brace",
             "check-whitespace"
         ],
-        "quotemark": [
+        /*"quotemark": [
             true,
             "single",
             "jsx-double"
-        ],
+        ],*/
         "radix": true,
         "semicolon": [
             true,
