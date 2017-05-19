@@ -5,6 +5,7 @@ import {fetchCommune, communeStream, choreStream, purchaseStream, userStream} fr
 import CircularProgress from 'material-ui/CircularProgress';
 import {routes} from './routes';
 
+
 export class Dashboard extends React.Component <any, any> {
 
     choreSub: any;
