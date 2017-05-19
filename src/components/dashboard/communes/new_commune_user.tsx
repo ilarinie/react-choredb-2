@@ -1,8 +1,8 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import ApiService from '../../services/api_service';
-import { updateMessage } from './notificator/notificator';
+import ApiService from '../../../services/api_service';
+import { updateMessage } from '../notificator/notificator';
 import Paper from 'material-ui/Paper';
 
 export class NewCommuneUser extends React.Component<any, any> {

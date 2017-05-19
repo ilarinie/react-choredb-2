@@ -13,24 +13,22 @@ function authenticated() {
 }
 
 class App extends React.Component<{}, null> {
+
     render() {
-      if (authenticated()) {
+        let content;
+        if (authenticated()) {
+            content = <Dashboard />;
+        } else {
+            content = <Login />;
+        }
+
         return (
           <div className="main-container">
             <MuiThemeProvider muiTheme={Theme}>
-              <Dashboard />
+                {content}
             </MuiThemeProvider>
           </div>
         );
-      } else {
-        return (
-          <div className="main-container">
-            <MuiThemeProvider muiTheme={Theme}>
-              <Login />
-            </MuiThemeProvider>
-          </div>
-        );
-      }
     }
 }
 

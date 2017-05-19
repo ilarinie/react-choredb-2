@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import ApiService from '../../services/api_service';
+import ApiService from '../../../services/api_service';
 
 export class NewCommune extends React.Component<any, any> {
 
