@@ -27,26 +27,30 @@ export class Chores extends React.Component<any,
     return (
       <div className="dashboard-large-item">
         <h2 className="dashboard-item-title">Chores</h2>
-        <Table>
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn>Chore</TableHeaderColumn>
-              <TableHeaderColumn>Last done</TableHeaderColumn>
-              <TableHeaderColumn>By</TableHeaderColumn>
-              <TableHeaderColumn>Do</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {choreNodes}
-          </TableBody>
-        </Table>
+        {choreNodes}
       </div>);
     } else {
       return (
         <div className="dashboard-large-item">
           No chores yet, add them at <Link to='/new_chore'>New Chore</Link> if you're an admin.  
         </div>
-      )
+      );
     }
   }
 }
+
+/*
+ <Table>
+ <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+ <TableRow>
+ <TableHeaderColumn>Chore</TableHeaderColumn>
+ <TableHeaderColumn>Last done</TableHeaderColumn>
+ <TableHeaderColumn>By</TableHeaderColumn>
+ <TableHeaderColumn>Do</TableHeaderColumn>
+ </TableRow>
+ </TableHeader>
+ <TableBody>
+ {choreNodes}
+ </TableBody>
+ </Table>
+ */

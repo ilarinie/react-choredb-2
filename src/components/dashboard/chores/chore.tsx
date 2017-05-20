@@ -8,6 +8,16 @@ import {updateMessage} from '../notificator/notificator';
 import * as moment from 'moment';
 import {Link} from 'react-router-dom';
 import {fetchChores} from '../../../store/state_observable';
+import {CardActions, Subheader, CardHeader, CardText, Card} from "material-ui";
+
+
+const TaskRow = ({...props}) => {
+  return (
+      <p>{props.task.username + ' ' + moment(props.task.created_at).fromNow()}</p>
+  );
+}
+
+
 export class ChoreComponent extends React.Component < any,
 any > {
 
@@ -16,12 +26,39 @@ any > {
     this.state = {
       chore: this.props.chore,
       user: this.props.user,
-      justDone: (new Date().getTime() < new Date(this.props.chore.lastdone).getTime() + 20000),
+      lastTask: this.getLastTask(),
+      justDone: this.isChoreJustDone(),
+      late: this.isChoreLate(),
       done: false,
-      late: (new Date().getTime() > new Date(this.props.chore.lastdone).getTime() + this.props.chore.priority * 60000),
       loading: false
     };
 
+  }
+
+  getLastTask = () => {
+    if (this.props.chore.tasks[0]) {
+      return this.props.chore.tasks[0];
+    }else {
+      return null;
+    }
+
+  }
+
+  isChoreJustDone = () => {
+    if (this.props.chore.tasks[0]) {
+      return (new Date().getTime() < new Date(this.props.chore.tasks[0].created_at).getTime() + 20000);
+    } else {
+      return false;
+    }
+
+  }
+
+  isChoreLate = () => {
+    if (this.props.chore.tasks[0]) {
+      return (new Date().getTime() > new Date(this.props.chore.tasks[0].created_at).getTime() + this.props.chore.priority * 60000);
+    } else {
+      return false;
+    }
   }
 
   completeChoreHandler = () => {
@@ -59,25 +96,31 @@ any > {
           button = <RaisedButton secondary={true} label="Do" onClick={this.completeChoreHandler}/>;
         }
       }
+      var tasks = this.state.chore.tasks.map((task: any, index: any) => (
+          <TaskRow key={index} task={task} />
+      ), this);
+
+      var done = ( this.state.lastTask ? moment(this.state.lastTask).fromNow() : 'Chore has not been done yet.');
 
       return (
-        <TableRow
-          style={this.state.late
-          ? {
-            background: '#D32F2F'
-          }
-          : {}}>
-          <TableRowColumn>
-            <Link className="chore-link" to={'/chores/' + this.props.i}>{this.state.chore.chorename}</Link>
-          </TableRowColumn>
-          <TableRowColumn >
-            {this.state.chore.lastdoer ? moment(this.state.chore.lastdone).fromNow() : ''}
-          </TableRowColumn>
-          <TableRowColumn>{this.state.chore.lastdoer}</TableRowColumn>
-          <TableRowColumn>
-            {button}
-          </TableRowColumn>
-        </TableRow>
+          <Card>
+            <CardHeader
+                title={this.state.chore.name}
+                subtitle={'Done ' + moment(this.state.lastTask.created_at).fromNow() + ' ago.'}
+                actAsExpander={true}
+                showExpandableButton={true}
+            />
+            <CardActions>
+              {button}}
+            </CardActions>
+            <CardText expandable={true}>
+              <Subheader>Last completions: </Subheader>
+              {tasks}
+              <RaisedButton label="Edit" />
+            </CardText>
+          </Card>
+
+
       );
     } else {
       return (
@@ -86,3 +129,26 @@ any > {
     }
   }
 }
+
+
+
+/*
+ <TableRow
+ style={this.state.late
+ ? {
+ background: '#D32F2F'
+ }
+ : {}}>
+ <TableRowColumn>
+ <Link className="chore-link" to={'/chores/' + this.props.i}>{this.state.chore.chorename}</Link>
+ </TableRowColumn>
+ <TableRowColumn >
+ {this.state.chore.lastdoer ? moment(this.state.chore.lastdone).fromNow() : ''}
+ </TableRowColumn>
+ <TableRowColumn>{this.state.chore.lastdoer}</TableRowColumn>
+ <TableRowColumn>
+ {button}
+ </TableRowColumn>
+ </TableRow>
+ */
+

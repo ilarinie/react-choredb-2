@@ -6,6 +6,7 @@ import Divider from 'material-ui/Divider';
 import { Link } from 'react-router-dom';
 import FontIcon from 'material-ui/FontIcon';
 import Subheader from 'material-ui/Subheader';
+import {logout} from "../../../store/state_observable";
 
 export class MenuComponent extends React.Component<any, any> {
 
@@ -34,8 +35,7 @@ export class MenuComponent extends React.Component<any, any> {
 
     logOut = () => {
         localStorage.removeItem('token');
-        window.history.pushState('', 'Login', '/');
-        location.reload();
+        logout();
     }
 
     render() {

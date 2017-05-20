@@ -5,6 +5,7 @@ import {Register} from './register';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import './login.css';
 import ApiService from '../../services/api_service';
+import {login} from "../../store/state_observable";
 
 export class Login extends React.Component < any,
 any > {
@@ -35,7 +36,7 @@ any > {
 
   callBack = (err : any, response : any) => {
     if (!err) {
-      location.reload();
+      login();
     } else {
       this.setState({logging: false});
       this.setState({error: err});

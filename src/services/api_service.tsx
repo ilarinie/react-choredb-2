@@ -1,10 +1,11 @@
 
 import { ResultObject } from '../models/result_object';
+import {consoleTestResultsHandler} from "tslint/lib/test";
 
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
-    var apiUrl = 'https://choredb-api.herokuapp.com/';
+    var apiUrl = 'http://localhost:3000/';
 
     /*function setHeaders(){
         var headers = new Headers();
@@ -79,7 +80,7 @@ export module ApiService {
         xhr.onreadystatechange = function (event : any) {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    let resultObject: ResultObject = JSON.parse(xhr.responseText) as ResultObject;
+                    let resultObject = JSON.parse(xhr.responseText);
                     if (resultObject) {
                         callBack(null, resultObject);
                     } else {
@@ -125,11 +126,23 @@ export module ApiService {
     export function completeChore(chore : any, callBack : any) {
         send('POST', 'chores/' + chore.chore_id + '/do', null, callBack);
     }
+    export function getChores(callBack: any) {
+        get('chores', (err, res) => {
+            if (!err) {
+                var chores = res.contents;
+                callBack(null, chores);
+            } else {
+                callBack("Could not get chores from the server.");
+            }
+        });
+    }
 
     export function getCommune(callBack : any) {
         get('communes', (error, result) => {
             if (!error) {
-                let commune = JSON.parse(result.contents);
+                console.log("apiservice")
+                console.log(result)
+                let commune = result.contents;
                 callBack(null, commune);
             } else {
                 callBack('Could not parse Commune object from the server response');
@@ -142,7 +155,7 @@ export module ApiService {
 
     export function postChore(chore : any, callBack : any) {
         if (chore.chore_id) {
-            // send('UPDATE, 'chores', JSON.stringify(chore), callBack)
+            send('PUT', 'chores', JSON.stringify(chore), callBack);
         }
         send('POST', 'chores', JSON.stringify(chore), callBack);
     }

@@ -8,18 +8,63 @@ var initialState = {
     purchases: null
 };
 
+var initialMeta = {
+    loggedIn: false
+};
+
+var metaState = initialMeta;
+
 export var choreStream = new Rx.Subject();
 export var purchaseStream = new Rx.Subject();
 export var communeStream = new Rx.Subject();
 export var userStream = new Rx.Subject();
+export var metaStream = new Rx.Subject();
 var state = initialState;
 
 choreStream.onNext(initialState);
+metaStream.onNext(initialMeta);
+
+
+getMeta();
+
+
+// Function that is run on app start, checks to see if saved token is still valid.
+function getMeta() {
+    var newState = metaState;
+    if (!localStorage.getItem('token')) {
+        newState.loggedIn = false;
+        metaState = newState;
+        metaStream.onNext(metaState);
+    } else {
+        ApiService.get('auth/validate_token', (err, res) => {
+            if (!err) {
+                newState.loggedIn = true;
+            } else {
+                newState.loggedIn = false;
+            }
+            metaState = newState;
+            metaStream.onNext(metaState);
+        });
+    }
+}
+
+export var login = () => {
+    var newState = metaState;
+    newState.loggedIn = true;
+    metaState = newState;
+    metaStream.onNext(metaState);
+}
+
+export var logout = () => {
+    var newState = metaState;
+    newState.loggedIn = false;
+    metaState = newState;
+    metaStream.onNext(metaState);
+}
 
 var setCommune = (commune) => {
     state = commune;
     communeStream.onNext(commune.commune);
-    choreStream.onNext(state.chores);
     purchaseStream.onNext(state.purchases);
     userStream.onNext(state.user);
 };
@@ -41,17 +86,20 @@ var setPurchases = (purchases) => {
 export var fetchCommune = () => {
     ApiService.getCommune((err, commune) => {
         if (!err) {
+            console.log("stat ovs");
+            console.log(commune);
             setCommune(commune);
         } else {
             // set error
         }
     });
+    fetchChores();
 };
 
 export var fetchChores = () => {
-    ApiService.getCommune((err, commune) => {
+    ApiService.getChores((err, chores) => {
         if (!err) {
-            setChores(commune.chores);
+            setChores(chores);
         } else {
             // set error
         }

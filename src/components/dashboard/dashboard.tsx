@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {NewCommune} from './communes/newCommune';
 import {Notification} from './notificator/notification';
-import {fetchCommune, communeStream, choreStream, purchaseStream, userStream} from '../../store/state_observable';
+import {
+    fetchCommune, communeStream, choreStream, purchaseStream, userStream,
+    fetchChores
+} from '../../store/state_observable';
 import CircularProgress from 'material-ui/CircularProgress';
 import {routes} from './routes';
 

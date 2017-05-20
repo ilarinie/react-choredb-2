@@ -4,6 +4,7 @@ import './App.css';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Login } from './components/login/login';
 import  Theme  from './theme/theme';
+import {metaStream} from "./store/state_observable";
 
 function authenticated() {
   if (localStorage.getItem('token') === null) {
@@ -12,11 +13,29 @@ function authenticated() {
   return true;
 }
 
-class App extends React.Component<{}, null> {
+class App extends React.Component<{}, any> {
+
+    metaSub: any;
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            loggedIn: false
+        };
+    }
+
+    componentDidMount = () => {
+        this.metaSub = metaStream.subscribe(
+            (metaState) => {
+                this.setState({
+                    loggedIn: metaState.loggedIn
+                });
+            }
+        );
+    }
 
     render() {
         let content;
-        if (authenticated()) {
+        if (this.state.loggedIn) {
             content = <Dashboard />;
         } else {
             content = <Login />;
