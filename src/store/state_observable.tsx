@@ -1,40 +1,30 @@
 import * as Rx from 'rx';
 import ApiService from '../services/api_service';
+import {State} from "../models/state";
+import {Chore} from "../models/chore";
+import {Purchase} from "../models/purchase";
+import {User} from "../models/user";
+import {Commune} from "../models/commune";
 
-var initialState = {
+let mainState: State = {
     commune: null,
-    user: null,
+    current_user: null,
+    commune_users: null,
     chores: null,
-    purchases: null
-};
+    purchases: null,
+    loggedIn: true
+}
 
-var initialMeta = {
-    loggedIn: false
-};
+export var mainStream = new Rx.Subject();
 
-var metaState = initialMeta;
+// Try if login has expired / exists:
 
-export var choreStream = new Rx.Subject();
-export var purchaseStream = new Rx.Subject();
-export var communeStream = new Rx.Subject();
-export var userStream = new Rx.Subject();
-export var metaStream = new Rx.Subject();
-var state = initialState;
-
-choreStream.onNext(initialState);
-metaStream.onNext(initialMeta);
-
-
-getMeta();
-
-
-// Function that is run on app start, checks to see if saved token is still valid.
-function getMeta() {
-    var newState = metaState;
+export let getInitialState = () => {
+    let newState = mainState;
     if (!localStorage.getItem('token')) {
         newState.loggedIn = false;
-        metaState = newState;
-        metaStream.onNext(metaState);
+        mainState = newState;
+        mainStream.onNext(mainState);
     } else {
         ApiService.get('auth/validate_token', (err, res) => {
             if (!err) {
@@ -42,76 +32,91 @@ function getMeta() {
             } else {
                 newState.loggedIn = false;
             }
-            metaState = newState;
-            metaStream.onNext(metaState);
+            mainState = newState;
+            mainStream.onNext(mainState);
         });
     }
 }
 
-export var login = () => {
-    var newState = metaState;
+mainStream.onNext(mainState);
+
+export let fetchCommune = () => {
+    ApiService.getCommune((err, response) => {
+        let commune: Commune = response as Commune;
+        let newState: State = mainState;
+        newState.commune = commune;
+        mainState = newState;
+        mainStream.onNext(mainState);
+    });
+}
+
+export let fetchChores = () => {
+    ApiService.getChores((err, response) => {
+        let chores: Chore[] = response as Chore[];
+        let newState: State = mainState;
+        newState.chores = chores;
+        mainState = newState;
+        mainStream.onNext(mainState);
+    });
+}
+
+export let fetchPurchases = () => {
+    ApiService.getPurchases((err, response) => {
+        let purchases: Purchase[] = response as Purchase[];
+        let newState: State = mainState;
+        newState.purchases = purchases;
+        mainState = newState;
+        mainStream.onNext(mainState);
+    });
+}
+
+export let fetchUsers = () => {
+    ApiService.getUsers((err, response) => {
+        let commune_users: User[] = response as User[];
+        let newState: State = mainState;
+        newState.commune_users = commune_users;
+        mainState = newState;
+        mainStream.onNext(mainState);
+    });
+}
+
+export let fetchCurrentUser = () => {
+    ApiService.getUser((err, response) => {
+        let user: User = response as User;
+        let newState: State = mainState;
+        newState.current_user = user;
+        mainState = newState;
+        mainStream.onNext(mainState);
+    });
+}
+
+export let fetchAll = () => {
+    ApiService.getUser((err, response) => {
+        let user: User = response as User;
+        let newState: State = mainState;
+        newState.current_user = user;
+        mainState = newState;
+        mainStream.onNext(mainState);
+        if (user.commune_id) {
+            fetchCommune();
+            fetchChores();
+            fetchUsers();
+            fetchPurchases();
+        }
+    });
+
+}
+
+export let login = () => {
+    let newState: State = mainState;
     newState.loggedIn = true;
-    metaState = newState;
-    metaStream.onNext(metaState);
+    mainState = newState;
+    mainStream.onNext(mainState);
 }
 
-export var logout = () => {
-    var newState = metaState;
+export let logout = () => {
+    let newState: State = mainState;
     newState.loggedIn = false;
-    metaState = newState;
-    metaStream.onNext(metaState);
+    mainState = newState;
+    mainStream.onNext(mainState);
 }
-
-var setCommune = (commune) => {
-    state = commune;
-    communeStream.onNext(commune.commune);
-    purchaseStream.onNext(state.purchases);
-    userStream.onNext(state.user);
-};
-
-var setChores = (chores) => {
-    var newState = state;
-    newState.chores = chores;
-    state = newState;
-    choreStream.onNext(state.chores);
-};
-
-var setPurchases = (purchases) => {
-    var newState = state;
-    newState.purchases = purchases;
-    state = newState;
-    purchaseStream.onNext(state.purchases);
-};
-
-export var fetchCommune = () => {
-    ApiService.getCommune((err, commune) => {
-        if (!err) {
-            console.log("stat ovs");
-            console.log(commune);
-            setCommune(commune);
-        } else {
-            // set error
-        }
-    });
-    fetchChores();
-};
-
-export var fetchChores = () => {
-    ApiService.getChores((err, chores) => {
-        if (!err) {
-            setChores(chores);
-        } else {
-            // set error
-        }
-    });
-};
-
-export var fetchPurchases = () => {
-    ApiService.getCommune((err, commune) => {
-        if (!err) {
-            setPurchases(commune.purchases);
-        } else {
-            // set error
-        }
-    });
-};

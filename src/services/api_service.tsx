@@ -1,39 +1,18 @@
 
 import { ResultObject } from '../models/result_object';
 import {consoleTestResultsHandler} from "tslint/lib/test";
+import {Chore} from "../models/chore";
+import {Commune} from "../models/commune";
+import {Purchase} from "../models/purchase";
+import {User} from "../models/user";
 
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
-    var apiUrl = 'http://localhost:3000/';
-
-    /*function setHeaders(){
-        var headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        return headers;
-    }*/
+    var apiUrl = 'https://choredb-api.herokuapp.com:3000/';
 
     export function send(method: string, path : string, data : any, callBack : CallbackFunction ) {
         var url = apiUrl + path;
-        /*var init = {
-        method: 'POST',
-        headers: setHeaders(),
-        cache: 'default',
-        body: data
-        }
-
-        var request = new Request(url, init);
-        fetch(request).then((response) => {
-        if (response.ok) {
-            console.log(response);
-            callBack(null, response);
-        } else {
-            return response.json();
-            callBack(response, null);
-        }
-        })*/
-
         var xhr = new XMLHttpRequest();
         xhr.open(method, url);
         xhr.setRequestHeader('Authorization', 'JWT ' + localStorage.getItem('token'));
@@ -63,16 +42,6 @@ export module ApiService {
 
     export function get(path : any, callBack : CallbackFunction ) {
         var url = apiUrl + path;
-        /*  var init = {
-        method: 'GET',
-        headers: setHeaders(),
-        cache: 'default'
-    }
-
-    var request = new Request(url, init);
-    fetch(request).then((response) => {
-        console.log(response);
-    })*/
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
@@ -114,7 +83,11 @@ export module ApiService {
         });
     }
 
-    export function register(username : any, password : any, callBack : any) {
+    export function changePassword(password: string, callBack: any) {
+        send('PUT', 'auth/change_password', JSON.stringify({password: password}), callBack);
+    }
+
+    export function register(username : string, password : string, callBack : any) {
         send('POST', 'auth/register', JSON.stringify({username: username, password: password}), callBack);
     }
 
@@ -123,13 +96,13 @@ export module ApiService {
         location.reload();
     }
 
-    export function completeChore(chore : any, callBack : any) {
+    export function completeChore(chore : Chore, callBack : any) {
         send('POST', 'chores/' + chore.chore_id + '/do', null, callBack);
     }
     export function getChores(callBack: any) {
         get('chores', (err, res) => {
             if (!err) {
-                var chores = res.contents;
+                let chores: Chore[] = res.contents as Chore[];
                 callBack(null, chores);
             } else {
                 callBack("Could not get chores from the server.");
@@ -140,9 +113,7 @@ export module ApiService {
     export function getCommune(callBack : any) {
         get('communes', (error, result) => {
             if (!error) {
-                console.log("apiservice")
-                console.log(result)
-                let commune = result.contents;
+                let commune: Commune = result.contents as Commune;
                 callBack(null, commune);
             } else {
                 callBack('Could not parse Commune object from the server response');
@@ -153,11 +124,12 @@ export module ApiService {
         send('POST', 'communes', data, callBack);
     }
 
-    export function postChore(chore : any, callBack : any) {
+    export function postChore(chore: Chore, callBack : any) {
         if (chore.chore_id) {
-            send('PUT', 'chores', JSON.stringify(chore), callBack);
+            send('PUT', 'chores/' + chore.chore_id, JSON.stringify(chore), callBack);
+        } else {
+            send('POST', 'chores', JSON.stringify(chore), callBack);
         }
-        send('POST', 'chores', JSON.stringify(chore), callBack);
     }
     export function deleteChore(chore : any , callBack : any) {
         send('DELETE', 'chores/' + chore.id, null, callBack );
@@ -169,15 +141,37 @@ export module ApiService {
     export function getPurchases(callBack : any) {
         get('purchases', (err : any, result : any) => {
             if (!err) {
-                var purchases = JSON.parse(result.contents);
+                let purchases: Purchase[] = result.contents as Purchase[];
                 callBack(null, purchases);
             } else {
                 callBack('Could not parse purchases from server response.');
             }
         });
     }
-    export function deletePurchase(purchase : any, callBack: any) {
-        console.log(purchase);
+
+    export function getUsers(callBack: any) {
+        get('users', (err, res) => {
+            if (!err) {
+                let users: User[] = res.contents as User[];
+                callBack(null, users);
+            } else {
+                callBack("Could not get users from the server.");
+            }
+        });
+    }
+
+    export function getUser(callBack: any) {
+        get('users/profile', (err, res) => {
+            if (!err) {
+                let user: User = res.contents as User;
+                callBack(null, user);
+            } else {
+                callBack("Could not get users from the server.");
+            }
+        });
+    }
+
+    export function deletePurchase(purchase : Purchase, callBack: any) {
         send('DELETE', 'purchases/' + purchase.purchase_id, null, callBack);
     }
 }

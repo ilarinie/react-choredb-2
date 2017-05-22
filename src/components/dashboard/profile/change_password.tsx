@@ -2,6 +2,8 @@ import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Divider, Paper} from "material-ui";
+import {ApiService} from "../../../services/api_service";
+import {updateMessage} from "../notificator/notificator";
 
 
 export class ChangePassword extends React.Component<any, any> {
@@ -12,7 +14,7 @@ export class ChangePassword extends React.Component<any, any> {
             user: this.props.user,
             password: '',
             password_confirmation: '',
-            error: ''
+            error: null
         };
     }
 
@@ -22,15 +24,28 @@ export class ChangePassword extends React.Component<any, any> {
             this.setState({
                 error: 'Empty inputs.'
             });
-        } else if (this.state.password !== this.state.password_confirmation){
+        } else if (this.state.password !== this.state.password_confirmation) {
             this.setState({
                 error: 'Passwords dont match'
             });
         } else {
-            // API CALl
+            ApiService.changePassword(this.state.password, (err, res) => {
+                if (!err) {
+                    updateMessage("Password changed succesfully");
+                    this.clearInputs();
+                } else {
+                    updateMessage("Error happened");
+                }
+            });
         }
     }
 
+    clearInputs = () => {
+        this.setState({
+            password: '',
+            password_confirmation: ''
+        });
+    }
     handlePasswordChange = (event: any) => {
         this.setState({
             password: event.target.value
@@ -41,12 +56,22 @@ export class ChangePassword extends React.Component<any, any> {
         this.setState({
             password_confirmation: event.target.value
         });
+        if (this.state.password !== event.target.value) {
+            this.setState({
+                error: 'Passwords dont match'
+            });
+        } else {
+            this.setState({
+                error: ''
+            });
+        }
     }
 
 
     render () {
         return (
             <div className="form-component-container">
+                <h2>Change your password</h2>
                 <form onSubmit={this.onSubmit}>
                     <Paper zDepth={2}>
                         <TextField

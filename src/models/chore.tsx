@@ -1,8 +1,9 @@
+import {Task} from "./task";
+
 export class Chore {
-    choreId: number;
+    chore_id: number;
     name: string;
     priority: number;
     points: number;
-    lastdoer: string;
-    lastdone: string;
+    tasks: Task[];
 }

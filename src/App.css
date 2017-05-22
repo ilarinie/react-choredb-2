@@ -8,10 +8,12 @@ body {
 }
 .main-container {
   max-width: 900px;
-  background:white;
+  background: white;
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
   margin: 0 auto;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .table {

@@ -3,6 +3,23 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import * as moment from 'moment';
 import { TablePagination } from 'react-pagination-table';
 
+const ChoreTable = ({...props}) => {
+    return (
+        <div>
+            <TablePagination
+                title="Latest completions:"
+                headers={[]}
+                data={props.data}
+                columns="username.created_at"
+                perPageItemCount={10}
+                totalCount={props.data.length}
+            />
+
+        </div>
+    );
+}
+
+
 export class ChoreInfo extends React.Component < any, any > {
 
     constructor(props: any) {
@@ -43,18 +60,3 @@ export class ChoreInfo extends React.Component < any, any > {
     }
 }
 
-const ChoreTable = ({...props}) => {
-    return (
-        <div>
-            <TablePagination
-                title="Latest completions:"
-                headers={[]}
-                data={props.data}
-                columns="username.created_at"
-                perPageItemCount={10}
-                totalCount={props.data.length}
-            />
-
-        </div>
-    );
-}

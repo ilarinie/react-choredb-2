@@ -4,39 +4,46 @@ import './App.css';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Login } from './components/login/login';
 import  Theme  from './theme/theme';
-import {metaStream} from "./store/state_observable";
+import {fetchCommune, getInitialState, mainStream} from "./store/state_observable";
+import {State} from "./models/state";
 
-function authenticated() {
-  if (localStorage.getItem('token') === null) {
-    return false;
-  }
-  return true;
-}
 
 class App extends React.Component<{}, any> {
 
-    metaSub: any;
+    sub: any;
     constructor(props: any) {
         super(props);
+
         this.state = {
-            loggedIn: false
+            mainState: null
         };
     }
 
     componentDidMount = () => {
-        this.metaSub = metaStream.subscribe(
-            (metaState) => {
+        this.sub = mainStream.subscribe(
+            (mainState: State) => {
                 this.setState({
-                    loggedIn: metaState.loggedIn
+                    mainState: mainState
                 });
             }
         );
+        getInitialState();
     }
+
+    componentWillUnmount = () => {
+        this.sub.dispose();
+    }
+
+    onBackButtonEvent = (e) => {
+        e.preventDefault();
+    }
+
+
 
     render() {
         let content;
-        if (this.state.loggedIn) {
-            content = <Dashboard />;
+        if (this.state.mainState && this.state.mainState.loggedIn) {
+            content = <Dashboard mainState={this.state.mainState} />;
         } else {
             content = <Login />;
         }

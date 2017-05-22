@@ -58,6 +58,13 @@ export class MenuComponent extends React.Component<any, any> {
                     >User
                     </MenuItem>
                 </Link>
+                <Link to="/users">
+                   <MenuItem
+                       onTouchTap={this.handleClose}
+                       leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}
+                       >Remove User
+                   </MenuItem>
+                </Link>
                 <Divider />
             </div>
         );

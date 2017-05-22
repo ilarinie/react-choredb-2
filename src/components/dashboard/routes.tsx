@@ -11,13 +11,14 @@ import {Profile} from "./profile/profile";
 import * as React from 'react';
 import {NotFound} from "./not_found";
 import {Switch} from "react-router";
+import {UserList} from "./users";
 
 export var routes = (context: any) => {
     return (
         <BrowserRouter>
             <div>
                 <div className="dashboard-container">
-                    <MenuComponent commune={context.state.commune} user={context.state.user}/>
+                    <MenuComponent commune={context.state.mainState.commune} user={context.state.mainState.current_user}/>
                     <CSSTransitionGroup
                         transitionName="example"
                         transitionEnterTimeout={500}
@@ -27,14 +28,15 @@ export var routes = (context: any) => {
                         
                     >
                         <Switch>
-                            <Route exact={true} path="/" component={() => (<Chores chores={context.state.chores} user={context.state.user}/>)}/>
-                            <Route path="/budget" component={() => (<Budget user={context.state.user} purchases={context.state.purchases}/>)}/>
+                            <Route exact={true} path="/" component={() => (<Chores mainState={context.props.mainState} />)}/>
+                            <Route path="/budget" component={() => (<Budget user={context.props.mainState.current_user} users={context.props.mainState.commune_users} purchases={context.props.mainState.purchases}/>)}/>
                             <Route path="/new_chore" component={() => (<ChoreForm chore={{}}/>)}/>
                             <Route path="/new_purchase" component={() => (<NewPurchase/>)}/>
                             <Route path="/new_user" component={() => (<NewCommuneUser/>)}/>
                             <Route path="/chores/:index"
-                                   component={() => (<ChoreDetails chores={context.state.chores}/>)}/>
-                            <Route path="/profile" component={() => (<Profile user={context.state.user}/>)}/>
+                                   component={() => (<ChoreDetails chores={context.props.mainState.chores}/>)}/>
+                            <Route path="/profile" component={() => (<Profile user={context.props.mainState.current_user}/>)}/>
+                            <Route path="/users" component={() => (<UserList users={context.props.mainState.commune_users} user={context.props.mainState.current_user} />)} />
                             <Route path="*" component={() => (<NotFound/>)} />
                         </Switch>
                     </CSSTransitionGroup>

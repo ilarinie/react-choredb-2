@@ -1,6 +1,6 @@
 export class User {
-    userId: number;
-    communeId: number;
+    user_id: string;
+    commune_id: number;
     username: string;
     name: string;
 }

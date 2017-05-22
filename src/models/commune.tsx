@@ -1,11 +1,5 @@
-import {Chore} from './chore';
-import {Purchase} from './purchase';
-import {User} from './user';
-
 export class Commune {
-    communeId : number;
+    commune_id: number;
+    created_at: Date;
     name: string;
-    user: User[];
-    chores: Chore[];
-    purchases: Purchase[];
 }

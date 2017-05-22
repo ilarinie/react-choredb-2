@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ApiService from '../../../services/api_service';
 import { updateMessage } from '../notificator/notificator';
 import Paper from 'material-ui/Paper';
+import {fetchUsers} from "../../../store/state_observable";
 
 export class NewCommuneUser extends React.Component<any, any> {
 
@@ -20,6 +21,7 @@ export class NewCommuneUser extends React.Component<any, any> {
     ApiService.send('POST', 'communes/add_user', JSON.stringify(data), (err : any, res : any) => {
       if (!err) {
         updateMessage('New user added');
+        fetchUsers();
       } else {
         updateMessage(err);
       }

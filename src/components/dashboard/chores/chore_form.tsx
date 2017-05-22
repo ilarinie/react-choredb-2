@@ -40,6 +40,11 @@ export class ChoreForm extends React.Component<any, any> {
       return;
     }
 
+    // If
+    if ( this.state.chore.chore_id ) {
+      this.chore.chore_id = this.state.chore.chore_id;
+    }
+
     this.chore.name = name;
     this.chore.priority = priority;
     this.chore.points = points;
@@ -62,8 +67,12 @@ export class ChoreForm extends React.Component<any, any> {
 
   callBack = (err: any, response: any) => {
     if (!err) {
+      if ( response.message.indexOf('updated') !== -1) {
+        updateMessage('Chore updated succesfully.');
+      } else {
+        updateMessage('New chore created.');
+      }
       this.clearValues();
-      updateMessage('New chore created.');
       fetchChores();
       this.setState({backendErrors: null, backendSuccess: response.message});
     } else {
@@ -131,20 +140,19 @@ export class ChoreForm extends React.Component<any, any> {
   }
 
   render() {
-    console.log(this.state.chore.chorename + 'asd')
     if ( this.state.backendSuccess ) {
       return <Redirect to="/" push={true} />;
     } else {
     return (
       <div className="form-component-container">
         <form onSubmit={this.handleSubmit}>
-        <h1>{!this.state.chore.chorename ? 'Create a new chore' : 'Edit ' + this.state.chore.chorename }</h1>
+        <h1>{!this.state.chore.name ? 'Create a new chore' : 'Edit ' + this.state.chore.name }</h1>
           <Paper zDepth={2}>
             <TextField
               id="chore-form-name"
               className="small-form-input"
               underlineShow={false}
-              defaultValue={this.state.chore ? this.state.chore.chorename : ''}
+              defaultValue={this.state.chore ? this.state.chore.name : ''}
               hintText="Chore name"
               errorText={(this.state.errors && this.state.errors.name) ? this.state.errors.name : ''} />
             <Divider />
@@ -167,7 +175,7 @@ export class ChoreForm extends React.Component<any, any> {
               errorText={(this.state.errors && this.state.errors.points ) ? this.state.errors.points : ''} />
               <Divider />
           </Paper><br />
-          <RaisedButton label="Create" type="submit" />
+          <RaisedButton label={this.state.chore.chore_id ? 'Update' : 'Create'} type="submit" />
           {this.state.chore.chore_id ? <RaisedButton primary={true} label="Delete" onClick={this.handleDelete} /> : <span />}
           <div className="chore-error-div"><p>{this.state.backendErrors}</p></div>
           <div className="chore-success-div"><p>{this.state.backendSuccess}</p></div>

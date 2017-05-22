@@ -84,8 +84,7 @@
         ],*/
         "radix": true,
         "semicolon": [
-            true,
-            "always"
+            false
         ],
         "switch-default": true,
         "trailing-comma": false,
@@ -111,9 +110,7 @@
         "variable-name": [
             true,
             "ban-keywords",
-            "check-format",
-            "allow-leading-underscore",
-            "allow-pascal-case"
+            "allow-leading-underscore"
         ],
         "whitespace": [
             true,

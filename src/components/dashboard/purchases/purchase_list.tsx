@@ -13,6 +13,25 @@ import {fetchPurchases} from '../../../store/state_observable';
 import * as moment from 'moment';
 import {TableRowColumn} from "material-ui";
 
+const PurchaseTableRow = ({...props}) => {
+    return (
+        <TableRow>
+            <TableRowColumn>{moment(props.purchase.created_at).fromNow()}</TableRowColumn>
+            <TableRowColumn>{props.purchase.username}</TableRowColumn>
+            <TableRowColumn>{props.purchase.description}</TableRowColumn>
+            <TableRowColumn>{props.purchase.amount}</TableRowColumn>
+            <TableRowColumn>
+                {props.user.user_id === props.purchase.user_id && !props.purchase.cancelled /*|| props.state.user.admin*/
+                    ? <RaisedButton
+                        primary={true}
+                        onClick={props.delete.bind(null, props.purchase)}
+                        label="Delete"/>
+                    : <span/>}
+            </TableRowColumn>;
+        </TableRow>
+    );
+};
+
 export class PurchaseList extends React.Component < any,
 any > {
 
@@ -71,21 +90,3 @@ any > {
     }
 }
 
-const PurchaseTableRow = ({...props}) => {
-    return (
-        <TableRow>
-            <TableRowColumn>{moment(props.purchase.created_at).fromNow()}</TableRowColumn>
-            <TableRowColumn>{props.purchase.username}</TableRowColumn>
-            <TableRowColumn>{props.purchase.description}</TableRowColumn>
-            <TableRowColumn>{props.purchase.amount}</TableRowColumn>
-            <TableRowColumn>
-                {props.user.user_id === props.purchase.user_id && !props.purchase.cancelled /*|| props.state.user.admin*/
-                    ? <RaisedButton
-                        primary={true}
-                        onClick={props.delete.bind(null, props.purchase)}
-                        label="Delete"/>
-                    : <span/>}
-            </TableRowColumn>;
-        </TableRow>
-    );
-};

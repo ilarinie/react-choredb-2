@@ -29,22 +29,16 @@ export class Notification extends React.Component<any, any> {
             });
     }
 
-    handleTouchTap = () => {
-        this.setState({open: true});
+    componentWillUnmount = () => {
+        this.sub.dispose();
     }
+
 
     handleActionTouchTap = () => {
         this.setState({open: false});
     }
 
-    handleChangeDuration = (event: any) => {
-        const value = event.target.value;
-        this.setState({
-            autoHideDuration: value.length > 0
-                ? parseInt(value, 10)
-                : 0
-        });
-    }
+
 
     handleRequestClose = () => {
         this.setState({open: false});

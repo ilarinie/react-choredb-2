@@ -3,6 +3,19 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'materi
 import {PurchaseList} from "./purchase_list";
 import {TableRowColumn} from "material-ui";
 
+const BudgetRow = ({...props}) => {
+    return (
+        <TableRow>
+            <TableRowColumn>{props.budgetItem.username}</TableRowColumn>
+            <TableRowColumn>{props.budgetItem.amount}</TableRowColumn>
+            <TableRowColumn style={props.budgetItem.differential < 0 ? {color: '#D32F2F'} : {color: 'green'}}>
+                <b>{props.budgetItem.differential < 0 ? '' : '+'}{props.budgetItem.differential}</b>
+            </TableRowColumn>
+        </TableRow>
+    );
+}
+
+
 export class Budget extends React.Component <any,
     any> {
 
@@ -10,7 +23,8 @@ export class Budget extends React.Component <any,
         super(props);
         this.state = {
             purchases: this.props.purchases,
-            budgetList: null
+            budgetList: null,
+            otherPurchasesAmount: null
         };
     }
 
@@ -19,11 +33,11 @@ export class Budget extends React.Component <any,
         if (this.state.purchases) {
             var users = [];
             var sum = 0;
+            var otherPurchases = {amount: 0};
 
-            this
-                .state
-                .purchases
-                .forEach((purchase) => {
+
+            this.state.purchases.forEach((purchase) => {
+                if (this.belongsToCommune(purchase.user_id)) {
                     let newPurchase = purchase;
                     let index = this.listIndexOfUser(purchase, users);
                     if (index !== -1) {
@@ -33,7 +47,10 @@ export class Budget extends React.Component <any,
                         users.push(newPurchase);
                     }
                     sum += parseFloat(purchase.amount);
-                });
+                } else {
+                    otherPurchases.amount += purchase.amount;
+                }
+            });
 
             var average = sum / users.length;
             var budgetItems = [];
@@ -51,6 +68,15 @@ export class Budget extends React.Component <any,
 
             return budgetItems;
         }
+    }
+
+    belongsToCommune(userId: string) {
+        for (let i = 0; i < this.props.users.length; i++) {
+            if (this.props.users[i].user_id === userId ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     listIndexOfUser = (user: any, list: any): number => {
@@ -94,22 +120,4 @@ export class Budget extends React.Component <any,
     }
 }
 
-const BudgetRow = ({...props}) => {
-    return (
-        <TableRow>
-            <TableRowColumn>{props.budgetItem.username}</TableRowColumn>
-            <TableRowColumn>{props.budgetItem.amount}</TableRowColumn>
-            <TableRowColumn
-                style={props.budgetItem.differential < 0
-                    ? {
-                        color: '#D32F2F'
-                    }
-                    : {
-                        color: 'green'
-                    }}
-            >
-                <b>{props.budgetItem.differential < 0 ? '' : '+'}{props.budgetItem.differential}</b>
-            </TableRowColumn>
-        </TableRow>
-    );
-}
+
