@@ -9,7 +9,7 @@ import {User} from "../models/user";
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
-    var apiUrl = 'https://choredb-api.herokuapp.com:3000/';
+    var apiUrl = 'https://choredb-api.herokuapp.com/';
 
     export function send(method: string, path : string, data : any, callBack : CallbackFunction ) {
         var url = apiUrl + path;
