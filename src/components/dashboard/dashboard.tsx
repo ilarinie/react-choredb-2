@@ -44,7 +44,7 @@ export class Dashboard extends React.Component <any, any> {
                     );
                 } else {
                     return (
-                        <LoadingScreen />
+                        <LoadingScreen message="Loading commune data.."/>
                     );
                 }
 
@@ -57,7 +57,7 @@ export class Dashboard extends React.Component <any, any> {
         // If there is no user, that means we're still waiting for a response from the api
         } else {
             return (
-               <LoadingScreen />
+               <LoadingScreen message="Loading user data..."/>
             );
         }
     }

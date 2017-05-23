@@ -6,6 +6,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import './login.css';
 import ApiService from '../../services/api_service';
 import {login} from "../../store/state_observable";
+import {LoadingScreen} from "../utils/loading_screen";
 
 export class Login extends React.Component < any,
 any > {
@@ -29,7 +30,12 @@ any > {
     this.setState({logging: true});
     let username = (document.getElementById('username')as HTMLInputElement).value;
     let password = (document.getElementById('password')as HTMLInputElement).value;
-    ApiService.authenticate(username, password, this.callBack);
+    ApiService.authenticate(username, password).then(() => {
+      login();
+    }).catch((error) => {
+      this.setState({logging: false});
+      this.setState({error: error});
+    })
   }
 
   callBack = (err : any, response : any) => {
@@ -52,7 +58,7 @@ any > {
           <Tab label="Log in" value="login">
             <div className="login-container">
               {this.state.logging
-                ? <div>Logging in..</div>
+                ? <LoadingScreen message="Logging in..." />
                 : <div>
                   <h1>Please log in</h1>
                   <form onSubmit={this.login}>

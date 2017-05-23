@@ -100,8 +100,18 @@ export module ApiService {
         xhr.send();
     }
 
-    export function authenticate(username: any, password: any, callBack: any) {
-        send('POST', 'auth/login',
+    export function authenticate(username: any, password: any) {
+        return fetchSend('POST', 'auth/login', {username: username, password:password}).then((result) => {
+                    localStorage.setItem('token', result.contents.token);
+                    return result;
+                }).catch((error) => {
+                    return error;
+                })
+
+
+
+    /*
+        fetchSend('POST', 'auth/login',
              JSON.stringify({ username: username, password: password }),
              (error: any, result: Promise<any>) => {
                  if (!error) {
@@ -119,7 +129,7 @@ export module ApiService {
                      callBack('Username or password wrong, try again.');
                  }
 
-        });
+        });*/
     }
 
 

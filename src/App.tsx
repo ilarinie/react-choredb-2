@@ -50,7 +50,7 @@ class App extends React.Component<{}, any> {
         if (this.state.mainState && this.state.mainState.loggedIn) {
             content = <Dashboard mainState={this.state.mainState} />;
         } else if (!this.state.mainState) {
-          content = <LoadingScreen />;
+          content = <LoadingScreen message="Loading.."/>;
         } else {
             content = <Login />;
         }
