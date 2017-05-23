@@ -41,8 +41,7 @@ export let getInitialState = () => {
 mainStream.onNext(mainState);
 
 export let fetchCommune = () => {
-    ApiService.getCommune((err, response) => {
-        let commune: Commune = response as Commune;
+    ApiService.getCommune().then((commune) => {
         let newState: State = mainState;
         newState.commune = commune;
         mainState = newState;
@@ -51,8 +50,7 @@ export let fetchCommune = () => {
 }
 
 export let fetchChores = () => {
-    ApiService.getChores((err, response) => {
-        let chores: Chore[] = response as Chore[];
+    ApiService.getChores().then((chores) => {
         let newState: State = mainState;
         newState.chores = chores;
         mainState = newState;
@@ -61,8 +59,7 @@ export let fetchChores = () => {
 }
 
 export let fetchPurchases = () => {
-    ApiService.getPurchases((err, response) => {
-        let purchases: Purchase[] = response as Purchase[];
+    ApiService.getPurchases().then((purchases) => {
         let newState: State = mainState;
         newState.purchases = purchases;
         mainState = newState;
@@ -71,8 +68,7 @@ export let fetchPurchases = () => {
 }
 
 export let fetchUsers = () => {
-    ApiService.getUsers((err, response) => {
-        let commune_users: User[] = response as User[];
+    ApiService.getUsers().then((commune_users) => {
         let newState: State = mainState;
         newState.commune_users = commune_users;
         mainState = newState;
@@ -80,19 +76,18 @@ export let fetchUsers = () => {
     });
 }
 
-export let fetchCurrentUser = () => {
-    ApiService.getUser((err, response) => {
-        let user: User = response as User;
+export let fetchCurrentUser = (): Promise<User> => {
+    return ApiService.getUser().then((user) => {
         let newState: State = mainState;
         newState.current_user = user;
         mainState = newState;
         mainStream.onNext(mainState);
+        return user;
     });
 }
 
 export let fetchAll = () => {
-    ApiService.getUser((err, response) => {
-        let user: User = response as User;
+    fetchCurrentUser().then((user) => {
         let newState: State = mainState;
         newState.current_user = user;
         mainState = newState;

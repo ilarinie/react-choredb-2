@@ -1,0 +1,497 @@
+{
+  "commune": {
+    "commune_id": 1,
+    "name": "test_commune_1",
+    "created_at": "2017-05-22T19:16:53.099Z"
+  },
+  "commune_users": [
+    {
+      "username": "user_with_admin",
+      "name": null,
+      "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+      "admin": true,
+      "tasks": [
+        {
+          "task_id": 7,
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+          "created_at": "2017-05-22T19:22:41.974Z",
+          "chore_id": 27,
+          "name": "connect"
+        },
+        {
+          "task_id": 6,
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+          "created_at": "2017-05-22T19:22:39.613Z",
+          "chore_id": 26,
+          "name": "calculate"
+        },
+        {
+          "task_id": 5,
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+          "created_at": "2017-05-22T19:22:36.760Z",
+          "chore_id": 5,
+          "name": "hack"
+        },
+        {
+          "task_id": 4,
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+          "created_at": "2017-05-22T19:22:34.364Z",
+          "chore_id": 4,
+          "name": "bypass"
+        },
+        {
+          "task_id": 3,
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+          "created_at": "2017-05-22T19:22:30.429Z",
+          "chore_id": 3,
+          "name": "transmit"
+        },
+        {
+          "task_id": 2,
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+          "created_at": "2017-05-22T19:22:27.309Z",
+          "chore_id": 2,
+          "name": "generate"
+        },
+        {
+          "task_id": 1,
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+          "created_at": "2017-05-22T19:22:25.245Z",
+          "chore_id": 1,
+          "name": "compress"
+        }
+      ],
+      "purchases": [
+        {
+          "description": "Refined Soft Sausages",
+          "purchase_id": 5,
+          "amount": "10.00",
+          "created_at": "2017-05-22T19:16:53.493Z",
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+        },
+        {
+          "description": "Fantastic Steel Cheese",
+          "purchase_id": 4,
+          "amount": "10.00",
+          "created_at": "2017-05-22T19:16:53.491Z",
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+        },
+        {
+          "description": "Gorgeous Frozen Bacon",
+          "purchase_id": 3,
+          "amount": "10.00",
+          "created_at": "2017-05-22T19:16:53.491Z",
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+        },
+        {
+          "description": "Rustic Concrete Computer",
+          "purchase_id": 2,
+          "amount": "10.00",
+          "created_at": "2017-05-22T19:16:53.490Z",
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+        },
+        {
+          "description": "Intelligent Steel Computer",
+          "purchase_id": 1,
+          "amount": "10.00",
+          "created_at": "2017-05-22T19:16:53.489Z",
+          "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+        }
+      ]
+    },
+    {
+      "username": "user_normal",
+      "name": null,
+      "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271",
+      "admin": false,
+      "purchases": [
+        {
+          "description": "Handmade Granite Pants",
+          "purchase_id": 10,
+          "amount": "5.00",
+          "created_at": "2017-05-22T19:16:53.503Z",
+          "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271"
+        },
+        {
+          "description": "Incredible Steel Chicken",
+          "purchase_id": 9,
+          "amount": "5.00",
+          "created_at": "2017-05-22T19:16:53.503Z",
+          "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271"
+        },
+        {
+          "description": "Licensed Cotton Computer",
+          "purchase_id": 8,
+          "amount": "5.00",
+          "created_at": "2017-05-22T19:16:53.498Z",
+          "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271"
+        },
+        {
+          "description": "Rustic Wooden Mouse",
+          "purchase_id": 7,
+          "amount": "5.00",
+          "created_at": "2017-05-22T19:16:53.495Z",
+          "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271"
+        },
+        {
+          "description": "Generic Concrete Ball",
+          "purchase_id": 6,
+          "amount": "5.00",
+          "created_at": "2017-05-22T19:16:53.493Z",
+          "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271"
+        }
+      ],
+      "tasks": []
+    }
+  ],
+  "current_user": {
+    "username": "user_with_admin",
+    "name": null,
+    "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+    "admin": true,
+    "commune_id": 1,
+    "tasks": [
+      {
+        "task_id": 7,
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+        "created_at": "2017-05-22T19:22:41.974Z",
+        "chore_id": 27,
+        "name": "connect"
+      },
+      {
+        "task_id": 6,
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+        "created_at": "2017-05-22T19:22:39.613Z",
+        "chore_id": 26,
+        "name": "calculate"
+      },
+      {
+        "task_id": 5,
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+        "created_at": "2017-05-22T19:22:36.760Z",
+        "chore_id": 5,
+        "name": "hack"
+      },
+      {
+        "task_id": 4,
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+        "created_at": "2017-05-22T19:22:34.364Z",
+        "chore_id": 4,
+        "name": "bypass"
+      },
+      {
+        "task_id": 3,
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+        "created_at": "2017-05-22T19:22:30.429Z",
+        "chore_id": 3,
+        "name": "transmit"
+      },
+      {
+        "task_id": 2,
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+        "created_at": "2017-05-22T19:22:27.309Z",
+        "chore_id": 2,
+        "name": "generate"
+      },
+      {
+        "task_id": 1,
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+        "created_at": "2017-05-22T19:22:25.245Z",
+        "chore_id": 1,
+        "name": "compress"
+      }
+    ],
+    "purchases": [
+      {
+        "description": "Refined Soft Sausages",
+        "purchase_id": 5,
+        "cancelled": false,
+        "amount": "10.00",
+        "created_at": "2017-05-22T19:16:53.493Z",
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+      },
+      {
+        "description": "Gorgeous Frozen Bacon",
+        "purchase_id": 3,
+        "cancelled": false,
+        "amount": "10.00",
+        "created_at": "2017-05-22T19:16:53.491Z",
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+      },
+      {
+        "description": "Fantastic Steel Cheese",
+        "purchase_id": 4,
+        "cancelled": false,
+        "amount": "10.00",
+        "created_at": "2017-05-22T19:16:53.491Z",
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+      },
+      {
+        "description": "Rustic Concrete Computer",
+        "purchase_id": 2,
+        "cancelled": false,
+        "amount": "10.00",
+        "created_at": "2017-05-22T19:16:53.490Z",
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+      },
+      {
+        "description": "Intelligent Steel Computer",
+        "purchase_id": 1,
+        "cancelled": false,
+        "amount": "10.00",
+        "created_at": "2017-05-22T19:16:53.489Z",
+        "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5"
+      }
+    ]
+  },
+  "purchases": [
+    {
+      "username": "user_normal",
+      "cancelled": false,
+      "purchase_id": 10,
+      "amount": "5.00",
+      "description": "Handmade Granite Pants",
+      "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271",
+      "created_at": "2017-05-22T19:16:53.503Z"
+    },
+    {
+      "username": "user_normal",
+      "cancelled": false,
+      "purchase_id": 9,
+      "amount": "5.00",
+      "description": "Incredible Steel Chicken",
+      "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271",
+      "created_at": "2017-05-22T19:16:53.503Z"
+    },
+    {
+      "username": "user_normal",
+      "cancelled": false,
+      "purchase_id": 8,
+      "amount": "5.00",
+      "description": "Licensed Cotton Computer",
+      "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271",
+      "created_at": "2017-05-22T19:16:53.498Z"
+    },
+    {
+      "username": "user_normal",
+      "cancelled": false,
+      "purchase_id": 7,
+      "amount": "5.00",
+      "description": "Rustic Wooden Mouse",
+      "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271",
+      "created_at": "2017-05-22T19:16:53.495Z"
+    },
+    {
+      "username": "user_normal",
+      "cancelled": false,
+      "purchase_id": 6,
+      "amount": "5.00",
+      "description": "Generic Concrete Ball",
+      "user_id": "d0f6c11a-826f-43ac-a309-e52d6c6e5271",
+      "created_at": "2017-05-22T19:16:53.493Z"
+    },
+    {
+      "username": "user_with_admin",
+      "cancelled": false,
+      "purchase_id": 5,
+      "amount": "10.00",
+      "description": "Refined Soft Sausages",
+      "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+      "created_at": "2017-05-22T19:16:53.493Z"
+    },
+    {
+      "username": "user_with_admin",
+      "cancelled": false,
+      "purchase_id": 4,
+      "amount": "10.00",
+      "description": "Fantastic Steel Cheese",
+      "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+      "created_at": "2017-05-22T19:16:53.491Z"
+    },
+    {
+      "username": "user_with_admin",
+      "cancelled": false,
+      "purchase_id": 3,
+      "amount": "10.00",
+      "description": "Gorgeous Frozen Bacon",
+      "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+      "created_at": "2017-05-22T19:16:53.491Z"
+    },
+    {
+      "username": "user_with_admin",
+      "cancelled": false,
+      "purchase_id": 2,
+      "amount": "10.00",
+      "description": "Rustic Concrete Computer",
+      "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+      "created_at": "2017-05-22T19:16:53.490Z"
+    },
+    {
+      "username": "user_with_admin",
+      "cancelled": false,
+      "purchase_id": 1,
+      "amount": "10.00",
+      "description": "Intelligent Steel Computer",
+      "user_id": "7926eed6-5416-447a-9dc7-d01bc3875be5",
+      "created_at": "2017-05-22T19:16:53.489Z"
+    }
+  ],
+  "chores": [
+    {
+      "chore_id": 1,
+      "name": "compress",
+      "points": 31393,
+      "priority": 53551,
+      "created_at": "2017-05-22T19:16:53.385Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": [
+        {
+          "username": "user_with_admin",
+          "name": "compress",
+          "created_at": "2017-05-22T19:22:25.245Z",
+          "task_id": 1,
+          "chore_id": 1
+        }
+      ]
+    },
+    {
+      "chore_id": 2,
+      "name": "generate",
+      "points": 58085,
+      "priority": 42413,
+      "created_at": "2017-05-22T19:16:53.385Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": [
+        {
+          "username": "user_with_admin",
+          "name": "generate",
+          "created_at": "2017-05-22T19:22:27.309Z",
+          "task_id": 2,
+          "chore_id": 2
+        }
+      ]
+    },
+    {
+      "chore_id": 3,
+      "name": "transmit",
+      "points": 52873,
+      "priority": 96793,
+      "created_at": "2017-05-22T19:16:53.387Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": [
+        {
+          "username": "user_with_admin",
+          "name": "transmit",
+          "created_at": "2017-05-22T19:22:30.429Z",
+          "task_id": 3,
+          "chore_id": 3
+        }
+      ]
+    },
+    {
+      "chore_id": 4,
+      "name": "bypass",
+      "points": 95023,
+      "priority": 7615,
+      "created_at": "2017-05-22T19:16:53.388Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": [
+        {
+          "username": "user_with_admin",
+          "name": "bypass",
+          "created_at": "2017-05-22T19:22:34.364Z",
+          "task_id": 4,
+          "chore_id": 4
+        }
+      ]
+    },
+    {
+      "chore_id": 5,
+      "name": "hack",
+      "points": 82362,
+      "priority": 217,
+      "created_at": "2017-05-22T19:16:53.389Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": [
+        {
+          "username": "user_with_admin",
+          "name": "hack",
+          "created_at": "2017-05-22T19:22:36.760Z",
+          "task_id": 5,
+          "chore_id": 5
+        }
+      ]
+    },
+    {
+      "chore_id": 26,
+      "name": "calculate",
+      "points": 40318,
+      "priority": 21855,
+      "created_at": "2017-05-22T19:16:53.437Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": [
+        {
+          "username": "user_with_admin",
+          "name": "calculate",
+          "created_at": "2017-05-22T19:22:39.613Z",
+          "task_id": 6,
+          "chore_id": 26
+        }
+      ]
+    },
+    {
+      "chore_id": 27,
+      "name": "connect",
+      "points": 78936,
+      "priority": 41543,
+      "created_at": "2017-05-22T19:16:53.443Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": [
+        {
+          "username": "user_with_admin",
+          "name": "connect",
+          "created_at": "2017-05-22T19:22:41.974Z",
+          "task_id": 7,
+          "chore_id": 27
+        }
+      ]
+    },
+    {
+      "chore_id": 28,
+      "name": "synthesize",
+      "points": 20073,
+      "priority": 3470,
+      "created_at": "2017-05-22T19:16:53.444Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": []
+    },
+    {
+      "chore_id": 29,
+      "name": "bypass",
+      "points": 15543,
+      "priority": 11091,
+      "created_at": "2017-05-22T19:16:53.446Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": []
+    },
+    {
+      "chore_id": 32,
+      "name": "connect",
+      "points": 55253,
+      "priority": 39192,
+      "created_at": "2017-05-22T19:16:53.451Z",
+      "commune_id": 1,
+      "creator_id": null,
+      "tasks": []
+    }
+  ]
+}

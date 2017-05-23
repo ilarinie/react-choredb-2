@@ -3,8 +3,7 @@ import * as React from 'react';
 import {ChoreComponent} from './chore';
 import {Link} from 'react-router-dom';
 
-export class Chores extends React.Component<any,
-  any> {
+export class Chores extends React.Component<any, any> {
 
 
   constructor(props: any) {

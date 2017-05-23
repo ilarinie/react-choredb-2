@@ -23,6 +23,8 @@
     "scripts",
     "acceptance-tests",
     "webpack",
+    "__tests__",
+    "__mocks__",
     "jest",
     "src/setupTests.ts"
   ],

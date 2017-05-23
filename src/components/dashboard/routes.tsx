@@ -25,7 +25,6 @@ export var routes = (context: any) => {
                         transitionLeaveTimeout={300}
                         transitionAppear={true}
                         transitionAppearTimeout={10000}
-                        
                     >
                         <Switch>
                             <Route exact={true} path="/" component={() => (<Chores mainState={context.props.mainState} />)}/>
@@ -33,9 +32,8 @@ export var routes = (context: any) => {
                             <Route path="/new_chore" component={() => (<ChoreForm chore={{}}/>)}/>
                             <Route path="/new_purchase" component={() => (<NewPurchase/>)}/>
                             <Route path="/new_user" component={() => (<NewCommuneUser/>)}/>
-                            <Route path="/chores/:index"
-                                   component={() => (<ChoreDetails chores={context.props.mainState.chores}/>)}/>
-                            <Route path="/profile" component={() => (<Profile user={context.props.mainState.current_user}/>)}/>
+                            <Route path="/chores/:index" component={() => (<ChoreDetails chores={context.props.mainState.chores}/>)}/>
+                            <Route path="/profile" component={() => (<Profile mainState={context.props.mainState} />)}/>
                             <Route path="/users" component={() => (<UserList users={context.props.mainState.commune_users} user={context.props.mainState.current_user} />)} />
                             <Route path="*" component={() => (<NotFound/>)} />
                         </Switch>

@@ -4,6 +4,7 @@ import {Notification} from './notificator/notification';
 import { fetchAll} from '../../store/state_observable';
 import CircularProgress from 'material-ui/CircularProgress';
 import {routes} from './routes';
+import {LoadingScreen} from "../utils/loading_screen";
 
 
 export class Dashboard extends React.Component <any, any> {
@@ -43,9 +44,7 @@ export class Dashboard extends React.Component <any, any> {
                     );
                 } else {
                     return (
-                        <div className="loading-screen">
-                            <div style={{padding: '200px'}}><CircularProgress/></div>
-                        </div>
+                        <LoadingScreen />
                     );
                 }
 
@@ -58,9 +57,7 @@ export class Dashboard extends React.Component <any, any> {
         // If there is no user, that means we're still waiting for a response from the api
         } else {
             return (
-                <div className="loading-screen">
-                    <div style={{padding: '200px'}}><CircularProgress/></div>
-                </div>
+               <LoadingScreen />
             );
         }
     }

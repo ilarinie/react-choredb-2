@@ -1,0 +1,149 @@
+exports[`test renders ChoreForm 1`] = `
+<div
+  className="form-component-container">
+  <form
+    onSubmit={[Function]}>
+    <h1>
+      Create a new chore
+    </h1>
+    <Paper
+      circle={false}
+      rounded={true}
+      transitionEnabled={true}
+      zDepth={2}>
+      <TextField
+        className="small-form-input"
+        defaultValue={undefined}
+        disabled={false}
+        errorText=""
+        floatingLabelFixed={false}
+        fullWidth={false}
+        hintText="Chore name"
+        id="chore-form-name"
+        multiLine={false}
+        rows={1}
+        type="text"
+        underlineShow={false} />
+      <Divider
+        inset={false} />
+      <TextField
+        className="small-form-input"
+        defaultValue={undefined}
+        disabled={false}
+        errorText=""
+        floatingLabelFixed={false}
+        fullWidth={false}
+        hintText="How often this should be done? (hours)"
+        id="chore-form-priority"
+        multiLine={false}
+        rows={1}
+        type="number"
+        underlineShow={false} />
+      <Divider
+        inset={false} />
+      <TextField
+        className="small-form-input"
+        defaultValue={undefined}
+        disabled={false}
+        errorText=""
+        floatingLabelFixed={false}
+        fullWidth={false}
+        hintText="Points awarded"
+        id="chore-form-points"
+        multiLine={false}
+        rows={1}
+        type="number"
+        underlineShow={false} />
+      <Divider
+        inset={false} />
+    </Paper>
+    <br />
+    <RaisedButton
+      disabled={false}
+      fullWidth={false}
+      label="Create"
+      labelPosition="after"
+      primary={false}
+      secondary={false}
+      type="submit" />
+    <span />
+    <div
+      className="chore-error-div">
+      <p />
+    </div>
+    <div
+      className="chore-success-div">
+      <p />
+    </div>
+  </form>
+</div>
+`;
+
+exports[`test renders Login 1`] = `
+<div
+  className="login-container">
+  <div
+    className="banner">
+    <h1>
+      ChoreDB 2.0
+    </h1>
+  </div>
+  <Tabs
+    initialSelectedIndex={0}
+    onChange={[Function]}
+    value="login">
+    <Tab
+      label="Log in"
+      value="login">
+      <div
+        className="login-container">
+        <div>
+          <h1>
+            Please log in
+          </h1>
+          <form
+            onSubmit={[Function]}>
+            <TextField
+              disabled={false}
+              floatingLabelFixed={false}
+              fullWidth={false}
+              hintText="Username"
+              id="username"
+              multiLine={false}
+              rows={1}
+              type="text"
+              underlineShow={true} />
+            <br />
+            <TextField
+              disabled={false}
+              floatingLabelFixed={false}
+              fullWidth={false}
+              hintText="Password"
+              id="password"
+              multiLine={false}
+              rows={1}
+              type="password"
+              underlineShow={true} />
+            <br />
+            <div
+              className="auth-failure" />
+            <RaisedButton
+              disabled={false}
+              fullWidth={true}
+              label="Log in"
+              labelPosition="after"
+              primary={false}
+              secondary={false}
+              type="submit" />
+          </form>
+        </div>
+      </div>
+    </Tab>
+    <Tab
+      label="Register"
+      value="register">
+      <Register />
+    </Tab>
+  </Tabs>
+</div>
+`;

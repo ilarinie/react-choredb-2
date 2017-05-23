@@ -1,0 +1,158 @@
+[
+  {
+    "chore_id": 1,
+    "name": "compress",
+    "points": 31393,
+    "priority": 53551,
+    "created_at": "2017-05-22T19:16:53.385Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": [
+      {
+        "username": "user_with_admin",
+        "name": "compress",
+        "created_at": "2017-05-22T19:22:25.245Z",
+        "task_id": 1,
+        "chore_id": 1
+      }
+    ]
+  },
+  {
+    "chore_id": 2,
+    "name": "generate",
+    "points": 58085,
+    "priority": 42413,
+    "created_at": "2017-05-22T19:16:53.385Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": [
+      {
+        "username": "user_with_admin",
+        "name": "generate",
+        "created_at": "2017-05-22T19:22:27.309Z",
+        "task_id": 2,
+        "chore_id": 2
+      }
+    ]
+  },
+  {
+    "chore_id": 3,
+    "name": "transmit",
+    "points": 52873,
+    "priority": 96793,
+    "created_at": "2017-05-22T19:16:53.387Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": [
+      {
+        "username": "user_with_admin",
+        "name": "transmit",
+        "created_at": "2017-05-22T19:22:30.429Z",
+        "task_id": 3,
+        "chore_id": 3
+      }
+    ]
+  },
+  {
+    "chore_id": 4,
+    "name": "bypass",
+    "points": 95023,
+    "priority": 7615,
+    "created_at": "2017-05-22T19:16:53.388Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": [
+      {
+        "username": "user_with_admin",
+        "name": "bypass",
+        "created_at": "2017-05-22T19:22:34.364Z",
+        "task_id": 4,
+        "chore_id": 4
+      }
+    ]
+  },
+  {
+    "chore_id": 5,
+    "name": "hack",
+    "points": 82362,
+    "priority": 217,
+    "created_at": "2017-05-22T19:16:53.389Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": [
+      {
+        "username": "user_with_admin",
+        "name": "hack",
+        "created_at": "2017-05-22T19:22:36.760Z",
+        "task_id": 5,
+        "chore_id": 5
+      }
+    ]
+  },
+  {
+    "chore_id": 26,
+    "name": "calculate",
+    "points": 40318,
+    "priority": 21855,
+    "created_at": "2017-05-22T19:16:53.437Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": [
+      {
+        "username": "user_with_admin",
+        "name": "calculate",
+        "created_at": "2017-05-22T19:22:39.613Z",
+        "task_id": 6,
+        "chore_id": 26
+      }
+    ]
+  },
+  {
+    "chore_id": 27,
+    "name": "connect",
+    "points": 78936,
+    "priority": 41543,
+    "created_at": "2017-05-22T19:16:53.443Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": [
+      {
+        "username": "user_with_admin",
+        "name": "connect",
+        "created_at": "2017-05-22T19:22:41.974Z",
+        "task_id": 7,
+        "chore_id": 27
+      }
+    ]
+  },
+  {
+    "chore_id": 28,
+    "name": "synthesize",
+    "points": 20073,
+    "priority": 3470,
+    "created_at": "2017-05-22T19:16:53.444Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": []
+  },
+  {
+    "chore_id": 29,
+    "name": "bypass",
+    "points": 15543,
+    "priority": 11091,
+    "created_at": "2017-05-22T19:16:53.446Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": []
+  },
+  {
+    "chore_id": 32,
+    "name": "connect",
+    "points": 55253,
+    "priority": 39192,
+    "created_at": "2017-05-22T19:16:53.451Z",
+    "commune_id": 1,
+    "creator_id": null,
+    "tasks": []
+  }
+]

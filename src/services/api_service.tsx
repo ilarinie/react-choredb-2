@@ -5,13 +5,47 @@ import {Chore} from "../models/chore";
 import {Commune} from "../models/commune";
 import {Purchase} from "../models/purchase";
 import {User} from "../models/user";
+import {errorComparator} from "tslint/lib/test/lintError";
 
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
     var apiUrl = 'https://choredb-api.herokuapp.com/';
 
-    export function send(method: string, path : string, data : any, callBack : CallbackFunction ) {
+    export function fetchSend(method: string, path : string, dataPacket : any): Promise<any> {
+        return fetch(apiUrl + path, {
+            method: method,
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': 'JWT ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify(dataPacket)
+            })
+            .then((data) => {
+                return data.json();
+            })
+            .catch((error) => {
+                return error;
+            })
+    }
+
+    export function fetchGet(path : any): Promise<any> {
+        return fetch(apiUrl + path, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': 'JWT ' + localStorage.getItem('token')
+            }
+        })
+            .then((data) => {
+                return data.json();
+            })
+            .catch((error) => {
+                return error;
+            })
+    }
+
+    export function send(method: string, path : string, dataPacket : any, callBack : CallbackFunction ) {
         var url = apiUrl + path;
         var xhr = new XMLHttpRequest();
         xhr.open(method, url);
@@ -37,8 +71,10 @@ export module ApiService {
                 }
             }
         };
-        xhr.send(data);
+        xhr.send(dataPacket);
     }
+
+
 
     export function get(path : any, callBack : CallbackFunction ) {
         var url = apiUrl + path;
@@ -67,15 +103,18 @@ export module ApiService {
     export function authenticate(username: any, password: any, callBack: any) {
         send('POST', 'auth/login',
              JSON.stringify({ username: username, password: password }),
-             (error: any, result: any) => {
+             (error: any, result: Promise<any>) => {
                  if (!error) {
-                    let token = result.contents.token;
-                    if (token) {
-                        localStorage.setItem('token', token);
-                        callBack(null, 'Succesfully logged in.');
-                    } else {
-                        callBack('Could not get a token from the server');
-                    }
+                    result.then((resultObject) => {
+                        console.log(resultObject);
+                        let token = resultObject.contents.token;
+                        if (token) {
+                            localStorage.setItem('token', token);
+                            callBack(null, 'Succesfully logged in.');
+                        } else {
+                            callBack('Could not get a token from the server');
+                        }
+                    })
                  } else {
                      callBack('Username or password wrong, try again.');
                  }
@@ -83,6 +122,9 @@ export module ApiService {
         });
     }
 
+
+    //AUTH
+    //____________________________________________________________________________________________//
     export function changePassword(password: string, callBack: any) {
         send('PUT', 'auth/change_password', JSON.stringify({password: password}), callBack);
     }
@@ -99,36 +141,56 @@ export module ApiService {
     export function completeChore(chore : Chore, callBack : any) {
         send('POST', 'chores/' + chore.chore_id + '/do', null, callBack);
     }
-    export function getChores(callBack: any) {
-        get('chores', (err, res) => {
-            if (!err) {
-                let chores: Chore[] = res.contents as Chore[];
-                callBack(null, chores);
-            } else {
-                callBack("Could not get chores from the server.");
-            }
+
+    //_____________________________________________________________________________________________//
+
+    // GETS
+    //_____________________________________________________________________________________________//
+    export function getChores(): Promise<Chore[]> {
+        return fetchGet('chores').then((promise) => {
+            return promise.contents as Promise<Chore[]>;
         });
     }
 
-    export function getCommune(callBack : any) {
-        get('communes', (error, result) => {
-            if (!error) {
-                let commune: Commune = result.contents as Commune;
-                callBack(null, commune);
-            } else {
-                callBack('Could not parse Commune object from the server response');
-            }
+    export function getCommune(): Promise<Commune> {
+        return fetchGet('communes').then((promise) => {
+            return promise.contents as Promise<Commune>;
         });
     }
+
+    export function getPurchases(): Promise<Purchase[]> {
+        return fetchGet('purchases').then((promise) => {
+            return promise.contents as Promise<Purchase[]>;
+        })
+    }
+
+    export function getUsers(): Promise<User[]> {
+       return fetchGet('users').then((promise) => {
+           return promise.contents as Promise<User[]>;
+       })
+    }
+
+    export function getUser(): Promise<User> {
+        return fetchGet('users/profile').then((promise) => {
+            return promise.contents as Promise<User>;
+        })
+    }
+
+    // PUTS
+    // ___________________________________________________________________________________________ //
     export function postCommune(data : any, callBack : any) {
         send('POST', 'communes', data, callBack);
     }
 
-    export function postChore(chore: Chore, callBack : any) {
+    export function updateUser(user: User): Promise<any> {
+        return fetchSend('PUT', 'users', user);
+    }
+
+    export function postChore(chore: Chore): Promise<any> {
         if (chore.chore_id) {
-            send('PUT', 'chores/' + chore.chore_id, JSON.stringify(chore), callBack);
+            return fetchSend('PUT', 'chores/' + chore.chore_id, chore);
         } else {
-            send('POST', 'chores', JSON.stringify(chore), callBack);
+            return fetchSend('POST', 'chores', chore);
         }
     }
     export function deleteChore(chore : any , callBack : any) {
@@ -138,38 +200,7 @@ export module ApiService {
     export function postPurchase(purchase : any, callBack : any) {
         send('POST', 'purchases', JSON.stringify(purchase), callBack);
     }
-    export function getPurchases(callBack : any) {
-        get('purchases', (err : any, result : any) => {
-            if (!err) {
-                let purchases: Purchase[] = result.contents as Purchase[];
-                callBack(null, purchases);
-            } else {
-                callBack('Could not parse purchases from server response.');
-            }
-        });
-    }
 
-    export function getUsers(callBack: any) {
-        get('users', (err, res) => {
-            if (!err) {
-                let users: User[] = res.contents as User[];
-                callBack(null, users);
-            } else {
-                callBack("Could not get users from the server.");
-            }
-        });
-    }
-
-    export function getUser(callBack: any) {
-        get('users/profile', (err, res) => {
-            if (!err) {
-                let user: User = res.contents as User;
-                callBack(null, user);
-            } else {
-                callBack("Could not get users from the server.");
-            }
-        });
-    }
 
     export function deletePurchase(purchase : Purchase, callBack: any) {
         send('DELETE', 'purchases/' + purchase.purchase_id, null, callBack);

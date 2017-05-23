@@ -17,9 +17,7 @@ any > {
       logging: false,
       error: null
     };
-    this.login = this
-      .login
-      .bind(this);
+    this.login = this.login.bind(this);
   }
 
   handleChange = (value : any) => {
@@ -36,6 +34,7 @@ any > {
 
   callBack = (err : any, response : any) => {
     if (!err) {
+      console.log("kutsuu")
       login();
     } else {
       this.setState({logging: false});

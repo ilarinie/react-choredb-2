@@ -8,6 +8,11 @@ import {fetchCommune, getInitialState, mainStream} from "./store/state_observabl
 import {State} from "./models/state";
 
 
+import * as injectTapEventPlugin from 'react-tap-event-plugin';
+import {LoadingScreen} from "./components/utils/loading_screen";
+
+injectTapEventPlugin();
+
 class App extends React.Component<{}, any> {
 
     sub: any;
@@ -44,6 +49,8 @@ class App extends React.Component<{}, any> {
         let content;
         if (this.state.mainState && this.state.mainState.loggedIn) {
             content = <Dashboard mainState={this.state.mainState} />;
+        } else if (!this.state.mainState) {
+          content = <LoadingScreen />;
         } else {
             content = <Login />;
         }

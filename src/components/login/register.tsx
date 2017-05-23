@@ -25,7 +25,7 @@ any > {
     }
   }
 
-  register() {
+  register = (event) => {
     this.setState({registering: true, registered: 'Loading..'});
     let username = (document.getElementById('regUsername')as HTMLInputElement).value;
     let password = (document.getElementById('regPassword')as HTMLInputElement).value;
@@ -41,7 +41,7 @@ any > {
   render() {
 
     if (this.state.registered) {
-      return <div className="login-container registration-success">Registration succesfull, you can now log in</div>;
+      return <div className="login-container registration-success">Registration successful, you can now log in</div>;
     } else {
       return (
         <div className="login-container">
@@ -49,22 +49,12 @@ any > {
 
           {this.state.registering
             ? <div className="registration-success">Loading..</div>
-            : <div><TextField hintText="Username" id="regUsername"/><br/>
-              <TextField
-                  hintText="Password"
-                  id="regPassword"
-                  type="password"
-              /><br/>
-              <TextField
-                  hintText="Password Confirmation"
-                  id="regPasswordConf"
-                  type="password"
-              /><br/>
-              <RaisedButton
-                label="Register"
-                fullWidth={true}
-                onClick={() => this.register()}/>
-            </div>}
+            : <form onSubmit={this.register}>
+                <TextField hintText="Username" id="regUsername"/><br/>
+                <TextField hintText="Password" id="regPassword" type="password"/><br/>
+                <TextField hintText="Password Confirmation" id="regPasswordConf" type="password"/><br/>
+                <RaisedButton label="Register" fullWidth={true} type="submit"/>
+            </form>}
           <div className="auth-failure">{this.state.error}</div>
         </div>
       );
