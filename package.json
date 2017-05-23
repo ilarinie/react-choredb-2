@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "mock-local-storage": "^1.0.2",
-    "react-scripts-ts": "1.4.0",
+    "react-scripts-ts": "2.0.1",
     "tslint": "^5.2.0",
     "tslint-react": "^3.0.0"
   },
