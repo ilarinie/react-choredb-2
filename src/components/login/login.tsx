@@ -33,8 +33,9 @@ any > {
     ApiService.authenticate(username, password).then(() => {
       login();
     }).catch((error) => {
+      console.log(error)
       this.setState({logging: false});
-      this.setState({error: error});
+      this.setState({error: "Wrong username and/or password."});
     })
   }
 

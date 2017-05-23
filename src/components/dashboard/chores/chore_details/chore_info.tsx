@@ -52,7 +52,7 @@ export class ChoreInfo extends React.Component < any, any > {
         }
         return (
             <div className="dashboard-large-item">
-                <h1>{this.props.chore.chorename} info page.</h1>
+                <h1>{this.props.chore.name} info page.</h1>
                 <p>{this.props.chore.tasks ?  this.props.chore.chorename + ' has been done ' + this.props.chore.tasks.length + ' times'  : 'No tasks as of yet.' } </p>
                 <ChoreTable data={this.state.modifiedTasks} />
             </div>

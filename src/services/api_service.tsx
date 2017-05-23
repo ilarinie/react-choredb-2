@@ -10,7 +10,7 @@ import {errorComparator} from "tslint/lib/test/lintError";
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
-    var apiUrl = 'https://choredb-api.herokuapp.com/';
+    var apiUrl = 'http://localhost:3000/';
 
     export function fetchSend(method: string, path : string, dataPacket : any): Promise<any> {
         return fetch(apiUrl + path, {
@@ -101,12 +101,10 @@ export module ApiService {
     }
 
     export function authenticate(username: any, password: any) {
-        return fetchSend('POST', 'auth/login', {username: username, password:password}).then((result) => {
+        return fetchSend('POST', 'auth/login', {username: username, password: password}).then((result) => {
                     localStorage.setItem('token', result.contents.token);
                     return result;
-                }).catch((error) => {
-                    return error;
-                })
+                });
 
 
 

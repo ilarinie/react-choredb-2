@@ -48,8 +48,13 @@ export class ChoreForm extends React.Component<any, any> {
         this.chore.priority = priority;
         this.chore.points = points;
         ApiService.postChore(this.chore).then((promise) => {
-            updateMessage('New chore created succesfully.')
-            this.clearValues();
+            if (!this.chore.chore_id) {
+                updateMessage('New chore created succesfully.')
+                this.clearValues();
+            } else {
+                updateMessage('Chore updated succesfully.');
+            }
+            fetchChores();
         })
         .catch((error) => {
             updateMessage("Error: " + error)
@@ -70,20 +75,6 @@ export class ChoreForm extends React.Component<any, any> {
     }
 
 
-    callBack = (err: any, response: any) => {
-        if (!err) {
-            if (response.message.indexOf('updated') !== -1) {
-                updateMessage('Chore updated succesfully.');
-            } else {
-                updateMessage('New chore created.');
-            }
-            this.clearValues();
-            fetchChores();
-            this.setState({backendErrors: null, backendSuccess: response.message});
-        } else {
-            this.setState({backendErrors: 'Server side error: ' + err, backendSuccess: null});
-        }
-    }
 
     parseName = (name: any) => {
         if (!name || name === '') {
