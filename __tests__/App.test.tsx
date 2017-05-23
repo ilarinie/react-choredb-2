@@ -79,7 +79,7 @@ it('renders Menu', () => {
     getMainState((err, res) => {
         expect(TestUtils.createRenderer().render(
             <UserList mainState={res} />
-        ))
+        )).toMatchSnapshot()
     });
 })
 
@@ -87,6 +87,6 @@ it('renders Profile', () => {
     getMainState((err, res) => {
         expect(TestUtils.createRenderer().render(
             <Profile mainState={res} />
-        ))
+        )).toMatchSnapshot()
     });
 })
