@@ -13,19 +13,25 @@ export module ApiService {
     var apiUrl = 'https://choredb-api.herokuapp.com/';
 
     export function fetchSend(method: string, path : string, dataPacket : any): Promise<any> {
+        if (dataPacket) {
+            dataPacket = JSON.stringify(dataPacket);
+        } else {
+            dataPacket = "";
+        }
+
         return fetch(apiUrl + path, {
             method: method,
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': 'JWT ' + localStorage.getItem('token')
             },
-            body: JSON.stringify(dataPacket)
+            body: dataPacket
             })
             .then((data) => {
+                if (!data.ok) {
+                    throw Error(data.statusText);
+                }
                 return data.json();
-            })
-            .catch((error) => {
-                return error;
             })
     }
 
@@ -36,13 +42,14 @@ export module ApiService {
                 'Content-type': 'application/json',
                 'Authorization': 'JWT ' + localStorage.getItem('token')
             }
-        })
+            })
             .then((data) => {
+                if (!data.ok) {
+                    throw Error(data.statusText);
+                }
                 return data.json();
             })
-            .catch((error) => {
-                return error;
-            })
+
     }
 
     export function send(method: string, path : string, dataPacket : any, callBack : CallbackFunction ) {
@@ -106,39 +113,14 @@ export module ApiService {
                     return result;
                 });
 
-
-
-    /*
-        fetchSend('POST', 'auth/login',
-             JSON.stringify({ username: username, password: password }),
-             (error: any, result: Promise<any>) => {
-                 if (!error) {
-                    result.then((resultObject) => {
-                        console.log(resultObject);
-                        let token = resultObject.contents.token;
-                        if (token) {
-                            localStorage.setItem('token', token);
-                            callBack(null, 'Succesfully logged in.');
-                        } else {
-                            callBack('Could not get a token from the server');
-                        }
-                    })
-                 } else {
-                     callBack('Username or password wrong, try again.');
-                 }
-
-        });*/
     }
 
-
-    //AUTH
-    //____________________________________________________________________________________________//
     export function changePassword(password: string, callBack: any) {
         send('PUT', 'auth/change_password', JSON.stringify({password: password}), callBack);
     }
 
-    export function register(username : string, password : string, callBack : any) {
-        send('POST', 'auth/register', JSON.stringify({username: username, password: password}), callBack);
+    export function register(username : string, password : string) {
+        return fetchSend('POST', 'auth/register', {username: username, password: password});
     }
 
     export function logout() {
@@ -146,14 +128,12 @@ export module ApiService {
         location.reload();
     }
 
-    export function completeChore(chore : Chore, callBack : any) {
-        send('POST', 'chores/' + chore.chore_id + '/do', null, callBack);
-    }
 
-    //_____________________________________________________________________________________________//
 
     // GETS
-    //_____________________________________________________________________________________________//
+    // ___________________________________________________________________________________________ //
+
+
     export function getChores(): Promise<Chore[]> {
         return fetchGet('chores').then((promise) => {
             return promise.contents as Promise<Chore[]>;
@@ -201,8 +181,13 @@ export module ApiService {
             return fetchSend('POST', 'chores', chore);
         }
     }
-    export function deleteChore(chore : any , callBack : any) {
-        send('DELETE', 'chores/' + chore.id, null, callBack );
+
+    export function completeChore(chore : Chore): Promise<any> {
+        return fetchSend('POST', 'chores/' + chore.chore_id + '/do', null);
+    }
+
+    export function deleteChore(chore : any) {
+        return fetchSend('DELETE', 'chores/' + chore.id, null);
     }
 
     export function postPurchase(purchase : any, callBack : any) {

@@ -8,8 +8,7 @@ import ApiService from '../../services/api_service';
 import {login} from "../../store/state_observable";
 import {LoadingScreen} from "../utils/loading_screen";
 
-export class Login extends React.Component < any,
-any > {
+export class Login extends React.Component <any, any> {
 
   constructor(props : any) {
     super(props);

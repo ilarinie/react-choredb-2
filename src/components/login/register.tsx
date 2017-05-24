@@ -26,22 +26,40 @@ any > {
   }
 
   register = (event) => {
+    event.preventDefault();
     this.setState({registering: true, registered: 'Loading..'});
     let username = (document.getElementById('regUsername')as HTMLInputElement).value;
     let password = (document.getElementById('regPassword')as HTMLInputElement).value;
     let passwordConfirmation = (document.getElementById('regPasswordConf')as HTMLInputElement).value;
 
+
     if (username !== '' && password === passwordConfirmation) {
-      ApiService.register(username, password, this.callBack);
+      ApiService.register(username, password).then((result) => {
+        console.log(result);
+        this.setState({
+          registering: false,
+          registered: 'Registration successful, you can now log in.'
+        })
+      }).catch((error) => {
+        this.setState({
+          registering: false,
+          registered: null,
+          error: error.toString()
+        })
+      });
     } else {
-      // handle error
+      this.setState({
+        registering: false,
+        registered: null,
+        error: "Username missing or passwords don't match."
+      })
     }
   }
 
   render() {
 
     if (this.state.registered) {
-      return <div className="login-container registration-success">Registration successful, you can now log in</div>;
+      return <div className="login-container registration-success">{this.state.registered}</div>;
     } else {
       return (
         <div className="login-container">

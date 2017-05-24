@@ -39,17 +39,16 @@ export class UserList extends React.Component<any, any> {
 
 
     handleDelete = (user) => {
-
-        var confirm = prompt("Are you sure?");
-
-        ApiService.send('DELETE', 'users/' + user.user_id, null, (err, res) => {
-            if (!err) {
-                updateMessage("User removed succesfully.");
-                fetchUsers();
-            } else {
-                updateMessage("Something went wrong");
-            }
-        });
+        if (confirm('Are you user you want to remove ' + user.username + '?')) {
+            ApiService.send('DELETE', 'users/' + user.user_id, null, (err, res) => {
+                if (!err) {
+                    updateMessage("User removed succesfully.");
+                    fetchUsers();
+                } else {
+                    updateMessage("Something went wrong");
+                }
+            });
+        }
     }
 
     render() {

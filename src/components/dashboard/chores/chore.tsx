@@ -47,18 +47,18 @@ any > {
 
   completeChoreHandler = () => {
     this.setState({loading: true});
-    ApiService.completeChore(this.state.chore, (err : any, res : any) => {
-      this.setState({loading: false});
-      if (!err) {
-
-        updateMessage('Well done.');
-        this.setState({
-          done: true
-        })
-        fetchChores();
-      } else {
-        this.setState({errorObject: err});
-      }
+    ApiService.completeChore(this.state.chore).then((response) => {
+      updateMessage('Well done.');
+      this.setState({
+        done: true
+      })
+      fetchChores();
+    })
+    .catch((error) => {
+      this.setState({
+        errorObject: error.toString(),
+        loading: false
+      });
     });
   }
 

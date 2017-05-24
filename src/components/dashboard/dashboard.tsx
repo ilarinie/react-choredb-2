@@ -2,7 +2,6 @@ import * as React from 'react';
 import {NewCommune} from './communes/newCommune';
 import {Notification} from './notificator/notification';
 import { fetchAll} from '../../store/state_observable';
-import CircularProgress from 'material-ui/CircularProgress';
 import {routes} from './routes';
 import {LoadingScreen} from "../utils/loading_screen";
 
@@ -18,14 +17,6 @@ export class Dashboard extends React.Component <any, any> {
 
     componentDidMount = () => {
         fetchAll();
-    }
-
-    componentWillUnmount = () => {
-           /* this.choreSub.dispose();
-            this.communeSub.dispose();
-            this.purchaseSub.dispose();
-            this.userSub.dispose();
-            this.usersSub.dispose();*/
     }
 
     render() {
