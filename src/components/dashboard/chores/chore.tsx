@@ -48,10 +48,10 @@ any > {
   completeChoreHandler = () => {
     this.setState({loading: true});
     ApiService.completeChore(this.state.chore).then((response) => {
-      updateMessage('Well done.');
       this.setState({
         done: true
       })
+      updateMessage('Well done.');
       fetchChores();
     })
     .catch((error) => {

@@ -45,25 +45,13 @@ export class MenuComponent extends React.Component<any, any> {
                 <Subheader>Admin tools</Subheader>
                 <Subheader>Add</Subheader>
                 <Link to="/new_chore">
-                    <MenuItem 
-                        onTouchTap={this.handleClose}
-                        leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}
-                    >Chore
-                    </MenuItem>
+                    <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}>Chore</MenuItem>
                 </Link>
                 <Link to="/new_user">
-                    <MenuItem 
-                        onTouchTap={this.handleClose}
-                        leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}
-                    >User
-                    </MenuItem>
+                    <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}>User</MenuItem>
                 </Link>
                 <Link to="/users">
-                   <MenuItem
-                       onTouchTap={this.handleClose}
-                       leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}
-                       >Remove User
-                   </MenuItem>
+                   <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}>Remove User</MenuItem>
                 </Link>
                 <Divider />
             </div>
@@ -76,42 +64,23 @@ export class MenuComponent extends React.Component<any, any> {
                     iconClassNameRight="muidocs-icon-navigation-expand-more"
                     onLeftIconButtonTouchTap={this.handleToggle}
                 />
-                <Drawer
-                    open={this.state.drawerOpen}
-                    docked={false}
-                    width={200}
-                    onRequestChange={(open) => this.setState({ open })}
-                >
+                <Drawer open={this.state.drawerOpen} docked={false} width={200} onRequestChange={(open) => this.setState({ open })}>
                     <MenuItem disabled={true} >ChoreDB 2.0</MenuItem>
                     <Divider />
                     <Link to="/profile">
-                       <MenuItem 
-                        onTouchTap={this.handleClose}
-                        leftIcon={<FontIcon className="fa fa-user-circle-o" aria-hidden="true"/>}
-                       >Profile
-                       </MenuItem>
+                       <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-user-circle-o" aria-hidden="true"/>}>Profile</MenuItem>
                     </Link>
-
                     <Link to="/">
-                        <MenuItem
-                            onTouchTap={this.handleClose}
-                            leftIcon={<FontIcon className="fa fa-check-circle-o" aria-hidden="true"/>}
-                        >Chores
-                        </MenuItem>
+                        <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-check-circle-o" aria-hidden="true"/>}>Chores</MenuItem>
                     </Link>
                     <Link to="/budget">
-                        <MenuItem 
-                            onTouchTap={this.handleClose}
-                            leftIcon={<FontIcon className="fa fa-line-chart" aria-hidden="true"/>}
-                        >Budget
-                        </MenuItem>
+                        <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-line-chart" aria-hidden="true"/>}>Budget</MenuItem>
+                    </Link>
+                    <Link to="/purchase_list">
+                        <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-line-chart" aria-hidden="true"/>}>Purchase list</MenuItem>
                     </Link>
                     <Link to="/new_purchase">
-                        <MenuItem 
-                            onTouchTap={this.handleClose}
-                            leftIcon={<FontIcon className="fa fa-money" aria-hidden="true"/>}
-                        >New Purchase
-                        </MenuItem>
+                        <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-money" aria-hidden="true"/>}>New Purchase</MenuItem>
                     </Link>
                     {true ? adminMenuItems : ''}
                     <Subheader > Logged in as : </Subheader>

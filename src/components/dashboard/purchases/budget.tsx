@@ -114,7 +114,6 @@ export class Budget extends React.Component <any,
                         </TableBody>
                     </Table>
                 </div>
-                <PurchaseList user={this.props.user} purchases={this.state.purchases}/>
             </div>
         );
     }

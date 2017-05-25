@@ -5,12 +5,11 @@ import {Chore} from "../models/chore";
 import {Commune} from "../models/commune";
 import {Purchase} from "../models/purchase";
 import {User} from "../models/user";
-import {errorComparator} from "tslint/lib/test/lintError";
 
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
-    var apiUrl = 'https://choredb-api.herokuapp.com/';
+    var apiUrl = 'http://localhost:3000/';
 
     export function fetchSend(method: string, path : string, dataPacket : any): Promise<any> {
         if (dataPacket) {
@@ -28,10 +27,12 @@ export module ApiService {
             body: dataPacket
             })
             .then((data) => {
-                if (!data.ok) {
-                    throw Error(data.statusText);
+                let json = data.json();
+                if (data.status >= 200 && data.status < 300) {
+                        return json;
+                } else {
+                    return json.then(Promise.reject.bind(Promise));
                 }
-                return data.json();
             })
     }
 
@@ -45,7 +46,7 @@ export module ApiService {
             })
             .then((data) => {
                 if (!data.ok) {
-                    throw Error(data.statusText);
+                    throw Error((data.json() as any).contents.message);
                 }
                 return data.json();
             })
@@ -186,12 +187,12 @@ export module ApiService {
         return fetchSend('POST', 'chores/' + chore.chore_id + '/do', null);
     }
 
-    export function deleteChore(chore : any) {
+    export function deleteChore(chore : any): Promise<any> {
         return fetchSend('DELETE', 'chores/' + chore.id, null);
     }
 
-    export function postPurchase(purchase : any, callBack : any) {
-        send('POST', 'purchases', JSON.stringify(purchase), callBack);
+    export function postPurchase(purchase : Purchase): Promise<any> {
+        return fetchSend('POST', 'purchases', purchase);
     }
 
 

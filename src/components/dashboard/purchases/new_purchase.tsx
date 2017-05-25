@@ -35,14 +35,18 @@ handleSubmit = (event: any) =>  {
   var purchase: any = {};
   purchase.description = desc;
   purchase.amount = amount;
-  ApiService.postPurchase(purchase, this.callBack);
+  ApiService.postPurchase(purchase).then((response) => {
+    updateMessage('New purchase created');
+    fetchPurchases();
+  }).catch((error) => {
+    updateMessage(error.message);
+  });
 }
 
 callBack = (err: any, response: any) => {
   if (!err) {
     this.setState({purchaseSuccess: response.message, purchaseError: null});
-    updateMessage('New purchase created');
-    fetchPurchases();
+
   } else {
     this.setState({purchaseSuccess: null, errorObject: err});
   }

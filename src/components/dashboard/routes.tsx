@@ -12,6 +12,7 @@ import * as React from 'react';
 import {NotFound} from "./not_found";
 import {Switch} from "react-router";
 import {UserList} from "./users";
+import {PurchaseList} from "./purchases/purchase_list";
 
 export var routes = (context: any) => {
     return (
@@ -29,6 +30,7 @@ export var routes = (context: any) => {
                         <Switch>
                             <Route exact={true} path="/" component={() => (<Chores mainState={context.props.mainState} />)}/>
                             <Route path="/budget" component={() => (<Budget user={context.props.mainState.current_user} users={context.props.mainState.commune_users} purchases={context.props.mainState.purchases}/>)}/>
+                            <Route path="/purchase_list" component={() => (<PurchaseList purchases={context.props.mainState.purchases} user={context.props.mainState.current_user}/>)}/>
                             <Route path="/new_chore" component={() => (<ChoreForm chore={{}}/>)}/>
                             <Route path="/new_purchase" component={() => (<NewPurchase/>)}/>
                             <Route path="/new_user" component={() => (<NewCommuneUser/>)}/>

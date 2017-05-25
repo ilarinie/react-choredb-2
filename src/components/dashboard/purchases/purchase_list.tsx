@@ -52,7 +52,7 @@ any > {
     deletePurchase = (purchase : any) => {
         ApiService.deletePurchase(purchase, (err : any, result : any) => {
             if (!err) {
-                updateMessage('Purchase has been cancelled succesfully');
+                updateMessage('Purchase has been cancelled successfully.');
                 fetchPurchases();
             } else {
                 this.setState({state: err});
