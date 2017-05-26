@@ -5,3 +5,5 @@
 [Tuntilista](https://docs.google.com/spreadsheets/d/1nmtC1wCpUgc57WxfuDz5MQ3rix1VRYIb4LFRAO41ejM/edit?usp=sharing)
 
 [Tuotanto](https://choredb.herokuapp.com)
+
+[Wiki](https://github.com/ilarinie/react-choredb-2/wiki/ChoreDB)
