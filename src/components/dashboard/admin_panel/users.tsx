@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {fetchUsers} from "../../store/state_observable";
+import {fetchUsers} from "../../../store/state_observable";
 import {Card, CardHeader, CardActions, RaisedButton, CardText} from "material-ui";
-import {ApiService} from "../../services/api_service";
-import {updateMessage} from "./notificator/notificator";
+import {ApiService} from "../../../services/api_service";
+import {updateMessage} from "../notificator/notificator";
 
 const UserCard = ({...props}) => {
     return (

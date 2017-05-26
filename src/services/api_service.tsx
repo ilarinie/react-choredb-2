@@ -9,7 +9,7 @@ import {User} from "../models/user";
 type CallbackFunction = (errorString: any, result?: any) => void;
 
 export module ApiService {
-    var apiUrl = 'http://localhost:3000/';
+    var apiUrl = 'https://choredb-api.herokuapp.com/';
 
     export function fetchSend(method: string, path : string, dataPacket : any): Promise<any> {
         if (dataPacket) {
@@ -169,6 +169,9 @@ export module ApiService {
     // ___________________________________________________________________________________________ //
     export function postCommune(data : any, callBack : any) {
         send('POST', 'communes', data, callBack);
+    }
+    export function updateCommune(commune): Promise<any> {
+        return fetchSend('PUT', 'communes', commune);
     }
 
     export function updateUser(user: User): Promise<any> {

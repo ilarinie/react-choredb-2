@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as TestUtils from 'react-dom/test-utils';
-import App from '../src/App';
-import {getMainState} from "../__mocks__/api_service";
-import {Chores} from "../src/components/dashboard/chores/chores";
-import {Budget} from "../src/components/dashboard/purchases/budget";
-import {Dashboard} from "../src/components/dashboard/dashboard";
-import {ChoreForm} from "../src/components/dashboard/chores/chore_form";
-import {Login} from "../src/components/login/login";
-import {UserList} from "../src/components/dashboard/users";
-import {Profile} from "../src/components/dashboard/profile/profile";
+import App from '../App';
+import {getMainState} from "./__mocks__/api_service";
+import {Chores} from "../components/dashboard/chores/chores";
+import {Budget} from "../components/dashboard/purchases/budget";
+import {Dashboard} from "../components/dashboard/dashboard";
+import {ChoreForm} from "../components/dashboard/chores/chore_form";
+import {Login} from "../components/login/login";
+import {UserList} from "../components/dashboard/admin_panel/users";
+import {Profile} from "../components/dashboard/profile/profile";
 
 
 jest.mock(`../__mocks__/api_service.tsx`);

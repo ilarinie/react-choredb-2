@@ -43,15 +43,8 @@ export class MenuComponent extends React.Component<any, any> {
             <div>
                 <Divider />
                 <Subheader>Admin tools</Subheader>
-                <Subheader>Add</Subheader>
-                <Link to="/new_chore">
-                    <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}>Chore</MenuItem>
-                </Link>
-                <Link to="/new_user">
-                    <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}>User</MenuItem>
-                </Link>
-                <Link to="/users">
-                   <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-plus" aria-hidden="true"/>}>Remove User</MenuItem>
+                <Link to="/admin_panel">
+                   <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-lock" aria-hidden="true"/>}>Admin panel</MenuItem>
                 </Link>
                 <Divider />
             </div>
@@ -77,7 +70,7 @@ export class MenuComponent extends React.Component<any, any> {
                         <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-line-chart" aria-hidden="true"/>}>Budget</MenuItem>
                     </Link>
                     <Link to="/purchase_list">
-                        <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-line-chart" aria-hidden="true"/>}>Purchase list</MenuItem>
+                        <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-dollar" aria-hidden="true"/>}>Purchase list</MenuItem>
                     </Link>
                     <Link to="/new_purchase">
                         <MenuItem onTouchTap={this.handleClose} leftIcon={<FontIcon className="fa fa-money" aria-hidden="true"/>}>New Purchase</MenuItem>

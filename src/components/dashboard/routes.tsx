@@ -3,16 +3,14 @@ import {MenuComponent} from "./menu/menu_component";
 import {Chores} from "./chores/chores";
 import {Budget} from "./purchases/budget";
 import {NewPurchase} from "./purchases/new_purchase";
-import {ChoreForm} from "./chores/chore_form";
-import {NewCommuneUser} from "./communes/new_commune_user";
 import {ChoreDetails} from "./chores/chore_details/chore_details";
 import {CSSTransitionGroup} from 'react-transition-group';
 import {Profile} from "./profile/profile";
 import * as React from 'react';
 import {NotFound} from "./not_found";
 import {Switch} from "react-router";
-import {UserList} from "./users";
 import {PurchaseList} from "./purchases/purchase_list";
+import {AdminPanel} from "./admin_panel/admin_panel";
 
 export var routes = (context: any) => {
     return (
@@ -31,12 +29,10 @@ export var routes = (context: any) => {
                             <Route exact={true} path="/" component={() => (<Chores mainState={context.props.mainState} />)}/>
                             <Route path="/budget" component={() => (<Budget user={context.props.mainState.current_user} users={context.props.mainState.commune_users} purchases={context.props.mainState.purchases}/>)}/>
                             <Route path="/purchase_list" component={() => (<PurchaseList purchases={context.props.mainState.purchases} user={context.props.mainState.current_user}/>)}/>
-                            <Route path="/new_chore" component={() => (<ChoreForm chore={{}}/>)}/>
                             <Route path="/new_purchase" component={() => (<NewPurchase/>)}/>
-                            <Route path="/new_user" component={() => (<NewCommuneUser/>)}/>
                             <Route path="/chores/:index" component={() => (<ChoreDetails chores={context.props.mainState.chores}/>)}/>
                             <Route path="/profile" component={() => (<Profile mainState={context.props.mainState} />)}/>
-                            <Route path="/users" component={() => (<UserList users={context.props.mainState.commune_users} user={context.props.mainState.current_user} />)} />
+                            <Route path="/admin_panel" component={() => (<AdminPanel mainState={context.props.mainState} />)} />
                             <Route path="*" component={() => (<NotFound/>)} />
                         </Switch>
                     </CSSTransitionGroup>
