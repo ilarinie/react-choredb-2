@@ -6,7 +6,7 @@ import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import {Redirect} from 'react-router-dom';
 import {updateMessage} from '../notificator/notificator';
-import {addChore, fetchChores} from '../../../store/state_observable';
+import {fetchChores} from '../../../store/state_observable';
 
 export class ChoreForm extends React.Component<any, any> {
 
@@ -53,7 +53,6 @@ export class ChoreForm extends React.Component<any, any> {
                 this.clearValues();
                 let chore = promise.contents;
                 chore.tasks = [];
-                addChore(chore);
             } else {
                 updateMessage('Chore updated succesfully.');
                 fetchChores();

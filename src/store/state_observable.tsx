@@ -58,13 +58,6 @@ export let fetchChores = () => {
     });
 }
 
-export let addChore = (chore: Chore) => {
-    let newState: State = mainState;
-    newState.chores.push(chore);
-    mainState = newState;
-    mainStream.onNext(mainState);
-}
-
 export let fetchPurchases = () => {
     ApiService.getPurchases().then((purchases) => {
         let newState: State = mainState;
