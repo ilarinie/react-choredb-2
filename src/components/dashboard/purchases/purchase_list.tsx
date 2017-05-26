@@ -9,7 +9,7 @@ import {
     TableHeaderColumn,
     TableRow
 } from 'material-ui/Table';
-import {fetchPurchases} from '../../../store/state_observable';
+import {fetchCurrentUser, fetchPurchases} from '../../../store/state_observable';
 import * as moment from 'moment';
 import {TableRowColumn} from "material-ui";
 
@@ -54,6 +54,7 @@ any > {
             if (!err) {
                 updateMessage('Purchase has been cancelled successfully.');
                 fetchPurchases();
+                fetchCurrentUser();
             } else {
                 this.setState({state: err});
             }

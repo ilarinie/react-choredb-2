@@ -49,12 +49,12 @@ export class ChoreForm extends React.Component<any, any> {
         this.chore.points = points;
         ApiService.postChore(this.chore).then((promise) => {
             if (!this.chore.chore_id) {
-                updateMessage('New chore created succesfully.')
+                updateMessage(promise.message)
                 this.clearValues();
                 let chore = promise.contents;
                 chore.tasks = [];
             } else {
-                updateMessage('Chore updated succesfully.');
+                updateMessage(promise.message);
                 fetchChores();
             }
 
@@ -152,7 +152,7 @@ export class ChoreForm extends React.Component<any, any> {
                                 className="small-form-input"
                                 underlineShow={false}
                                 defaultValue={this.state.chore ? this.state.chore.name : ''}
-                                hintText="Chore name"
+                                floatingLabelText="Chore name"
                                 errorText={(this.state.errors && this.state.errors.name) ? this.state.errors.name : ''}/>
                             <Divider />
                             <TextField
@@ -160,7 +160,7 @@ export class ChoreForm extends React.Component<any, any> {
                                 className="small-form-input"
                                 defaultValue={this.state.chore ? this.state.chore.priority : ''}
                                 underlineShow={false}
-                                hintText="How often this should be done? (hours)"
+                                floatingLabelText="How often the chore should be done? (hours)"
                                 type="number"
                                 errorText={(this.state.errors && this.state.errors.priority) ? this.state.errors.priority : ''}/>
                             <Divider/>
@@ -168,7 +168,7 @@ export class ChoreForm extends React.Component<any, any> {
                                 id="chore-form-points"
                                 className="small-form-input"
                                 underlineShow={false}
-                                hintText="Points awarded"
+                                floatingLabelText="Points awarded"
                                 defaultValue={this.state.chore ? this.state.chore.points : ''}
                                 type="number"
                                 errorText={(this.state.errors && this.state.errors.points ) ? this.state.errors.points : ''}/>

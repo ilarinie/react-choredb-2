@@ -6,7 +6,7 @@ import {Redirect} from 'react-router-dom';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import {updateMessage} from '../notificator/notificator';
-import {fetchPurchases} from '../../../store/state_observable';
+import {fetchCurrentUser, fetchPurchases} from '../../../store/state_observable';
 
 export class NewPurchase extends React.Component<any, any> {
 
@@ -38,6 +38,7 @@ handleSubmit = (event: any) =>  {
   ApiService.postPurchase(purchase).then((response) => {
     updateMessage('New purchase created');
     fetchPurchases();
+    fetchCurrentUser();
   }).catch((error) => {
     updateMessage(error.message);
   });

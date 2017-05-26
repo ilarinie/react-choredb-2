@@ -7,7 +7,7 @@ import {Chore} from '../../../models/chore';
 import {updateMessage} from '../notificator/notificator';
 import * as moment from 'moment';
 import {Link} from 'react-router-dom';
-import {fetchChores} from '../../../store/state_observable';
+import {fetchChores, fetchCurrentUser, fetchUsers} from '../../../store/state_observable';
 import {CardActions, Subheader, CardHeader, CardText, Card} from "material-ui";
 
 
@@ -53,6 +53,7 @@ any > {
       })
       updateMessage('Well done.');
       fetchChores();
+      fetchCurrentUser();
     })
     .catch((error) => {
       this.setState({

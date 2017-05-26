@@ -16,10 +16,16 @@ export class Profile extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            mainState: this.props.mainState
+            mainState: this.props.mainState,
+            value: 'info'
         };
     }
 
+    handleChange = (value) => {
+        this.setState({
+            value: value
+        });
+    }
 
 
     render() {
@@ -28,17 +34,17 @@ export class Profile extends React.Component<any, any> {
         return (
             <div className="dashboard-large-item">
                 <h1>Hello, {this.state.mainState.current_user.name ? this.state.mainState.current_user.name : this.state.mainState.current_user.username }</h1>
-                <Tabs>
-                    <Tab label="Change Password">
+                <Tabs value={this.state.value} onChange={this.handleChange}>
+                    <Tab label="Change Password" value="password">
                         <ChangePassword user={this.state.mainState.current_user}/>
                     </Tab>
-                    <Tab label="Change Info">
+                    <Tab label="Change Info" value="info">
                         <ChangeInfo user={this.state.mainState.current_user} />
                     </Tab>
-                    <Tab label="Purchases">
+                    <Tab label="Purchases" value="purchases">
                         <PurchaseList user={this.state.mainState.current_user} purchases={this.state.mainState.current_user.purchases} />
                     </Tab>
-                    <Tab label="Completed Chores">
+                    <Tab label="Completed Chores" value="chores">
                         {tasks}
                     </Tab>
                 </Tabs>

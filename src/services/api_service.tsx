@@ -170,7 +170,7 @@ export module ApiService {
     export function postCommune(data : any, callBack : any) {
         send('POST', 'communes', data, callBack);
     }
-    export function updateCommune(commune): Promise<any> {
+    export function updateCommune(commune: Commune): Promise<any> {
         return fetchSend('PUT', 'communes', commune);
     }
 
