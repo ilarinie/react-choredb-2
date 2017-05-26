@@ -10,9 +10,11 @@ import {ChoreForm} from "../components/dashboard/chores/chore_form";
 import {Login} from "../components/login/login";
 import {UserList} from "../components/dashboard/admin_panel/users";
 import {Profile} from "../components/dashboard/profile/profile";
+import {AdminPanel} from "../components/dashboard/admin_panel/admin_panel";
+import {PurchaseList} from "../components/dashboard/purchases/purchase_list";
+import {NewPurchase} from "../components/dashboard/purchases/new_purchase";
 
-
-jest.mock(`../__mocks__/api_service.tsx`);
+;
 
 declare var global: any;
 
@@ -33,6 +35,8 @@ it('renders without crashing', () => {
 
 it('renders Chores', () => {
     getMainState((err, res) => {
+
+        console.log(err);
         expect(TestUtils.createRenderer().render(
             <Chores mainState={res}/>
         )).toMatchSnapshot()
@@ -47,6 +51,21 @@ it('renders Budget', () => {
     });
 });
 
+it('renders PurchaseList', () => {
+    getMainState((err, res) => {
+        expect(TestUtils.createRenderer().render(
+            <PurchaseList user={res.current_user} purchases={res.purchases} />
+        )).toMatchSnapshot()
+    });
+});
+
+it('renders NewPurchase', () => {
+        expect(TestUtils.createRenderer().render(
+            <NewPurchase  />
+        )).toMatchSnapshot();
+});
+
+
 it('renders Dashboard', () => {
     getMainState((err, res) => {
         expect(TestUtils.createRenderer().render(
@@ -59,6 +78,13 @@ it('renders ChoreForm', () => {
     expect(TestUtils.createRenderer().render(
         <ChoreForm chore={{}}/>
     )).toMatchSnapshot()
+});
+it('renders ChoreForm with chore', () => {
+    getMainState((err, res) => {
+        expect(TestUtils.createRenderer().render(
+            <ChoreForm chore={res.chores[0]}/>
+        )).toMatchSnapshot()
+    });
 });
 
 it('renders Login', () => {
@@ -87,6 +113,14 @@ it('renders Profile', () => {
     getMainState((err, res) => {
         expect(TestUtils.createRenderer().render(
             <Profile mainState={res} />
+        )).toMatchSnapshot()
+    });
+})
+
+it('renders Admin Panel', () => {
+    getMainState((err, res) => {
+        expect(TestUtils.createRenderer().render(
+            <AdminPanel mainState={res} />
         )).toMatchSnapshot()
     });
 })

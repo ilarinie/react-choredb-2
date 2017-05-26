@@ -1,8 +1,12 @@
-exports[`test renders ChoreForm 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ChoreForm 1`] = `
 <div
-  className="form-component-container">
+  className="form-component-container"
+>
   <form
-    onSubmit={[Function]}>
+    onSubmit={[Function]}
+  >
     <h1>
       Create a new chore
     </h1>
@@ -10,7 +14,8 @@ exports[`test renders ChoreForm 1`] = `
       circle={false}
       rounded={true}
       transitionEnabled={true}
-      zDepth={2}>
+      zDepth={2}
+    >
       <TextField
         className="small-form-input"
         defaultValue={undefined}
@@ -23,9 +28,11 @@ exports[`test renders ChoreForm 1`] = `
         multiLine={false}
         rows={1}
         type="text"
-        underlineShow={false} />
+        underlineShow={false}
+      />
       <Divider
-        inset={false} />
+        inset={false}
+      />
       <TextField
         className="small-form-input"
         defaultValue={undefined}
@@ -38,9 +45,11 @@ exports[`test renders ChoreForm 1`] = `
         multiLine={false}
         rows={1}
         type="number"
-        underlineShow={false} />
+        underlineShow={false}
+      />
       <Divider
-        inset={false} />
+        inset={false}
+      />
       <TextField
         className="small-form-input"
         defaultValue={undefined}
@@ -53,9 +62,11 @@ exports[`test renders ChoreForm 1`] = `
         multiLine={false}
         rows={1}
         type="number"
-        underlineShow={false} />
+        underlineShow={false}
+      />
       <Divider
-        inset={false} />
+        inset={false}
+      />
     </Paper>
     <br />
     <RaisedButton
@@ -65,25 +76,30 @@ exports[`test renders ChoreForm 1`] = `
       labelPosition="after"
       primary={false}
       secondary={false}
-      type="submit" />
+      type="submit"
+    />
     <span />
     <div
-      className="chore-error-div">
+      className="chore-error-div"
+    >
       <p />
     </div>
     <div
-      className="chore-success-div">
+      className="chore-success-div"
+    >
       <p />
     </div>
   </form>
 </div>
 `;
 
-exports[`test renders Login 1`] = `
+exports[`renders Login 1`] = `
 <div
-  className="login-container">
+  className="login-container"
+>
   <div
-    className="banner">
+    className="banner"
+  >
     <h1>
       ChoreDB 2.0
     </h1>
@@ -91,18 +107,22 @@ exports[`test renders Login 1`] = `
   <Tabs
     initialSelectedIndex={0}
     onChange={[Function]}
-    value="login">
+    value="login"
+  >
     <Tab
       label="Log in"
-      value="login">
+      value="login"
+    >
       <div
-        className="login-container">
+        className="login-container"
+      >
         <div>
           <h1>
             Please log in
           </h1>
           <form
-            onSubmit={[Function]}>
+            onSubmit={[Function]}
+          >
             <TextField
               disabled={false}
               floatingLabelFixed={false}
@@ -112,7 +132,8 @@ exports[`test renders Login 1`] = `
               multiLine={false}
               rows={1}
               type="text"
-              underlineShow={true} />
+              underlineShow={true}
+            />
             <br />
             <TextField
               disabled={false}
@@ -123,10 +144,12 @@ exports[`test renders Login 1`] = `
               multiLine={false}
               rows={1}
               type="password"
-              underlineShow={true} />
+              underlineShow={true}
+            />
             <br />
             <div
-              className="auth-failure" />
+              className="auth-failure"
+            />
             <RaisedButton
               disabled={false}
               fullWidth={true}
@@ -134,16 +157,84 @@ exports[`test renders Login 1`] = `
               labelPosition="after"
               primary={false}
               secondary={false}
-              type="submit" />
+              type="submit"
+            />
           </form>
         </div>
       </div>
     </Tab>
     <Tab
       label="Register"
-      value="register">
+      value="register"
+    >
       <Register />
     </Tab>
   </Tabs>
+</div>
+`;
+
+exports[`renders NewPurchase 1`] = `
+<div
+  className="form-component-container"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <h1>
+      Create a new purchase
+    </h1>
+    <Paper
+      circle={false}
+      rounded={true}
+      transitionEnabled={true}
+      zDepth={2}
+    >
+      <TextField
+        className="small-form-input"
+        disabled={false}
+        errorText=""
+        floatingLabelFixed={false}
+        fullWidth={false}
+        hintText="Description"
+        id="purchase-description-input"
+        multiLine={false}
+        rows={1}
+        type="text"
+        underlineShow={false}
+      />
+      <Divider
+        inset={false}
+      />
+      <TextField
+        className="small-form-input"
+        disabled={false}
+        errorText=""
+        floatingLabelFixed={false}
+        fullWidth={false}
+        hintText="Amount"
+        id="purchase-amount-input"
+        multiLine={false}
+        rows={1}
+        type="tel"
+        underlineShow={false}
+      />
+      <Divider
+        inset={false}
+      />
+    </Paper>
+    <br />
+    <RaisedButton
+      disabled={false}
+      fullWidth={false}
+      label="Create"
+      labelPosition="after"
+      primary={false}
+      secondary={false}
+      type="submit"
+    />
+    <div
+      className="purchase-success-div"
+    />
+  </form>
 </div>
 `;
